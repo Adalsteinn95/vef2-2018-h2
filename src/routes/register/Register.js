@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { register } from '../../actions/register';
+import { registerUser } from '../../actions/register';
 
 /* todo sækja actions frá ./actions */
 
@@ -27,7 +27,7 @@ class Register extends Component {
     const { dispatch } = this.props;
     const { username ,password, name } = this.state;
 
-    //dispatch(register(username, password));
+    dispatch(registerUser(username, password, name));
   }
 
 

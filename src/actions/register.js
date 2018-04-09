@@ -40,7 +40,28 @@ function errorRegister(message) {
 }
 
 
-
-/* todo fleiri action */
-
 /* todo async "thunk" fyrir tengingu við vefþjónustu */
+
+export const registerUser = (username, password, name) => {
+  return async (dispatch) => {
+    dispatch(requestRegister());
+
+    let login;
+
+    try {
+      login = await api.register(username, password, name);
+      
+    } catch (e) {
+      return dispatch(errorRegister(e))
+    }
+
+    /*
+    if (true) {
+      console.info(user);
+      const { user } = login;
+      localStorage.setItem('user', JSON.stringify(user));
+
+      dispatch(userRegister(user));
+    }*/
+  }
+}

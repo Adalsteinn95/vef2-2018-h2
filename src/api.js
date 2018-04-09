@@ -27,36 +27,42 @@ async function login(username, password) {
 
   if (username === "error") {
     return {
-      error: "Big error",
+      error: "Big error"
     };
   }
 
   if (username === "Admin" && password === "admin") {
     return {
       loggedIn: true,
-      user,
-    }
-  
+      user
+    };
   }
 
   if (username !== "Admin") {
     return {
       loggedIn: false,
-      error: "Wrong username",
+      error: "Wrong username"
     };
   }
 
   return {
     loggedIn: false,
-    error: "Wrong password",
+    error: "Wrong password"
   };
 }
 
 async function register(username, password, name) {
-  
+  const url = `${baseurl}/register`;
+
+  let result;
+  try {
+    result = await fetch(url, {method: 'POST'})
+  } catch (error) {}
+  console.info(result);
 }
 
 export default {
   get,
   login,
+  register
 };
