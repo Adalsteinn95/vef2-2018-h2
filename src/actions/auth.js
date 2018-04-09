@@ -73,8 +73,7 @@ export const loginUser = (username, password) => {
 
     if (login.loggedIn) {
       const { user } = login;
-      localStorage.setItem('user', JSON.stringify(user));
-
+      localStorage.setItem('user', JSON.stringify({token: login.user.token }));
       dispatch(userLogin(user));
     }
   }

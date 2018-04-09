@@ -22,7 +22,8 @@ async function login(username, password) {
   /* dummy account */
   const user = {
     name: "Admin",
-    password: "admin"
+    password: "admin",
+    token: "awesometoken",
   };
 
   if (username === "error") {
@@ -54,11 +55,28 @@ async function login(username, password) {
 async function register(username, password, name) {
   const url = `${baseurl}/register`;
 
-  let result;
+  const user = {
+    username,
+    password,
+    name
+  };
+
+
+  let response;
   try {
-    result = await fetch(url, {method: 'POST'})
-  } catch (error) {}
-  console.info(result);
+    response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user)
+    });
+    const json = await response.json();
+
+    if (json.errors) {
+      console.info(json.errors);
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export default {

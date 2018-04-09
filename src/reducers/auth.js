@@ -6,8 +6,10 @@ import {
 } from '../actions/auth';
 
 
-/* konnum hvort user se i localstorage annars null */
+/* konnum hvort token se i localstorage annars null */
 const user = JSON.parse(localStorage.getItem('user' || 'null'));
+
+
 
 /* upphafstada */ 
 const initialState = {
