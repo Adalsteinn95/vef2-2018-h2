@@ -20,7 +20,7 @@ function requestLogin() {
   }
 }
 
-function login(user){
+function userLogin(user){
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
@@ -66,16 +66,16 @@ export const loginUser = (username, password) => {
     }
 
     
-    if (!login.loggedin) {
+    if (!login.loggedIn) {
       console.info(login.loggedIn);
       dispatch(errorLogin(login.error))
     }
 
-    if (login.loggedin) {
-      console.info(user);
+    if (login.loggedIn) {
       const { user } = login;
       localStorage.setItem('user', JSON.stringify(user));
-      dispatch(login(user));
+
+      dispatch(userLogin(user));
     }
   }
 }

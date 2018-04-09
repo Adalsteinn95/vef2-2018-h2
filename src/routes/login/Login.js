@@ -29,6 +29,14 @@ class Login extends Component {
     dispatch(loginUser(username, password));
   }
 
+  handleLogout = (e) => {
+    e.preventDefault();
+
+    const { dispatch } = this.props;
+    
+    dispatch(logoutUser());
+  }
+
   render() {
 
     const {
