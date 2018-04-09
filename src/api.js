@@ -52,6 +52,10 @@ async function login(username, password) {
   };
 }
 
+async function register(username, password, name) {
+  
+}
+
 export default {
   get,
   login,
