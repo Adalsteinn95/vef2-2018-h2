@@ -16,7 +16,6 @@ class Profile extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  /* todo stilla redux ef það er notað */
   return {
     isFetching: state.auth.isFetching,
     isAuthenticated: state.auth.isAuthenticated,

@@ -17,7 +17,6 @@ class UserPage extends Component {
             users,
         } = this.props;
 
-        console.info(users);
         return (
             <div>
                 

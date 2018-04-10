@@ -44,7 +44,7 @@ class App extends Component {
             />
             {/* todo fleiri route */}
             <Route path='/register' exact authenticated={isAuthenticated}  component={Register} />
-            <Route path='/userpage' exact authenticated={isAuthenticated} component={UserPage} />
+            <UserRoute path='/userpage' exact authenticated={isAuthenticated} component={UserPage} />
             <Route component={NotFound} />
           </Switch>
         </div>
@@ -55,7 +55,6 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   /* todo stilla redux ef það er notað */
-
   return {
     isAuthenticated: state.auth.isAuthenticated,
     username: state.auth.user ? state.auth.user.username : '',
