@@ -27,7 +27,7 @@ class Books extends Component {
     const searchLink = `search=${this.state.search}`;
     this.props.dispatch(fetchBooks(`books?${searchLink}&${offset}`));
     const newSearchUrl = search !== "" ? `search=${search}` : null;
-    const newPageUrl = page > 0 ? `page=${page}` : "";
+    const newPageUrl = page > 0 ? `page=${page + 1}` : "";
     const newUrl = newSearchUrl
       ? `?${newSearchUrl}${newPageUrl ? `&${newPageUrl}` : ""}`
       : `?${newPageUrl}`;
@@ -73,7 +73,7 @@ class Books extends Component {
             children={"Fyrri síða"}
           />
         )}
-        <span>{this.state.page}</span>
+        <span>Síða {this.state.page + 1}</span>
         {books.items.length === 10 && (
           <Button
             onClick={() => this.handlePageClick("next")}
