@@ -11,8 +11,10 @@ import "./Books.css";
 
 class Books extends Component {
   urlpage = queryString.parse(this.props.location.search).page;
+  urlsearch = queryString.parse(this.props.location.search).search;
   state = {
-    page: this.urlpage > 0 ? this.urlpage : 0
+    page: this.urlpage > 0 ? this.urlpage : 0,
+    search: this.urlsearch
   };
 
   async componentDidMount() {
@@ -21,7 +23,9 @@ class Books extends Component {
 
   async fetchBooks(endpoint) {
     this.props.dispatch(fetchBooks(`books?offset=${this.state.page * 10}`));
-    this.props.history.push(`?page=${this.state.page}`);
+    console.log(this.state.page);
+    const newUrl = this.state.page > 0 ? `?page=${this.state.page}` : "books";
+    this.props.history.push(newUrl);
   }
 
   handlePageClick = key => {
