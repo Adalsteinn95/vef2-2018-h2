@@ -1,35 +1,92 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import getAllUsers from '../../reducers/getAllUsers';
-import { fetchUsers } from '../../actions/getAllUsers';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import queryString from "query-string";
+
+/* action */
+
+import { fetchUsers } from "../../actions/getAllUsers";
+
+/* comp */
+import Button from "../../components/button";
 
 class UserPage extends Component {
-    componentDidMount() {
-        const { 
-            dispatch 
-        } = this.props;
+  urlpage = Number(queryString.parse(this.props.location.search).page - 1);
 
-        dispatch(fetchUsers('users'));
+  state = {
+    page: this.urlpage > 0 ? this.urlpage : 0
+  };
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+
+    this.fetchUsers("users");
+  }
+
+  async fetchUsers(endpoint) {
+    const { page } = this.state;
+    const { dispatch, history } = this.props;
+    const offset = `offset=${page * 10}`;
+    dispatch(fetchUsers(`users?${offset}`));
+    const newPageUrl = page > 0 ? `page=${page + 1}` : "";
+
+    //history.push(newPageUrl);
+  }
+
+  handlePageClick = key => {
+    this.setState((prevState, props) => {
+      return {
+        page: Number(prevState.page) + (key === "prev" ? -1 : 1)
+      };
+    }, this.fetchUsers);
+  };
+
+  render() {
+    const { isFetching, users, message } = this.props;
+
+    if (isFetching) {
+      return <div>Sæki gögn...</div>;
     }
-    render() {
 
-        const {
-            users,
-        } = this.props;
-
-        return (
-            <div>
-                
-            </div>
-        );
+    if (message) {
+      return <div>Villa við að sækja gögn</div>;
     }
+
+    return (
+      <div>
+        <h2>Notendur</h2>
+        <div key={this.state.page}>
+          {users.items.map((item, index )=> {
+            return (
+              <div key={index}>
+                <p>{item.username}</p>
+              </div>
+            );
+          })}
+        </div>
+        {this.state.page > 0 && (
+          <Button
+            onClick={() => this.handlePageClick("prev")}
+            children={"Fyrri síða"}
+          />
+        )}
+        <span>Síða {this.state.page + 1}</span>
+        {users.items.length === 10 && (
+          <Button
+            onClick={() => this.handlePageClick("next")}
+            children={"Næsta síða"}
+          />
+        )}
+      </div>
+    );
+  }
 }
 
-const maptstateToProps = (state) =>{
-
-    return {
-        users: state.getAllUsers.users,
-    }
-}
+const maptstateToProps = state => {
+  return {
+    isFetching: state.getAllUsers.isFetching,
+    users: state.getAllUsers.users,
+    message: state.getAllUsers.message
+  };
+};
 
 export default connect(maptstateToProps)(UserPage);
