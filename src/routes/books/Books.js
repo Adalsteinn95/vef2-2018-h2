@@ -14,7 +14,7 @@ class Books extends Component {
   urlsearch = queryString.parse(this.props.location.search).search;
   state = {
     page: this.urlpage > 0 ? this.urlpage : 0,
-    search: this.urlsearch
+    search: this.urlsearch || ""
   };
 
   async componentDidMount() {
@@ -22,9 +22,15 @@ class Books extends Component {
   }
 
   async fetchBooks(endpoint) {
-    this.props.dispatch(fetchBooks(`books?offset=${this.state.page * 10}`));
-    console.log(this.state.page);
-    const newUrl = this.state.page > 0 ? `?page=${this.state.page}` : "books";
+    const { page, search } = this.state;
+    const offset = `offset=${page * 10}`;
+    const searchLink = `search=${this.state.search}`;
+    this.props.dispatch(fetchBooks(`books?${searchLink}&${offset}`));
+    const newSearchUrl = search !== "" ? `search=${search}` : null;
+    const newPageUrl = page > 0 ? `page=${page}` : "";
+    const newUrl = newSearchUrl
+      ? `?${newSearchUrl}${newPageUrl ? `&${newPageUrl}` : ""}`
+      : `?${newPageUrl}`;
     this.props.history.push(newUrl);
   }
 
@@ -67,6 +73,7 @@ class Books extends Component {
             children={"Fyrri síða"}
           />
         )}
+        <p>{this.state.page}</p>
         {books.items.length === 10 && (
           <Button
             onClick={() => this.handlePageClick("next")}
