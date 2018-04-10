@@ -44,13 +44,17 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state);
+const mapStateToProps = (state) => {
+  /* todo stilla redux ef það er notað */
+
   return {
+    isAuthenticated: state.auth.isAuthenticated,
+    username: state.auth.user ? state.auth.user.username : '',
+    name: state.auth.user ? state.auth.user.name : '',
     isFetching: state.books.isFetching,
     message: state.books.message,
     books: state.books
-  };
-};
+  }
+}
 
 export default withRouter(connect(mapStateToProps)(App));

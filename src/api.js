@@ -25,6 +25,41 @@ async function get(endpoint) {
 
 /* todo aðrar aðgerðir */
 
+async function login(username, password) {
+  /* dummy account */
+  const user = {
+    name: "Admin",
+    password: "admin"
+  };
+
+  if (username === "error") {
+    return {
+      error: "Big error",
+    };
+  }
+
+  if (username === "Admin" && password === "admin") {
+    return {
+      loggedIn: true,
+      user,
+    }
+  
+  }
+
+  if (username !== "Admin") {
+    return {
+      loggedIn: false,
+      error: "Wrong username",
+    };
+  }
+
+  return {
+    loggedIn: false,
+    error: "Wrong password",
+  };
+}
+
 export default {
-  get
+  get,
+  login,
 };
