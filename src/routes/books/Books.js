@@ -10,7 +10,7 @@ import Button from "../../components/button";
 import "./Books.css";
 
 class Books extends Component {
-  urlpage = queryString.parse(this.props.location.search).page;
+  urlpage = Number(queryString.parse(this.props.location.search).page - 1);
   urlsearch = queryString.parse(this.props.location.search).search;
   state = {
     page: this.urlpage > 0 ? this.urlpage : 0,
