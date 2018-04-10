@@ -10,9 +10,9 @@ import Button from "../../components/button";
 import "./Books.css";
 
 class Books extends Component {
-  urlOffset = queryString.parse(this.props.location.search).offset;
+  urlpage = queryString.parse(this.props.location.search).page;
   state = {
-    offset: this.urlOffset > 0 ? this.urlOffset : 0
+    page: this.urlpage > 0 ? this.urlpage : 0
   };
 
   async componentDidMount() {
@@ -20,19 +20,18 @@ class Books extends Component {
   }
 
   async fetchBooks(endpoint) {
-    this.props.dispatch(fetchBooks(`books?offset=${this.state.offset}`));
-    this.props.history.push(`?offset=${this.state.offset}`);
+    this.props.dispatch(fetchBooks(`/books?offset=${this.state.page * 10}`));
+    this.props.history.push(`?page=${this.state.page}`);
   }
 
   handlePageClick = key => {
+    console.log(this.state.page);
     this.setState((prevState, props) => {
-      console.log(prevState.offset === 0 && key === "prev");
-      console.log(prevState.offset + (key === "prev" ? -10 : 10));
       return {
-        offset:
-          prevState.offset === 0 && key === "prev"
-            ? prevState.offset
-            : Number(prevState.offset) + (key === "prev" ? -10 : 10)
+        page:
+          prevState.page === 0 && key === "prev"
+            ? prevState.page
+            : Number(prevState.page) + (key === "prev" ? -1 : 1)
       };
     }, this.fetchBooks);
   };
@@ -51,7 +50,7 @@ class Books extends Component {
     return (
       <div>
         <h2>Bækur</h2>
-        <div key={this.state.offset}>
+        <div key={this.state.page}>
           {books.items.map(book => {
             return (
               <div key={book.id}>
