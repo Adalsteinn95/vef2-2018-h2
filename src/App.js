@@ -45,7 +45,12 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  /* todo stilla redux ef það er notað */
+  console.log(state);
+  return {
+    isFetching: state.books.isFetching,
+    message: state.books.message,
+    books: state.books
+  };
 };
 
 export default withRouter(connect(mapStateToProps)(App));

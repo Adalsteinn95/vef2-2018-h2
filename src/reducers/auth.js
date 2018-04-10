@@ -1,14 +1,12 @@
 import {
-  LOGIN_REQUEST,
+  LOGIN_REQUEST
   /* todo fleiri actions */
-} from '../actions/auth';
+} from "../actions/auth";
 
-const initialState = {
-};
+const initialState = {};
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
     /* todo setja upp reducer */
 
     default:

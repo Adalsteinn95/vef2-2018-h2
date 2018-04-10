@@ -1,58 +1,44 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { fetchBooks } from "../../actions/books";
+import Button from "../../components/button";
 
 /* todo sækja actions frá ./actions */
 
 import "./Books.css";
 
 class Books extends Component {
-  state = { data: null, loading: true, error: false, offset: 0 };
+  state = { offset: 0 };
 
   async componentDidMount() {
-    this.tryToFetch();
+    this.fetchBooks();
   }
 
-  async tryToFetch() {
-    try {
-      const data = await this.fetchData();
-      this.setState({ data, loading: false });
-    } catch (e) {
-      console.error("Error fetching data", e);
-      this.setState({ error: true, loading: false });
-    }
-  }
-
-  async fetchData() {
-    const url = `${process.env.REACT_APP_SERVICE_URL}books?offset=${
-      this.state.offset
-    }`;
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
+  async fetchBooks() {
+    this.props.dispatch(fetchBooks(`books?offset=${this.state.offset}`));
   }
 
   handleNextPageClick = e => {
-    this.tryToFetch();
-    console.log(this.state.offset);
     this.setState((prevState, props) => {
       return { offset: prevState.offset + 10 };
-    });
+    }, this.fetchBooks);
   };
   handlePrevPageClick = e => {
-    this.tryToFetch();
-    console.log(this.state.offset);
     this.setState((prevState, props) => {
-      return { offset: prevState.offset - 10 };
-    });
+      return {
+        offset:
+          prevState.offset === 0 ? prevState.offset : prevState.offset - 10
+      };
+    }, this.fetchBooks);
   };
   render() {
-    const { data, loading, error } = this.state;
+    const { books, isFetching, message } = this.props;
 
-    if (loading) {
+    if (isFetching) {
       return <div>Sæki gögn...</div>;
     }
 
-    if (error) {
+    if (message) {
       return <div>Villa við að sækja gögn</div>;
     }
 
@@ -60,7 +46,7 @@ class Books extends Component {
       <div>
         <h2>Bækur</h2>
         <div key={this.state.offset}>
-          {data.items.map(book => {
+          {books.books.items.map(book => {
             return (
               <div key={book.id}>
                 <h3>{book.title}</h3>
@@ -69,13 +55,20 @@ class Books extends Component {
             );
           })}
         </div>
-        <button onClick={this.handlePrevPageClick}>Fyrri síða</button>
-        <button onClick={this.handleNextPageClick}>Næsta síða</button>
+        <Button onClick={this.handlePrevPageClick} children="Fyrri síða" />
+        <Button onClick={this.handleNextPageClick} children="Næsta síða" />
       </div>
     );
   }
 }
 
-/* todo tengja við redux */
+const mapStateToProps = state => {
+  /* todo stilla redux ef það er notað */
+  return {
+    isFetching: state.books.isFetching,
+    message: state.books.message,
+    books: state.books
+  };
+};
 
-export default Books;
+export default connect(mapStateToProps)(Books);
