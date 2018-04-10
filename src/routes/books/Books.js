@@ -73,7 +73,7 @@ class Books extends Component {
             children={"Fyrri síða"}
           />
         )}
-        <p>{this.state.page}</p>
+        <span>{this.state.page}</span>
         {books.items.length === 10 && (
           <Button
             onClick={() => this.handlePageClick("next")}
