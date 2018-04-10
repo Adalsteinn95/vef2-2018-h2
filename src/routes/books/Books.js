@@ -20,7 +20,7 @@ class Books extends Component {
   }
 
   async fetchBooks(endpoint) {
-    this.props.dispatch(fetchBooks(`/books?offset=${this.state.page * 10}`));
+    this.props.dispatch(fetchBooks(`books?offset=${this.state.page * 10}`));
     this.props.history.push(`?page=${this.state.page}`);
   }
 
@@ -28,10 +28,7 @@ class Books extends Component {
     console.log(this.state.page);
     this.setState((prevState, props) => {
       return {
-        page:
-          prevState.page === 0 && key === "prev"
-            ? prevState.page
-            : Number(prevState.page) + (key === "prev" ? -1 : 1)
+        page: Number(prevState.page) + (key === "prev" ? -1 : 1)
       };
     }, this.fetchBooks);
   };
@@ -60,14 +57,18 @@ class Books extends Component {
             );
           })}
         </div>
-        <Button
-          onClick={() => this.handlePageClick("prev")}
-          children={"Fyrri síða"}
-        />
-        <Button
-          onClick={() => this.handlePageClick("next")}
-          children={"Næsta síða"}
-        />
+        {this.state.page > 0 && (
+          <Button
+            onClick={() => this.handlePageClick("prev")}
+            children={"Fyrri síða"}
+          />
+        )}
+        {books.items.length === 10 && (
+          <Button
+            onClick={() => this.handlePageClick("next")}
+            children={"Næsta síða"}
+          />
+        )}
       </div>
     );
   }
