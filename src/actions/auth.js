@@ -7,9 +7,9 @@
 import api from '../api';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOING_SUCCESS';
-export const LOGIN_FAILURE = 'LOING_FAILURE';
-export const LOGIN_LOGOUT = 'LOING_LOGOUT';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGIN_LOGOUT = 'LOGIN_LOGOUT';
 
 function requestLogin() {
   return {
@@ -20,7 +20,7 @@ function requestLogin() {
   }
 }
 
-function login(user){
+function userLogin(user){
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
@@ -56,8 +56,6 @@ export const loginUser = (username, password) => {
   return async (dispatch) => {
     dispatch(requestLogin());
 
-    console.info(username)
-
     let login;
     try {
       login = await api.login(username, password);
@@ -66,16 +64,14 @@ export const loginUser = (username, password) => {
     }
 
     
-    if (!login.loggedin) {
-      console.info(login.loggedIn);
+    if (login.error) {
       dispatch(errorLogin(login.error))
     }
 
-    if (login.loggedin) {
-      console.info(user);
+    if (!login.error) {
       const { user } = login;
-      localStorage.setItem('user', JSON.stringify(user));
-      dispatch(login(user));
+      localStorage.setItem('user', JSON.stringify({user, token: login.token }));
+      dispatch(userLogin(user));
     }
   }
 }

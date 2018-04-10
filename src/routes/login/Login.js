@@ -29,6 +29,14 @@ class Login extends Component {
     dispatch(loginUser(username, password));
   }
 
+  handleLogout = (e) => {
+    e.preventDefault();
+
+    const { dispatch } = this.props;
+    
+    dispatch(logoutUser());
+  }
+
   render() {
 
     const {
@@ -81,7 +89,6 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
   /* todo stilla redux ef það er notað */
-
   return {
     isFetching: state.auth.isFetching,
     isAuthenticated: state.auth.isAuthenticated,

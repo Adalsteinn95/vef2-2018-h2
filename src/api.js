@@ -12,6 +12,9 @@ async function get(endpoint) {
   if (token) {
     options.headers["Authorization"] = `Bearer ${token}`;
   }
+ 
+
+  /* todo framkvæma get */
 
   const response = await fetch(url);
 
@@ -21,45 +24,57 @@ async function get(endpoint) {
   }
   const data = await response.json();
   return data;
+
 }
 
 /* todo aðrar aðgerðir */
 
 async function login(username, password) {
-  /* dummy account */
-  const user = {
-    name: "Admin",
-    password: "admin"
-  };
-
-  if (username === "error") {
-    return {
-      error: "Big error",
-    };
-  }
-
-  if (username === "Admin" && password === "admin") {
-    return {
-      loggedIn: true,
-      user,
-    }
   
-  }
+  const url = `${baseurl}/login`;
 
-  if (username !== "Admin") {
-    return {
-      loggedIn: false,
-      error: "Wrong username",
-    };
-  }
+  let response;
+  try {
+    response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({username,password}),
+    });
+    const json = await response.json();
 
-  return {
-    loggedIn: false,
-    error: "Wrong password",
+    return json;
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+async function register(username, password, name) {
+  const url = `${baseurl}/register`;
+
+  const user = {
+    username,
+    password,
+    name
   };
+
+
+  let response;
+  try {
+    response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user)
+    });
+    const json = await response.json();
+    return json;
+
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export default {
   get,
   login,
+  register
 };
