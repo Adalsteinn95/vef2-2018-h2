@@ -6,7 +6,7 @@ class Profile extends Component {
   render() {
     const {
       user, 
-    } = this.props.user;
+    } = this.props;
 
     return (
       <div>

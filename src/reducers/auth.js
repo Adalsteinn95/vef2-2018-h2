@@ -10,12 +10,12 @@ import {
 const user = JSON.parse(localStorage.getItem('user' || 'null'));
 
 
-
 /* upphafstada */ 
 const initialState = {
   isFetching: false,
   isAuthenticated: user ? true : false,
-  user,
+  user: user === null ? null: user.user,
+  token: user === null ? null : user.token,
 };
 
 export default (state = initialState, action) => {

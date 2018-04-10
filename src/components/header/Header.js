@@ -27,12 +27,9 @@ class Header extends Component {
 
 
     const {
-      isAuthenticated,
-    } = this.props.auth;
-
-    const {
       user,
-    } = this.props.auth.user;
+      isAuthenticated,
+    } = this.props;
 
     return (
       <header className="header">
@@ -40,11 +37,13 @@ class Header extends Component {
         {/* ætti samt frekar heima í sér component */}
         <Button onClick={this.onClick}>Leita</Button>
 
-        <h1>{user.username}</h1>
-        <h1>{user.name}</h1>
 
         {isAuthenticated && (
-          <button onClick={this.handleLogout}>Útskrá</button>
+          <div>
+            <button onClick={this.handleLogout}>Útskrá</button>
+            <h1>{user.username}</h1>
+            <h1>{user.name}</h1>
+          </div>
         )}
 
         {!isAuthenticated && (
@@ -57,7 +56,8 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth,
+    user: state.auth.user,
+    isAuthenticated: state.auth.isAuthenticated,
   }
 }
 
