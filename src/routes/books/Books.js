@@ -35,7 +35,6 @@ class Books extends Component {
   }
 
   handlePageClick = key => {
-    console.log(this.state.page);
     this.setState((prevState, props) => {
       return {
         page: Number(prevState.page) + (key === "prev" ? -1 : 1)
@@ -43,7 +42,6 @@ class Books extends Component {
     }, this.fetchBooks);
   };
   render() {
-    console.log(this.props);
     const { books: booksData, isFetching, message } = this.props;
     const { books } = booksData;
     if (isFetching) {
