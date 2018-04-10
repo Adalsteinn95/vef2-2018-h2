@@ -41,6 +41,7 @@ class Register extends Component {
       isFetching,
       user,
       message,
+      isAuthenticated,
     } = this.props;
 
     if (isFetching) {
@@ -49,12 +50,18 @@ class Register extends Component {
       );
     }
 
-    console.info(user);
-
     if(user){
-      return(
+      return (
         <div>
           <h1>Takk fyrir skráninguna {user.username}</h1>
+        </div>
+      );
+    }
+
+    if(isAuthenticated) {
+      return (
+        <div>
+          <h1>Þú ert nú þegar innskráður!</h1>
         </div>
       );
     }
@@ -98,6 +105,7 @@ const mapStateToProps = (state) => {
     isFetching: state.register.isFetching,
     message: state.register.message,
     user: state.register.user,
+    isAuthenticated: state.auth.isAuthenticated,
   }
 }
 

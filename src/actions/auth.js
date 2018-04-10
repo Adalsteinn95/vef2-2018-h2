@@ -56,8 +56,6 @@ export const loginUser = (username, password) => {
   return async (dispatch) => {
     dispatch(requestLogin());
 
-    console.info(username)
-
     let login;
     try {
       login = await api.login(username, password);
@@ -65,15 +63,16 @@ export const loginUser = (username, password) => {
       return dispatch(errorLogin(e))
     }
 
+
+    console.info(login);
     
-    if (!login.loggedIn) {
-      console.info(login.loggedIn);
+    if (login.error) {
       dispatch(errorLogin(login.error))
     }
 
-    if (login.loggedIn) {
+    if (!login.error) {
       const { user } = login;
-      localStorage.setItem('user', JSON.stringify({token: login.user.token }));
+      localStorage.setItem('user', JSON.stringify({token: login.token }));
       dispatch(userLogin(user));
     }
   }

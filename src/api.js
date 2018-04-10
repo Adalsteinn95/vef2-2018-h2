@@ -21,39 +21,24 @@ async function get(endpoint) {
 /* todo aðrar aðgerðir */
 
 async function login(username, password) {
-  /* dummy account */
-  const user = {
-    name: "Admin",
-    password: "admin",
-    token: "awesometoken",
-  };
+  
+  const url = `${baseurl}/login`;
 
-  if (username === "error") {
-    return {
-      error: "Big error"
-    };
+  let response;
+  try {
+    response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({username,password}),
+    });
+    const json = await response.json();
+
+    return json;
+
+  } catch (error) {
+    console.error(error);
   }
-
-  if (username === "Admin" && password === "admin") {
-    return {
-      loggedIn: true,
-      user
-    };
-  }
-
-  if (username !== "Admin") {
-    return {
-      loggedIn: false,
-      error: "Wrong username"
-    };
-  }
-
-  return {
-    loggedIn: false,
-    error: "Wrong password"
-  };
 }
-
 async function register(username, password, name) {
   const url = `${baseurl}/register`;
 
@@ -73,7 +58,7 @@ async function register(username, password, name) {
     });
     const json = await response.json();
     return json;
-    
+
   } catch (error) {
     console.error(error);
   }
