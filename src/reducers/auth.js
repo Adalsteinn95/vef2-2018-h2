@@ -46,7 +46,6 @@ export default (state = initialState, action) => {
         isAuthenticated: action.isAuthenticated,
         user: action.user,
       };
-
     default:
       return state;
   }

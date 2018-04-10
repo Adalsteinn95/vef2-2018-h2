@@ -13,7 +13,14 @@ async function get(endpoint) {
     options.headers["Authorization"] = `Bearer ${token}`;
   }
 
-  /* todo framkvæma get */
+  const response = await fetch(url);
+
+  // kannski ekki hafa thetta svona
+  if (response.status >= 400) {
+    throw response.status;
+  }
+  const data = await response.json();
+  return data;
 }
 
 /* todo aðrar aðgerðir */
