@@ -63,8 +63,6 @@ export const loginUser = (username, password) => {
       return dispatch(errorLogin(e))
     }
 
-
-    console.info(login);
     
     if (login.error) {
       dispatch(errorLogin(login.error))
@@ -72,7 +70,7 @@ export const loginUser = (username, password) => {
 
     if (!login.error) {
       const { user } = login;
-      localStorage.setItem('user', JSON.stringify({token: login.token }));
+      localStorage.setItem('user', JSON.stringify({user, token: login.token }));
       dispatch(userLogin(user));
     }
   }

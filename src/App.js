@@ -18,21 +18,23 @@ import './App.css';
 class App extends Component {
 
   render() {
-    const authenticated = false; /* vita hvort notandi sé innskráður */
+
+    const {
+      isAuthenticated
+    } = this.props;
 
     return (
       <main className="main">
         <Helmet defaultTitle="Bókasafnið" titleTemplate="%s – Bókasafnið" />
-
         <Header />
 
         <div className="main__content">
           <Switch location={this.props.location}>
             <Route path="/" exact component={Home} />
             <Route path="/login" exact component={Login} />
-            <UserRoute path="/profile" authenticated={authenticated} component={Profile} />
+            <UserRoute path="/profile" authenticated={isAuthenticated} component={Profile} />
             {/* todo fleiri route */}
-            <Route path='/register' exact component={Register} />>
+            <Route path='/register' exact authenticated={isAuthenticated}  component={Register} />>
             <Route component={NotFound} />
           </Switch>
         </div>
