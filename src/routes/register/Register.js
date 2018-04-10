@@ -23,10 +23,8 @@ class Register extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    
     const { dispatch } = this.props;
     const { username ,password, name } = this.state;
-
     dispatch(registerUser(username, password, name));
   }
 
@@ -41,6 +39,7 @@ class Register extends Component {
 
     const {
       isFetching,
+      user,
       message,
     } = this.props;
 
@@ -50,11 +49,26 @@ class Register extends Component {
       );
     }
 
+    console.info(user);
+
+    if(user){
+      return(
+        <div>
+          <h1>Takk fyrir skráninguna {user.username}</h1>
+        </div>
+      );
+    }
+
     return (
       <div>
-        {message && (
-          <p>{message}</p>
-        )}
+        {message && message.map((item, index)=>{
+          return (
+            <div key={index} >
+              <p>{item.field}</p>
+              <p>{item.message}</p>
+            </div>
+          );
+        })}
         <p>Nýskráning</p>
         <form onSubmit={this.handleSubmit}>
           <div>
@@ -80,10 +94,10 @@ class Register extends Component {
 
 const mapStateToProps = (state) => {
   /* todo stilla redux ef það er notað */
-
   return {
-    isFetching: state.auth.isFetching,
-    message: state.auth.message,
+    isFetching: state.register.isFetching,
+    message: state.register.message,
+    user: state.register.user,
   }
 }
 

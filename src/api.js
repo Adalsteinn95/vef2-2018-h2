@@ -13,6 +13,8 @@ async function get(endpoint) {
     options.headers["Authorization"] = `Bearer ${token}`;
   }
 
+  
+
   /* todo framkvæma get */
 }
 
@@ -70,10 +72,8 @@ async function register(username, password, name) {
       body: JSON.stringify(user)
     });
     const json = await response.json();
-
-    if (json.errors) {
-      console.info(json.errors);
-    }
+    return json;
+    
   } catch (error) {
     console.error(error);
   }

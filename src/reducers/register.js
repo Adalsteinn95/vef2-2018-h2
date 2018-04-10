@@ -8,10 +8,11 @@ import {
 
 const initialState = {
   isFetching: false,
-  user,
+  message: [],
 };
 
 export default (state = initialState, action) => {
+
   switch (action.type) {
     case REGISTER_REQUEST:
       return {
@@ -23,7 +24,7 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         user: action.user,
-        message: action.message
+        message: action.message,
       };
     case REGISTER_FAILURE:
       return {

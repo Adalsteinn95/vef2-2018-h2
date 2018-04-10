@@ -7,9 +7,9 @@
 import api from '../api';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOING_SUCCESS';
-export const LOGIN_FAILURE = 'LOING_FAILURE';
-export const LOGIN_LOGOUT = 'LOING_LOGOUT';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGIN_LOGOUT = 'LOGIN_LOGOUT';
 
 function requestLogin() {
   return {

@@ -16,7 +16,6 @@ function requestRegister() {
     type: REGISTER_REQUEST,
     isFetching: true,
     isAuthenticated: false,
-    message: null,
   }
 }
 
@@ -26,7 +25,7 @@ function userRegister(user){
     isFetching: false,
     isAuthenticated: true,
     user,
-    message: null,
+    message: [],
   }
 }
 
@@ -50,18 +49,18 @@ export const registerUser = (username, password, name) => {
 
     try {
       login = await api.register(username, password, name);
-      
+
     } catch (e) {
       return dispatch(errorRegister(e))
     }
 
-    /*
-    if (true) {
-      console.info(user);
-      const { user } = login;
-      localStorage.setItem('user', JSON.stringify(user));
 
-      dispatch(userRegister(user));
-    }*/
+    if(login.errors) {
+      dispatch(errorRegister(login.errors));
+    }
+  
+    if(!login.errors) {
+      dispatch(userRegister(login));
+    }
   }
 }
