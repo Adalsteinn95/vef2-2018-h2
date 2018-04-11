@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import queryString from "query-string";
+import { Link } from 'react-router-dom'
 
 /* action */
 
@@ -56,9 +57,15 @@ class UserPage extends Component {
         <h2>Notendur</h2>
         <div key={this.state.page}>
           {users.items.map((item, index )=> {
+            const {
+              id,
+              username,
+            } = item;
+
+            const url = `users/${id.toString()}`;
             return (
               <div key={index}>
-                <p>{item.username}</p>
+                <Link to={url}>{username}</Link>
               </div>
             );
           })}
