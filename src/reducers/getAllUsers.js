@@ -19,21 +19,18 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         users: action.users,
-        message: action.message
       };
     case GETUSERS_SUCCESS:
       return {
         ...state,
         isFetching: action.isFetching,
-        users: action.users,
-        message: action.message
+        users: action.users
       };
     case GETONEUSER_SUCCESS:
       return {
         ...state,
         isFetching: action.isFetching,
         user: action.user,
-        message: action.message
       };
     case GETUSERS_ERROR:
       return {

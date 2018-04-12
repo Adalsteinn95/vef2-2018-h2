@@ -24,6 +24,9 @@ function getUsersSuccess(users) {
 }
 
 function usersError(message) {
+  if(message === 404) {
+    message ='no such user';
+  }
   return {
     type: GETUSERS_ERROR,
     isFetching: false,
@@ -65,8 +68,9 @@ export const fetchOneUser = (id) => {
     dispatch(requestUsers());
 
     const endpoint = 'users/' + id;
+    let data;
     try {
-      const data = await api.get(endpoint);
+      data = await api.get(endpoint);
       dispatch(getOneUserSuccess(data));
     } catch (e) {
       console.error("Error fetching data", e);

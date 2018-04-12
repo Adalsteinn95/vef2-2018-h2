@@ -35,13 +35,12 @@ class AboutUser extends Component {
   render() {
     const { user, isFetching, message } = this.props;
 
+    if (message) {
+        return <div>{message}</div>;
+    }
 
     if (isFetching || !user) {
       return <div>Sæki gögn...</div>;
-    }
-
-    if (message) {
-      return <div>Villa við að sækja gögn</div>;
     }
 
     return (
