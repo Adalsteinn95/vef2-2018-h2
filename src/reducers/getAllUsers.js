@@ -33,12 +33,6 @@ export default (state = initialState, action) => {
         isFetching: action.isFetching,
         user: action.user,
       };
-    case UPDATEUSER_SUCCESS:
-      return {
-        ...state,
-        isFetching: action.isFetching,
-        user: action.user,
-      }
     case GETUSERS_ERROR:
       return {
         ...state,

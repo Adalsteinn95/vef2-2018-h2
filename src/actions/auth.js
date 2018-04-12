@@ -10,6 +10,7 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGIN_LOGOUT = 'LOGIN_LOGOUT';
+export const UPDATEUSER_SUCCESS = "UPDATEUSER_SUCCESS";
 
 function requestLogin() {
   return {
@@ -48,6 +49,15 @@ function logout() {
   }
 }
 
+function updateOneUserSucces(user) {
+  return {
+    type: UPDATEUSER_SUCCESS,
+    isFetching: false,
+    user,
+    message: null,
+  };
+}
+
 /* todo fleiri action */
 
 /* todo async "thunk" fyrir tengingu við vefþjónustu */
@@ -63,14 +73,14 @@ export const loginUser = (username, password) => {
       return dispatch(errorLogin(e))
     }
 
-    
     if (login.error) {
       dispatch(errorLogin(login.error))
     }
 
     if (!login.error) {
       const { user } = login;
-      localStorage.setItem('user', JSON.stringify({user, token: login.token }));
+      localStorage.setItem('user', JSON.stringify({user}));
+      localStorage.setItem('token', JSON.stringify({token: login.token }));
       dispatch(userLogin(user));
     }
   }
@@ -82,3 +92,30 @@ export const logoutUser = () => {
     dispatch(logout());
   }
 }
+
+export const updateOneUser = (username) => {
+  return async dispatch => {
+    dispatch(requestLogin());
+
+    let data;
+    try {
+      data = await api.update(username);
+
+      const {
+        error,
+        errors
+      } = data;
+
+      if(error || errors) {
+        throw error || errors;
+      }
+
+      localStorage.setItem('user', JSON.stringify({user: data}));
+      dispatch(updateOneUserSucces(data));
+    } catch (error) {
+
+      dispatch(errorLogin(error));
+    }
+  };
+};
+

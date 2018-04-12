@@ -1,32 +1,37 @@
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
-  const user = JSON.parse(window.localStorage.getItem("user"));
+  const token = JSON.parse(window.localStorage.getItem("token"));
 
   const url = `${baseurl}/${endpoint}`;
+
 
   const options = {
     headers: {}
   };
 
-  if (user) {
-    options.headers["Authorization"] = `Bearer ${user.token}`;
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
   }
 
   /* todo framkvæma get */
 
-  const response = await fetch(url, options);
+  try {
+    const response = await fetch(url, options);
 
-  const data = await response.json();
-
-  return data;
+    const data = await response.json();
+  
+    return data;
+  } catch(error) {
+    console.info(error);
+  }
 }
 
 async function update(name) {
-  const user = JSON.parse(window.localStorage.getItem("user"));
+  const token = JSON.parse(window.localStorage.getItem("token"));
 
   const url = `${baseurl}/users/me`;
-  
+
   const options = {
     headers: {},
     method: "PATCH",
@@ -34,8 +39,8 @@ async function update(name) {
     body: JSON.stringify({name: name})
   };
 
-  if (user) {
-    options.headers["Authorization"] = `Bearer ${user.token}`;
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
   }
   /* todo framkvæma get */
 

@@ -11,21 +11,21 @@ import { logoutUser } from '../../actions/auth';
 
 class Header extends Component {
 
+
   onClick = (e) => {
     console.log('leita');
   }
 
   handleLogout = (e) => {
     e.preventDefault();
-
     const { dispatch } = this.props;
-    
     dispatch(logoutUser());
   }
 
   render() {
 
 
+    console.info(this.props);
     const {
       user,
       isAuthenticated,

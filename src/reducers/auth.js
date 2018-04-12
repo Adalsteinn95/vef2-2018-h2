@@ -3,19 +3,19 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_LOGOUT,
-} from '../actions/auth';
-
+  UPDATEUSER_SUCCESS,
+} from "../actions/auth";
 
 /* konnum hvort token se i localstorage annars null */
-const user = JSON.parse(localStorage.getItem('user' || 'null'));
+const user = JSON.parse(localStorage.getItem("user" || "null"));
 
+/* upphafstada */
 
-/* upphafstada */ 
 const initialState = {
   isFetching: false,
   isAuthenticated: user ? true : false,
-  user: user === null ? null: user.user,
-  token: user === null ? null : user.token,
+  user: user === null ? null : user.user,
+  token: user === null ? null : user.token
 };
 
 export default (state = initialState, action) => {
@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetching: action.isFetching,
-        isAuthenticated: action.isAuthenticated,
+        isAuthenticated: action.isAuthenticated
       };
     case LOGIN_SUCCESS:
       return {
@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
         user: action.user,
-        message: action.message,
+        message: action.message
       };
     case LOGIN_FAILURE:
       return {
@@ -46,7 +46,14 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
-        user: action.user,
+        user: action.user
+      };
+    case UPDATEUSER_SUCCESS:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        isAuthenticated: action.isAuthenticated,
+        user: action.user
       };
     default:
       return state;

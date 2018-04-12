@@ -30,7 +30,6 @@ class UserPage extends Component {
     dispatch(fetchUsers(`users?${offset}`));
     const newPageUrl = page > 0 ? `page=${page + 1}` : "";
 
-
     //history.push(newPageUrl);
   }
 
@@ -51,7 +50,7 @@ class UserPage extends Component {
     }
 
     if (message) {
-      return <div>Villa við að sækja gögn</div>;
+      return <div>{message}</div>;
     }
 
     if(!users ){

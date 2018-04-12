@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/button";
-import { updateOneUser } from "../../actions/getAllUsers";
+import { updateOneUser } from "../../actions/auth";
 
 class Profile extends Component {
 
   state = {
     username: '',
     password: '',
-
   }
   handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +22,7 @@ class Profile extends Component {
     const { dispatch } = this.props;
     const { username ,password } = this.state;
     dispatch(updateOneUser(username));
+
   }
 
 
@@ -36,8 +36,8 @@ class Profile extends Component {
       username,
       password,
     } = this.state;
-
     
+
     return (
       <div>
         <h1>Upplýsingar</h1>
@@ -64,6 +64,7 @@ const mapStateToProps = state => {
   return {
     isFetching: state.getAllUsers.isFetching,
     message: state.getAllUsers.message,
+    user: state.auth.user,
   };
 };
 

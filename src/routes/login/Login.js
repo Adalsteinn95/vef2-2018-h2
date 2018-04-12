@@ -50,8 +50,7 @@ class Login extends Component {
       isFetching,
       message,
     } = this.props;
-
-
+    
     if (isAuthenticated) {
       return (
         <button onClick={this.handleLogout}>Útskrá</button>
