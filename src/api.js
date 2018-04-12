@@ -10,7 +10,7 @@ async function get(endpoint) {
   };
 
 
-  if (user.token) {
+  if (user) {
     options.headers["Authorization"] = `Bearer ${user.token}`;
   }
  

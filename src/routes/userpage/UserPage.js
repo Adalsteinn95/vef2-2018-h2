@@ -14,12 +14,12 @@ class UserPage extends Component {
   urlpage = Number(queryString.parse(this.props.location.search).page - 1);
 
   state = {
-    page: this.urlpage > 0 ? this.urlpage : 0
+    page: this.urlpage > 0 ? this.urlpage : 0,
+    user: null,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { dispatch } = this.props;
-
     this.fetchUsers("users");
   }
 
@@ -30,8 +30,10 @@ class UserPage extends Component {
     dispatch(fetchUsers(`users?${offset}`));
     const newPageUrl = page > 0 ? `page=${page + 1}` : "";
 
+
     //history.push(newPageUrl);
   }
+
 
   handlePageClick = key => {
     this.setState((prevState, props) => {
@@ -50,6 +52,10 @@ class UserPage extends Component {
 
     if (message) {
       return <div>Villa við að sækja gögn</div>;
+    }
+
+    if(!users ){
+      return <div>Sæki gögn...</div>;
     }
 
     return (

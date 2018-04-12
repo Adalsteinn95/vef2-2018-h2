@@ -14,6 +14,7 @@ import NotFound from './routes/not-found';
 import Register from './routes/register';
 import Books from "./routes/books";
 import UserPage from './routes/userpage';
+import AboutUser from './routes/aboutUser';
 
 /* todo fleiri routes */
 
@@ -45,6 +46,7 @@ class App extends Component {
             {/* todo fleiri route */}
             <Route path='/register' exact authenticated={isAuthenticated}  component={Register} />
             <UserRoute path='/users' authenticated={isAuthenticated} exact component={UserPage} />
+            <UserRoute path='/users/:id' authenticated={isAuthenticated} exact component={AboutUser} />
             <Route component={NotFound} />
           </Switch>
         </div>
