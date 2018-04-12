@@ -8,6 +8,17 @@ import api from "../api";
 export const BOOK_REQUEST = "BOOK_REQUEST";
 export const BOOK_SUCCESS = "BOOK_SUCCESS";
 export const BOOK_ERROR = "BOOK_ERROR";
+export const BOOK_SEARCH = "BOOK_SEARCH";
+
+function searchBooks(search) {
+  return {
+    type: BOOK_SEARCH,
+    isFetching: true,
+    message: null,
+    searchUrl: search,
+    books: null
+  };
+}
 
 function requestBooks() {
   return {
@@ -18,11 +29,12 @@ function requestBooks() {
   };
 }
 
-function bookSuccess(books) {
+function bookSuccess(books, search) {
   return {
     type: BOOK_SUCCESS,
     isFetching: false,
     books,
+    searchUrl: search,
     message: null
   };
 }
@@ -40,14 +52,14 @@ function bookError(message) {
 
 /* todo async "thunk" fyrir tengingu við vefþjónustu */
 
-export const fetchBooks = endpoint => {
+export const fetchBooks = (endpoint, search) => {
   return async dispatch => {
     dispatch(requestBooks());
+    dispatch(searchBooks(search));
 
     try {
-      const data = await api.get(endpoint);
-      dispatch(bookSuccess(data));
-      // this.setState({ data, loading: false });
+      const data = await api.get(endpoint, `?${search}`);
+      dispatch(bookSuccess(data, search));
     } catch (e) {
       console.error("Error fetching data", e);
       dispatch(bookError(e));

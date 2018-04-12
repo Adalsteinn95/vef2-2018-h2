@@ -21,7 +21,19 @@ class Books extends Component {
     this.fetchBooks();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const currentSearchValue = this.props.books.searchUrl;
+
+    if (
+      this.state.search !== currentSearchValue &&
+      currentSearchValue != null
+    ) {
+      this.setState({ search: currentSearchValue }, this.fetchBooks);
+    }
+  }
+
   async fetchBooks(endpoint) {
+    this.setState({ searchValue: this.props.location.search });
     const { page, search } = this.state;
     const offset = `offset=${page * 10}`;
     const searchLink = `search=${this.state.search}`;
@@ -35,7 +47,6 @@ class Books extends Component {
   }
 
   handlePageClick = key => {
-    console.log(this.state.page);
     this.setState((prevState, props) => {
       return {
         page: Number(prevState.page) + (key === "prev" ? -1 : 1)
@@ -43,9 +54,9 @@ class Books extends Component {
     }, this.fetchBooks);
   };
   render() {
-    console.log(this.props);
     const { books: booksData, isFetching, message } = this.props;
     const { books } = booksData;
+    const { page, search } = this.state;
     if (isFetching) {
       return <div>Sæki gögn...</div>;
     }
@@ -56,8 +67,8 @@ class Books extends Component {
 
     return (
       <div>
-        <h2>Bækur</h2>
-        <div key={this.state.page}>
+        {search ? <h2>Bókaleit: {search}</h2> : <h2>Bækur</h2>}
+        <div key={page}>
           {books.items.map(book => {
             return (
               <div key={book.id}>
@@ -67,13 +78,13 @@ class Books extends Component {
             );
           })}
         </div>
-        {this.state.page > 0 && (
+        {page > 0 && (
           <Button
             onClick={() => this.handlePageClick("prev")}
             children={"Fyrri síða"}
           />
         )}
-        <span>Síða {this.state.page + 1}</span>
+        <span>Síða {page + 1}</span>
         {books.items.length === 10 && (
           <Button
             onClick={() => this.handlePageClick("next")}
@@ -90,7 +101,8 @@ const mapStateToProps = state => {
   return {
     isFetching: state.books.isFetching,
     message: state.books.message,
-    books: state.books
+    books: state.books,
+    searchUrl: state.books.searchUrl
   };
 };
 
