@@ -45,6 +45,7 @@ async function update(name) {
   /* todo framkvæma get */
 
   let response;
+
   try {
     response = await fetch(url, options);
 
@@ -53,6 +54,7 @@ async function update(name) {
     return data;
   } catch (e) {
     console.info(e);
+    throw e;
   }
 }
 

@@ -65,9 +65,7 @@ class Login extends Component {
 
     return (
       <div>
-        {message && (
-          <p>{message}</p>
-        )}
+
         <p>Innskráning</p>
         <form onSubmit={this.handleSubmit}>
           <div>

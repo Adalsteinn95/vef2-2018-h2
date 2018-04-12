@@ -11,6 +11,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGIN_LOGOUT = 'LOGIN_LOGOUT';
 export const UPDATEUSER_SUCCESS = "UPDATEUSER_SUCCESS";
+export const UPDATEUSER_FAILURE = "UPDATEUSER_FAILURE";
 
 function requestLogin() {
   return {
@@ -53,9 +54,20 @@ function updateOneUserSucces(user) {
   return {
     type: UPDATEUSER_SUCCESS,
     isFetching: false,
+    isAuthenticated: true,
     user,
     message: null,
   };
+}
+
+function updateUsererror(message,user) {
+  return {
+    type: UPDATEUSER_FAILURE,
+    isFetching: false,
+    isAuthenticated: true,
+    user,
+    message,
+  }
 }
 
 /* todo fleiri action */
@@ -95,7 +107,6 @@ export const logoutUser = () => {
 
 export const updateOneUser = (username) => {
   return async dispatch => {
-    dispatch(requestLogin());
 
     let data;
     try {
@@ -112,9 +123,11 @@ export const updateOneUser = (username) => {
 
       localStorage.setItem('user', JSON.stringify({user: data}));
       dispatch(updateOneUserSucces(data));
+      
     } catch (error) {
+      const user = JSON.parse(localStorage.getItem("user" || "null"));
 
-      dispatch(errorLogin(error));
+      dispatch(updateUsererror(error,user.user));
     }
   };
 };

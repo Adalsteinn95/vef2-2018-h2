@@ -4,6 +4,7 @@ import {
   LOGIN_FAILURE,
   LOGIN_LOGOUT,
   UPDATEUSER_SUCCESS,
+  UPDATEUSER_FAILURE,
 } from "../actions/auth";
 
 /* konnum hvort token se i localstorage annars null */
@@ -54,6 +55,14 @@ export default (state = initialState, action) => {
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
         user: action.user
+      };
+    case UPDATEUSER_FAILURE:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        isAuthenticated: action.isAuthenticated,
+        user: action.user,
+        message: action.message
       };
     default:
       return state;
