@@ -9,30 +9,51 @@ async function get(endpoint) {
     headers: {}
   };
 
+  if (user) {
+    options.headers["Authorization"] = `Bearer ${user.token}`;
+  }
+
+  /* todo framkvæma get */
+
+  const response = await fetch(url, options);
+
+  const data = await response.json();
+
+  return data;
+}
+
+async function update(name) {
+  const user = JSON.parse(window.localStorage.getItem("user"));
+
+  const url = `${baseurl}/users/me`;
+  
+  const options = {
+    headers: {},
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({name: name})
+  };
 
   if (user) {
     options.headers["Authorization"] = `Bearer ${user.token}`;
   }
- 
-
   /* todo framkvæma get */
 
-  const response = await fetch(url,options);
+  let response;
+  try {
+    response = await fetch(url, options);
 
-  // kannski ekki hafa thetta svona
-  if (response.status >= 400) {
-    throw response.status;
+    const data = await response.json();
+
+    return data;
+  } catch (e) {
+    console.info(e);
   }
-  const data = await response.json();
-
-  return data;
-
 }
 
 /* todo aðrar aðgerðir */
 
 async function login(username, password) {
-  
   const url = `${baseurl}/login`;
 
   let response;
@@ -40,12 +61,11 @@ async function login(username, password) {
     response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({username,password}),
+      body: JSON.stringify({ username, password })
     });
     const json = await response.json();
 
     return json;
-
   } catch (error) {
     console.error(error);
   }
@@ -59,7 +79,6 @@ async function register(username, password, name) {
     name
   };
 
-
   let response;
   try {
     response = await fetch(url, {
@@ -69,7 +88,6 @@ async function register(username, password, name) {
     });
     const json = await response.json();
     return json;
-
   } catch (error) {
     console.error(error);
   }
@@ -78,5 +96,6 @@ async function register(username, password, name) {
 export default {
   get,
   login,
-  register
+  register,
+  update
 };

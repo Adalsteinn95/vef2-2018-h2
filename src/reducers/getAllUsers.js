@@ -2,7 +2,8 @@ import {
   GETUSERS_REQUEST,
   GETUSERS_SUCCESS,
   GETUSERS_ERROR,
-  GETONEUSER_SUCCESS
+  GETONEUSER_SUCCESS,
+  UPDATEUSER_SUCCESS,
   /* todo fleiri actions */
 } from "../actions/getAllUsers";
 
@@ -32,6 +33,12 @@ export default (state = initialState, action) => {
         isFetching: action.isFetching,
         user: action.user,
       };
+    case UPDATEUSER_SUCCESS:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        user: action.user,
+      }
     case GETUSERS_ERROR:
       return {
         ...state,

@@ -4,6 +4,7 @@ export const GETUSERS_REQUEST = "GETUSERS_REQUEST";
 export const GETUSERS_SUCCESS = "GETUSERS_SUCCESS";
 export const GETUSERS_ERROR = "GETUSERS_ERROR";
 export const GETONEUSER_SUCCESS = "GETONEUSER_SUCCESS";
+export const UPDATEUSER_SUCCESS = "UPDATEUSER_SUCCESS";
 
 function requestUsers() {
   return {
@@ -24,9 +25,6 @@ function getUsersSuccess(users) {
 }
 
 function usersError(message) {
-  if(message === 404) {
-    message ='no such user';
-  }
   return {
     type: GETUSERS_ERROR,
     isFetching: false,
@@ -44,6 +42,14 @@ function getOneUserSuccess(user) {
   };
 }
 
+function updateOneUserSucces(user) {
+  return {
+    type: GETONEUSER_SUCCESS,
+    isFetching: false,
+    user,
+    message: null,
+  };
+}
 /* todo fleiri action */
 
 /* todo async "thunk" fyrir tengingu við vefþjónustu */
@@ -78,3 +84,30 @@ export const fetchOneUser = (id) => {
     }
   };
 };
+
+
+export const updateOneUser = (username) => {
+  return async dispatch => {
+    dispatch(requestUsers());
+
+    let data;
+    try {
+      data = await api.update(username);
+      console.info(data);
+      const {
+        error,
+        errors
+      } = data;
+
+      if(error || errors) {
+        throw error || errors;
+      }
+      
+      dispatch(updateOneUserSucces(data));
+    } catch (error) {
+
+      dispatch(usersError(error));
+    }
+  };
+};
+
