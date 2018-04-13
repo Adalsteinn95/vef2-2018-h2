@@ -1,7 +1,6 @@
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
-  console.log("base", baseurl);
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const url = `${baseurl}/${endpoint}`;
@@ -58,7 +57,6 @@ async function update(name, pass) {
     response = await fetch(url, options);
 
     const data = await response.json();
-    console.log("DATA", data);
 
     return data;
   } catch (e) {
@@ -67,57 +65,20 @@ async function update(name, pass) {
   }
 }
 
-/* todo aðrar aðgerðir */
-
-// async function login(username, password) {
-//   const url = `${baseurl}/login`;
-//
-//   let response;
-//   try {
-//     response = await fetch(url, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ username, password })
-//     });
-//     const json = await response.json();
-//
-//     return json;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-// async function register(username, password, name) {
-//   const url = `${baseurl}/register`;
-//
-//   const user = {
-//     username,
-//     password,
-//     name
-//   };
-//
-//   let response;
-//   try {
-//     response = await fetch(url, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(user)
-//     });
-//     const json = await response.json();
-//     return json;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
-async function post(data = {}, endpoint) {
+async function post(data, endpoint) {
+  const token = JSON.parse(window.localStorage.getItem("token"));
   const url = `${baseurl}${endpoint}`;
   let response;
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  };
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
+  }
   try {
-    response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
+    response = await fetch(url, options);
     const json = await response.json();
     return json;
   } catch (error) {

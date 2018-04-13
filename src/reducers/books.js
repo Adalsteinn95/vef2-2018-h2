@@ -2,7 +2,13 @@ import {
   BOOK_REQUEST,
   BOOK_SUCCESS,
   BOOK_ERROR,
-  BOOK_SEARCH
+  BOOK_SEARCH,
+  BOOK_ADDREAD,
+  BOOK_ADDREAD_ERROR,
+  BOOK_ADDREAD_SUCCESS,
+  BOOK_GETREAD,
+  BOOK_GETREAD_ERROR,
+  BOOK_GETREAD_SUCCESS
   /* todo fleiri actions */
 } from "../actions/books";
 
@@ -43,6 +49,43 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         books: action.books,
+        message: action.message
+      };
+    case BOOK_ADDREAD:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        message: action.message
+      };
+    case BOOK_ADDREAD_ERROR:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        message: action.message
+      };
+    case BOOK_ADDREAD_SUCCESS:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        message: action.message
+      };
+    case BOOK_GETREAD:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        message: action.message
+      };
+    case BOOK_GETREAD_SUCCESS:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        message: action.message,
+        reviews: action.reviews
+      };
+    case BOOK_GETREAD_ERROR:
+      return {
+        ...state,
+        isFetching: action.isFetching,
         message: action.message
       };
 
