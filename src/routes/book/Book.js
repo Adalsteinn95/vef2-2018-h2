@@ -15,6 +15,10 @@ class Book extends Component {
     );
   }
 
+  onClick = e => {
+    console.log(e);
+  };
+
   render() {
     const { book, isFetching, message } = this.props;
 
@@ -28,14 +32,18 @@ class Book extends Component {
     const { id } = this.props.match.params;
     return (
       <React.Fragment>
-        <h1>{book.title}</h1>
-        <p>Eftir {book.author}</p>
-        <p>ISBN13: {book.isbn13}</p>
-        <p>{book.categorytitle}</p>
-        <p>{book.description}</p>
-        <p>{book.pagecount} síður</p>
-        <p>Gefin út {book.published}</p>
-        <p>Tungumál {book.language}</p>
+        <div>
+          <h1>{book.title}</h1>
+          <p>Eftir {book.author}</p>
+          <p>ISBN13: {book.isbn13}</p>
+          <p>{book.categorytitle}</p>
+          <p>{book.description}</p>
+          <p>{book.pagecount} síður</p>
+          <p>Gefin út {book.published}</p>
+          <p>Tungumál {book.language}</p>
+        </div>
+        <Button onClick={this.onClick()} children={"Lesin bók"} />
+        <Button onClick={this.onClick()} children={"Til Baka"} />
       </React.Fragment>
     );
   }
