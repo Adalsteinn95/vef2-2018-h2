@@ -13,6 +13,8 @@ import NotFound from "./routes/not-found";
 import Register from "./routes/register";
 import Books from "./routes/books";
 import Book from "./routes/book";
+import UserPage from './routes/userpage';
+
 /* todo fleiri routes */
 
 import "./App.css";
@@ -38,12 +40,8 @@ class App extends Component {
               component={Profile}
             />
             {/* todo fleiri route */}
-            <Route
-              path="/register"
-              exact
-              authenticated={isAuthenticated}
-              component={Register}
-            />
+            <Route path='/register' exact authenticated={isAuthenticated}  component={Register} />
+            <Route path='/userpage' exact authenticated={isAuthenticated} component={UserPage} />
             <Route component={NotFound} />
           </Switch>
         </div>

@@ -1,28 +1,30 @@
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
-  const token = window.localStorage.getItem("token");
+  const user = JSON.parse(window.localStorage.getItem("user"));
 
-  const url = `${baseurl}${endpoint}`;
+  const url = `${baseurl}/${endpoint}`;
 
   const options = {
     headers: {}
   };
 
-  if (token) {
-    options.headers["Authorization"] = `Bearer ${token}`;
+
+  if (user.token) {
+    options.headers["Authorization"] = `Bearer ${user.token}`;
   }
  
 
   /* todo framkvæma get */
 
-  const response = await fetch(url);
+  const response = await fetch(url,options);
 
   // kannski ekki hafa thetta svona
   if (response.status >= 400) {
     throw response.status;
   }
   const data = await response.json();
+
   return data;
 
 }
