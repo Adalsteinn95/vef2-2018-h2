@@ -34,6 +34,7 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         books: action.books,
+        singleBook: action.singleBook,
         searchUrl: action.searchUrl,
         message: action.message
       };

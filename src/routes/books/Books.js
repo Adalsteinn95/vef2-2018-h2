@@ -18,12 +18,13 @@ class Books extends Component {
   };
 
   async componentDidMount() {
+    console.log("triggered");
     this.fetchBooks();
   }
 
   componentDidUpdate(prevProps, prevState) {
     const currentSearchValue = this.props.books.searchUrl;
-
+    console.log(this.props.location);
     if (
       this.state.search !== currentSearchValue &&
       currentSearchValue != null
@@ -56,8 +57,9 @@ class Books extends Component {
   render() {
     const { books: booksData, isFetching, message } = this.props;
     const { books } = booksData;
+    console.log("books", books);
     const { page, search } = this.state;
-    if (isFetching) {
+    if (isFetching || !books) {
       return <div>Sæki gögn...</div>;
     }
 
@@ -72,7 +74,9 @@ class Books extends Component {
           {books.items.map(book => {
             return (
               <div key={book.id}>
-                <h3>{book.title}</h3>
+                <Link to={`/books/${book.id}`}>
+                  <h3>{book.title}</h3>
+                </Link>
                 <p>Eftir {book.author}</p>
               </div>
             );

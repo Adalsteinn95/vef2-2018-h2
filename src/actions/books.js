@@ -29,11 +29,13 @@ function requestBooks() {
   };
 }
 
-function bookSuccess(books, search) {
+function bookSuccess(books, search, singleBook) {
+  console.log("SINGLE", singleBook);
   return {
     type: BOOK_SUCCESS,
     isFetching: false,
     books,
+    singleBook,
     searchUrl: search,
     message: null
   };
@@ -41,7 +43,7 @@ function bookSuccess(books, search) {
 
 function bookError(message) {
   return {
-    type: BOOK_SUCCESS,
+    type: BOOK_ERROR,
     isFetching: false,
     book: null,
     message
@@ -52,14 +54,17 @@ function bookError(message) {
 
 /* todo async "thunk" fyrir tengingu við vefþjónustu */
 
-export const fetchBooks = (endpoint, search) => {
+export const fetchBooks = (endpoint, search, shouldGetOneBook) => {
   return async dispatch => {
     dispatch(requestBooks());
     dispatch(searchBooks(search));
 
     try {
       const data = await api.get(endpoint, `?${search}`);
-      dispatch(bookSuccess(data, search));
+      console.log("LEIT", shouldGetOneBook);
+      shouldGetOneBook
+        ? dispatch(bookSuccess(null, search, data))
+        : dispatch(bookSuccess(data, search));
     } catch (e) {
       console.error("Error fetching data", e);
       dispatch(bookError(e));

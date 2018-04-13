@@ -14,15 +14,12 @@ class Search extends Component {
 
   handleChange = e => {
     const { value } = e.target;
-    this.setState({ searchvalue: value }, this.updateBooks);
-  };
-
-  updateBooks = () => {
-    this.props.dispatch(fetchBooks("books", this.state.searchvalue));
+    this.setState({ searchvalue: value });
   };
 
   handleSubmit = e => {
-    history.push(`books?search=${this.state.searchvalue}`);
+    this.props.dispatch(fetchBooks("books", this.state.searchvalue));
+    history.push(`/books?search=${this.state.searchvalue}`);
   };
 
   render() {
