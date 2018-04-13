@@ -1,56 +1,69 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/button";
-import { updateOneUser } from "../../actions/auth";
+import { updateOneUser, postImage } from "../../actions/auth";
 
 class Profile extends Component {
   state = {
     username: "",
     password: "",
-    image: "",
+    image: null
   };
   handleInputChange = e => {
     const { name, value, files } = e.target;
 
-
     if (name) {
       this.setState({ [name]: value });
     }
-
-    if(name === 'image') {
-      this.setState({ [name]: files});
-    }
-    
   };
 
   handleSubmit = e => {
     e.preventDefault();
 
     const { dispatch } = this.props;
-    const { username, password, image } = this.state;
+    const { username, password } = this.state;
 
     dispatch(updateOneUser({ username, password }));
+
+    this.setState({ username: "", password: "" });
+  };
+
+  handleImageSubmit = e => {
+    e.preventDefault();
+
+    const { dispatch } = this.props;
+    const { image } = this.state;
+
+    dispatch(postImage({ image }));
   };
 
   render() {
-    const { isFetching, message } = this.props;
+    const { isFetching, message = null } = this.props;
 
-    const { username, password } = this.state;
+    const { username, password, image } = this.state;
+
+    let a;
+    if (!Array.isArray(message) && message) {
+      a = <div>{message}</div>;
+    } else {
+      a =
+        message &&
+        message.map((item, index) => {
+          return (
+            <div key={index}>
+              <p>{item.field}</p>
+              <p>{item.message}</p>
+            </div>
+          );
+        });
+    }
 
     return (
       <div>
+        {a}
         <h1>Upplýsingar</h1>
-        {message &&
-          message.map((item, index) => {
-            return (
-              <div key={index}>
-                <p>{item.field}</p>
-                <p>{item.message}</p>
-              </div>
-            );
-          })}
 
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleImageSubmit}>
           <div>
             <label htmlFor="image">image: </label>
             <input
@@ -96,8 +109,8 @@ class Profile extends Component {
 }
 const mapStateToProps = state => {
   return {
-    isFetching: state.getAllUsers.isFetching,
-    message: state.getAllUsers.message,
+    isFetching: state.auth.isFetching,
+    message: state.auth.message,
     user: state.auth.user
   };
 };

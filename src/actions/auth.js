@@ -104,12 +104,11 @@ export const logoutUser = () => {
   };
 };
 
-export const updateOneUser = ({ username, password, image } = {}) => {
+export const updateOneUser = ({ username, password } = {}) => {
   return async dispatch => {
-    console.info(image);
     let data;
     try {
-      data = await api.update(username, password, image);
+      data = await api.update(username, password);
 
       const { error, errors } = data;
 
@@ -120,6 +119,30 @@ export const updateOneUser = ({ username, password, image } = {}) => {
       localStorage.setItem("user", JSON.stringify({ user: data }));
 
       dispatch(updateOneUserSucces(data));
+    } catch (error) {
+      const user = JSON.parse(localStorage.getItem("user" || "null"));
+
+      dispatch(updateUsererror(error, user.user));
+    }
+  };
+};
+
+export const postImage = image => {
+  return async dispatch => {
+
+    let data;
+    try {
+      data = await api.post(image,'/users/me/profile');
+
+      const { error, errors } = data;
+
+      if (error || errors) {
+        throw error || errors;
+      }
+
+      localStorage.setItem("user", JSON.stringify({ user: data }));
+      //dispatch(updateOneUserSucces(data));
+
     } catch (error) {
       const user = JSON.parse(localStorage.getItem("user" || "null"));
 

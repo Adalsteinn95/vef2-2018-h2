@@ -45,6 +45,7 @@ async function update(name, pass) {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name: name, password: pass })
+
   };
 
   if (token) {
@@ -66,22 +67,28 @@ async function update(name, pass) {
     throw e;
   }
 }
+
 async function post(data = {}, endpoint) {
+  const token = JSON.parse(window.localStorage.getItem("token"));
   const url = `${baseurl}${endpoint}`;
   let response;
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  };
+  console.log("token", token);
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
+  }
   try {
-    response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
+    response = await fetch(url, options);
     const json = await response.json();
     return json;
   } catch (error) {
     console.error(error);
   }
 }
-
 export default {
   get,
   post,
