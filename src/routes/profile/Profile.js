@@ -29,9 +29,7 @@ class Profile extends Component {
     const { dispatch } = this.props;
     const { username, password, image } = this.state;
 
-    console.info(image);
-
-    dispatch(updateOneUser({ username, password, image }));
+    dispatch(updateOneUser({ username, password }));
   };
 
   render() {

@@ -44,7 +44,7 @@ async function update(name,pass) {
     headers: {},
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({name: name, password: pass})
+    body: JSON.stringify({name: name, password: pass })
   };
 
   if (token) {

@@ -112,7 +112,7 @@ export const updateOneUser = ({username, password, image} = {}) => {
     console.info(image);
     let data;
     try {
-      data = await api.update(username, password);
+      data = await api.update(username, password, image);
 
       const {
         error,
