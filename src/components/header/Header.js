@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 
 import { Link } from "react-router-dom";
 
-import Button from "../button";
+import Button from '../button';
+import Search from '../search'
 
 import "./Header.css";
 
@@ -11,10 +12,8 @@ import { logoutUser } from "../../actions/auth";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
+
 class Header extends Component {
-  onClick = e => {
-    console.log("leita");
-  };
 
   handleLogout = e => {
     e.preventDefault();
@@ -31,8 +30,8 @@ class Header extends Component {
         <h1 className="header__heading">
           <Link to="/">Bókasafnið</Link>
         </h1>
-        {/* ætti samt frekar heima í sér component */}
-        <Button onClick={this.onClick}>Leita</Button>
+        <Search />
+
 
         {isAuthenticated && (
           <div>
