@@ -18,10 +18,23 @@ class Books extends Component {
   };
 
   async componentDidMount() {
+    console.log("triggered");
     this.fetchBooks();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const currentSearchValue = this.props.books.searchUrl;
+    console.log(this.props.location);
+    if (
+      this.state.search !== currentSearchValue &&
+      currentSearchValue != null
+    ) {
+      this.setState({ search: currentSearchValue }, this.fetchBooks);
+    }
+  }
+
   async fetchBooks(endpoint) {
+    this.setState({ searchValue: this.props.location.search });
     const { page, search } = this.state;
     const offset = `offset=${page * 10}`;
     const searchLink = `search=${this.state.search}`;
@@ -44,7 +57,9 @@ class Books extends Component {
   render() {
     const { books: booksData, isFetching, message } = this.props;
     const { books } = booksData;
-    if (isFetching) {
+    console.log("books", books);
+    const { page, search } = this.state;
+    if (isFetching || !books) {
       return <div>Sæki gögn...</div>;
     }
 
@@ -54,24 +69,26 @@ class Books extends Component {
 
     return (
       <div>
-        <h2>Bækur</h2>
-        <div key={this.state.page}>
+        {search ? <h2>Bókaleit: {search}</h2> : <h2>Bækur</h2>}
+        <div key={page}>
           {books.items.map(book => {
             return (
               <div key={book.id}>
-                <h3>{book.title}</h3>
+                <Link to={`/books/${book.id}`}>
+                  <h3>{book.title}</h3>
+                </Link>
                 <p>Eftir {book.author}</p>
               </div>
             );
           })}
         </div>
-        {this.state.page > 0 && (
+        {page > 0 && (
           <Button
             onClick={() => this.handlePageClick("prev")}
             children={"Fyrri síða"}
           />
         )}
-        <span>Síða {this.state.page + 1}</span>
+        <span>Síða {page + 1}</span>
         {books.items.length === 10 && (
           <Button
             onClick={() => this.handlePageClick("next")}
@@ -88,7 +105,8 @@ const mapStateToProps = state => {
   return {
     isFetching: state.books.isFetching,
     message: state.books.message,
-    books: state.books
+    books: state.books,
+    searchUrl: state.books.searchUrl
   };
 };
 
