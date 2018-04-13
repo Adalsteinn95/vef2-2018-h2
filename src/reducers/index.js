@@ -10,6 +10,5 @@ export default combineReducers({
   register,
   books,
   getAllUsers,
-
 })
 

@@ -14,6 +14,7 @@ import Register from "./routes/register";
 import Books from "./routes/books";
 import Book from "./routes/book";
 import UserPage from './routes/userpage';
+import AboutUser from './routes/aboutUser';
 
 /* todo fleiri routes */
 
@@ -40,8 +41,9 @@ class App extends Component {
               component={Profile}
             />
             {/* todo fleiri route */}
-            <Route path='/register' exact authenticated={isAuthenticated}  component={Register} />
-            <Route path='/userpage' exact authenticated={isAuthenticated} component={UserPage} />
+            <Route path='/register' exact component={Register} />
+            <UserRoute path='/users' authenticated={isAuthenticated} exact component={UserPage} />
+            <UserRoute path='/users/:id' authenticated={isAuthenticated} exact component={AboutUser} />
             <Route component={NotFound} />
           </Switch>
         </div>
@@ -52,7 +54,6 @@ class App extends Component {
 
 const mapStateToProps = state => {
   /* todo stilla redux ef það er notað */
-
   return {
     isAuthenticated: state.auth.isAuthenticated,
     username: state.auth.user ? state.auth.user.username : "",

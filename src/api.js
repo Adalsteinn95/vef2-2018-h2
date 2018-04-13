@@ -1,38 +1,74 @@
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
-  const user = JSON.parse(window.localStorage.getItem("user"));
+  const token = JSON.parse(window.localStorage.getItem("token"));
 
   const url = `${baseurl}/${endpoint}`;
+
 
   const options = {
     headers: {}
   };
 
-
-  if (user.token) {
-    options.headers["Authorization"] = `Bearer ${user.token}`;
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
   }
- 
 
   /* todo framkvæma get */
 
-  const response = await fetch(url,options);
+  try {
+    const response = await fetch(url, options);
 
-  // kannski ekki hafa thetta svona
-  if (response.status >= 400) {
-    throw response.status;
+    const data = await response.json();
+  
+    return data;
+  } catch(error) {
+    console.info(error);
   }
-  const data = await response.json();
+}
 
-  return data;
+async function update(name,pass) {
+  const token = JSON.parse(window.localStorage.getItem("token"));
 
+  const url = `${baseurl}/users/me`;
+
+  if(name === '') {
+    name = null;
+  }
+
+  if(pass === '') {
+    pass = null;
+  }
+
+  const options = {
+    headers: {},
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({name: name, password: pass})
+  };
+
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
+  }
+  /* todo framkvæma get */
+
+  let response;
+
+  try {
+    response = await fetch(url, options);
+
+    const data = await response.json();
+
+    return data;
+  } catch (e) {
+    console.info(e);
+    throw e;
+  }
 }
 
 /* todo aðrar aðgerðir */
 
 async function login(username, password) {
-  
   const url = `${baseurl}/login`;
 
   let response;
@@ -40,12 +76,11 @@ async function login(username, password) {
     response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({username,password}),
+      body: JSON.stringify({ username, password })
     });
     const json = await response.json();
 
     return json;
-
   } catch (error) {
     console.error(error);
   }
@@ -59,7 +94,6 @@ async function register(username, password, name) {
     name
   };
 
-
   let response;
   try {
     response = await fetch(url, {
@@ -69,7 +103,6 @@ async function register(username, password, name) {
     });
     const json = await response.json();
     return json;
-
   } catch (error) {
     console.error(error);
   }
@@ -78,5 +111,6 @@ async function register(username, password, name) {
 export default {
   get,
   login,
-  register
+  register,
+  update
 };

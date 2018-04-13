@@ -1,20 +1,16 @@
-/**
- * Ef redux er notað skal skilgreina allar actions fyrir auth hér og
- * síðan í annari skrá fyrir aðra virkni.
- * Í async "thunks" ætti þá að gera vefþjónustuköll
- */
 import api from "../api";
 
 export const GETUSERS_REQUEST = "GETUSERS_REQUEST";
 export const GETUSERS_SUCCESS = "GETUSERS_SUCCESS";
 export const GETUSERS_ERROR = "GETUSERS_ERROR";
+export const GETONEUSER_SUCCESS = "GETONEUSER_SUCCESS";
 
 function requestUsers() {
   return {
     type: GETUSERS_REQUEST,
     isFetching: true,
     message: null,
-    users: null
+    users: null,
   };
 }
 
@@ -23,7 +19,7 @@ function getUsersSuccess(users) {
     type: GETUSERS_SUCCESS,
     isFetching: false,
     users,
-    message: null
+    message: null,
   };
 }
 
@@ -32,10 +28,18 @@ function usersError(message) {
     type: GETUSERS_ERROR,
     isFetching: false,
     book: null,
-    message
+    message,
   };
 }
 
+function getOneUserSuccess(user) {
+  return {
+    type: GETONEUSER_SUCCESS,
+    isFetching: false,
+    user,
+    message: null,
+  };
+}
 /* todo fleiri action */
 
 /* todo async "thunk" fyrir tengingu við vefþjónustu */
@@ -46,10 +50,31 @@ export const fetchUsers = endpoint => {
 
     try {
       const data = await api.get(endpoint);
+      if(data.error) {
+        throw data.error;
+      }
       dispatch(getUsersSuccess(data));
+    } catch (e) {
+
+      dispatch(usersError(e));
+    }
+  };
+};
+
+
+export const fetchOneUser = (id) => {
+  return async dispatch => {
+    dispatch(requestUsers());
+
+    const endpoint = 'users/' + id;
+    let data;
+    try {
+      data = await api.get(endpoint);
+      dispatch(getOneUserSuccess(data));
     } catch (e) {
       console.error("Error fetching data", e);
       dispatch(usersError(e));
     }
   };
 };
+

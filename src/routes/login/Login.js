@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loginUser, logoutUser } from '../../actions/auth';
+import Button from "../../components/button";
 
 /* todo sækja actions frá ./actions */
 
@@ -49,8 +50,7 @@ class Login extends Component {
       isFetching,
       message,
     } = this.props;
-
-
+    
     if (isAuthenticated) {
       return (
         <button onClick={this.handleLogout}>Útskrá</button>
@@ -65,10 +65,10 @@ class Login extends Component {
 
     return (
       <div>
+        <p>Innskráning</p>
         {message && (
           <p>{message}</p>
         )}
-        <p>Innskráning</p>
         <form onSubmit={this.handleSubmit}>
           <div>
             <label htmlFor='username'>Username: </label>
@@ -78,7 +78,7 @@ class Login extends Component {
             <label htmlFor='password' >Password: </label>
             <input id='password' name='password' type='password' value={password}onChange={this.handleInputChange} />
           </div>
-          <button disabled={isFetching}>Innskrá</button>
+          <Button disabled={isFetching}>Innskrá</Button>
         </form>
       </div>
     );
@@ -92,7 +92,7 @@ const mapStateToProps = (state) => {
   return {
     isFetching: state.auth.isFetching,
     isAuthenticated: state.auth.isAuthenticated,
-    message: state.auth.message,
+    message: [state.auth.message],
   }
 }
 

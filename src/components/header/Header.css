@@ -1,3 +1,18 @@
 .header {
   background-color: #dcbe87;
 }
+
+img {
+  height: 3em;
+  border-radius: 50%;
+}
+
+.example-appear {
+  opacity: 0.00;
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+  transform: rotate(360deg);
+  transition: all 1.5s ease-in;
+}
