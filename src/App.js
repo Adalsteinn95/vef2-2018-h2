@@ -44,7 +44,7 @@ class App extends Component {
               component={Profile}
             />
             {/* todo fleiri route */}
-            <Route path='/register' exact authenticated={isAuthenticated}  component={Register} />
+            <Route path='/register' exact component={Register} />
             <UserRoute path='/users' authenticated={isAuthenticated} exact component={UserPage} />
             <UserRoute path='/users/:id' authenticated={isAuthenticated} exact component={AboutUser} />
             <Route component={NotFound} />
