@@ -23,9 +23,6 @@ class Header extends Component {
   }
 
   render() {
-
-
-    console.info(this.props);
     const {
       user,
       isAuthenticated,

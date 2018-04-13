@@ -65,8 +65,10 @@ class Login extends Component {
 
     return (
       <div>
-
         <p>Innskráning</p>
+        {message && (
+          <p>{message}</p>
+        )}
         <form onSubmit={this.handleSubmit}>
           <div>
             <label htmlFor='username'>Username: </label>
@@ -90,7 +92,7 @@ const mapStateToProps = (state) => {
   return {
     isFetching: state.auth.isFetching,
     isAuthenticated: state.auth.isAuthenticated,
-    message: state.auth.message,
+    message: [state.auth.message],
   }
 }
 

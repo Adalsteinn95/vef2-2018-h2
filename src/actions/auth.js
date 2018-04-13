@@ -105,12 +105,12 @@ export const logoutUser = () => {
   }
 }
 
-export const updateOneUser = (username) => {
+export const updateOneUser = ({username, password} = {}) => {
   return async dispatch => {
 
     let data;
     try {
-      data = await api.update(username);
+      data = await api.update(username, password);
 
       const {
         error,
@@ -121,7 +121,9 @@ export const updateOneUser = (username) => {
         throw error || errors;
       }
 
+
       localStorage.setItem('user', JSON.stringify({user: data}));
+
       dispatch(updateOneUserSucces(data));
       
     } catch (error) {

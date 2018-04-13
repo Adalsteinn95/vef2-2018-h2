@@ -27,16 +27,24 @@ async function get(endpoint) {
   }
 }
 
-async function update(name) {
+async function update(name,pass) {
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const url = `${baseurl}/users/me`;
+
+  if(name === '') {
+    name = null;
+  }
+
+  if(pass === '') {
+    pass = null;
+  }
 
   const options = {
     headers: {},
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({name: name})
+    body: JSON.stringify({name: name, password: pass})
   };
 
   if (token) {
