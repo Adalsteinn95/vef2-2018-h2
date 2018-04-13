@@ -105,9 +105,11 @@ export const logoutUser = () => {
   }
 }
 
-export const updateOneUser = ({username, password} = {}) => {
+export const updateOneUser = ({username, password, image} = {}) => {
   return async dispatch => {
 
+
+    console.info(image);
     let data;
     try {
       data = await api.update(username, password);
@@ -133,4 +135,3 @@ export const updateOneUser = ({username, password} = {}) => {
     }
   };
 };
-
