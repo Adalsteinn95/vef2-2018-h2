@@ -9,10 +9,10 @@ img {
 
 .example-appear {
   opacity: 0.01;
-  
 }
 
 .example-appear.example-appear-active {
   opacity: 1;
-  transition: all 1s ease-in;
+  transform: rotate(360deg);
+  transition: all 1.5s ease-in;
 }

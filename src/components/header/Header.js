@@ -39,14 +39,13 @@ class Header extends Component {
             <ReactCSSTransitionGroup
               transitionName="example"
               transitionAppear={true}
-              transitionAppearTimeout={1000}
+              transitionAppearTimeout={2000}
               transitionEnter={false}
               transitionLeave={false}
             >
               <div>
                 <Button onClick={this.handleLogout} children="Útskrá" />
                 <img src={user.image || "/profile.jpg"} alt="profile" />
-                <h1>Fading at Initial Mount</h1>
                 <h1>{user.username}</h1>
                 <h1>{user.name}</h1>
               </div>
