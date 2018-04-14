@@ -54,10 +54,26 @@ class Login extends Component {
       );
     }
 
+    let alert;
+    if (!Array.isArray(message) && message) {
+      alert = <div>{message}</div>;
+    } else {
+      alert =
+        message &&
+        message.map((item, index) => {
+          return (
+            <div key={index}>
+              <p>{item.field}</p>
+              <p>{item.message}</p>
+            </div>
+          );
+        });
+    }
+
     return (
       <div>
         <p>Innskráning</p>
-        {message && <p>{message}</p>}
+        {alert}
         <form onSubmit={this.handleSubmit}>
           <div>
             <label htmlFor="username">Username: </label>
@@ -93,7 +109,7 @@ const mapStateToProps = state => {
   return {
     isFetching: state.auth.isFetching,
     isAuthenticated: state.auth.isAuthenticated,
-    message: [state.auth.message]
+    message: state.auth.message
   };
 };
 

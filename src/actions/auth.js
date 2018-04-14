@@ -49,22 +49,21 @@ function logout() {
   };
 }
 
-function updateOneUserSucces(user) {
+function updateOneUserSucces(user,message) {
   return {
     type: UPDATEUSER_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
     user,
-    message: null
+    message,
   };
 }
 
-function updateUsererror(message, user) {
+function updateUsererror(message) {
   return {
     type: UPDATEUSER_FAILURE,
     isFetching: false,
-    isAuthenticated: true,
-    user,
+    isAuthenticated: false,
     message
   };
 }
@@ -121,9 +120,8 @@ export const updateOneUser = ({ username, password } = {}) => {
 
       dispatch(updateOneUserSucces(data));
     } catch (error) {
-      const user = JSON.parse(localStorage.getItem("user" || "null"));
-
-      dispatch(updateUsererror(error, user.user));
+      console.info(error);
+      dispatch(updateUsererror(error));
     }
   };
 };
@@ -142,13 +140,11 @@ export const postImage = image => {
       }
 
       localStorage.setItem("user", JSON.stringify({ user: data }));
-      //dispatch(updateOneUserSucces(data));
+      dispatch(updateOneUserSucces(data,error));
 
     } catch (error) {
-      const user = JSON.parse(localStorage.getItem("user" || "null"));
-
       console.info(error);
-      dispatch(updateUsererror(error, user.user));
+      dispatch(updateUsererror(error));
     }
   };
 };
