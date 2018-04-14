@@ -27,6 +27,8 @@ class App extends Component {
       isAuthenticated
     } = this.props;
 
+    
+
     return (
       <main className="main">
         <Helmet defaultTitle="Bókasafnið" titleTemplate="%s – Bókasafnið" />

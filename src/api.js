@@ -1,7 +1,8 @@
+import { loginUser } from "./actions/auth";
+
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
-  console.log("base", baseurl);
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const url = `${baseurl}/${endpoint}`;
@@ -21,9 +22,16 @@ async function get(endpoint) {
 
     const data = await response.json();
 
+
+    if(data.error === 'expired token') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      throw data.error;
+    }
     return data;
   } catch (error) {
-    console.info(error);
+
+    throw error;
   }
 }
 
@@ -58,9 +66,15 @@ async function update(name, pass) {
     response = await fetch(url, options);
 
     const data = await response.json();
-    console.log("DATA", data);
+
+    if(data.error === 'expired token') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      throw data.error;
+    }
 
     return data;
+
   } catch (e) {
     console.info(e);
     throw e;
@@ -84,6 +98,8 @@ async function post(data = {}, endpoint) {
   try {
     response = await fetch(url, options);
     const json = await response.json();
+
+    
     return json;
   } catch (error) {
     console.error(error);

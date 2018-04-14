@@ -81,6 +81,7 @@ export const loginUser = ({ username, password }, endpoint) => {
     try {
       login = await api.post({ username, password }, endpoint);
     } catch (e) {
+      console.info(e);
       return dispatch(errorLogin(e));
     }
 
