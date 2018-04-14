@@ -132,7 +132,7 @@ export const postImage = image => {
 
     let data;
     try {
-      data = await api.post(image,'/users/me/profile');
+      data = await api.postImage(image,'/users/me/profile');
 
       const { error, errors } = data;
 
@@ -146,6 +146,7 @@ export const postImage = image => {
     } catch (error) {
       const user = JSON.parse(localStorage.getItem("user" || "null"));
 
+      console.info(error);
       dispatch(updateUsererror(error, user.user));
     }
   };

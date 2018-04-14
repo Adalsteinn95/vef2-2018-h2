@@ -33,7 +33,6 @@ class Profile extends Component {
 
     const { dispatch } = this.props;
     const { image } = this.state;
-
     dispatch(postImage({ image }));
   };
 
@@ -42,11 +41,11 @@ class Profile extends Component {
 
     const { username, password, image } = this.state;
 
-    let a;
+    let alert;
     if (!Array.isArray(message) && message) {
-      a = <div>{message}</div>;
+      alert = <div>{message}</div>;
     } else {
-      a =
+      alert =
         message &&
         message.map((item, index) => {
           return (
@@ -60,10 +59,10 @@ class Profile extends Component {
 
     return (
       <div>
-        {a}
+        {alert}
         <h1>Upplýsingar</h1>
 
-        <form onSubmit={this.handleImageSubmit}>
+        <form method='post' encType="multipart/form-data" onSubmit={this.handleImageSubmit}>
           <div>
             <label htmlFor="image">image: </label>
             <input
