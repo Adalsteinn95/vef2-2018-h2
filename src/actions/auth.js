@@ -59,12 +59,13 @@ function updateOneUserSucces(user,message) {
   };
 }
 
-function updateUsererror(message) {
+function updateUsererror(message, user) {
   return {
     type: UPDATEUSER_FAILURE,
     isFetching: false,
-    isAuthenticated: false,
-    message
+    isAuthenticated: true,
+    message,
+    user
   };
 }
 
@@ -120,8 +121,8 @@ export const updateOneUser = ({ username, password } = {}) => {
 
       dispatch(updateOneUserSucces(data));
     } catch (error) {
-      console.info(error);
-      dispatch(updateUsererror(error));
+      const user = JSON.parse(localStorage.getItem('user'));
+      dispatch(updateUsererror(error,user.user));
     }
   };
 };
@@ -140,11 +141,12 @@ export const postImage = image => {
       }
 
       localStorage.setItem("user", JSON.stringify({ user: data }));
+
       dispatch(updateOneUserSucces(data,error));
 
     } catch (error) {
-      console.info(error);
-      dispatch(updateUsererror(error));
+      const user = JSON.parse(localStorage.getItem('user'));
+      dispatch(updateUsererror(error, user.user));
     }
   };
 };

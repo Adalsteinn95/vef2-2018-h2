@@ -7,7 +7,9 @@ class Profile extends Component {
   state = {
     username: "",
     password: "",
-    image: null
+    passwordAgain: "",
+    image: null,
+    match: true,
   };
   handleInputChange = e => {
     const { name, value, files } = e.target;
@@ -21,11 +23,14 @@ class Profile extends Component {
     e.preventDefault();
 
     const { dispatch } = this.props;
-    const { username, password } = this.state;
+    const { username, password, passwordAgain } = this.state;
 
-    dispatch(updateOneUser({ username, password }));
-
-    this.setState({ username: "", password: "" });
+    if(password !== passwordAgain){
+      this.setState({match: false});
+    } else {
+      this.setState({match: true});
+      dispatch(updateOneUser({ username, password }));
+    }
   };
 
   handleImageSubmit = e => {
@@ -39,7 +44,7 @@ class Profile extends Component {
   render() {
     const { isFetching, message = null } = this.props;
 
-    const { username, password, image } = this.state;
+    const { username, password, passwordAgain, image, match } = this.state;
 
     let alert;
     if (!Array.isArray(message) && message) {
@@ -55,6 +60,10 @@ class Profile extends Component {
             </div>
           );
         });
+    }
+
+    if(!match) {
+      alert = <div>Password don't match!</div>;
     }
 
     return (
@@ -95,8 +104,18 @@ class Profile extends Component {
             <input
               id="password"
               name="password"
-              type="text"
+              type="password"
               value={password}
+              onChange={this.handleInputChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="passwordAgain">Password Again: </label>
+            <input
+              id="passwordAgain"
+              name="passwordAgain"
+              type="password"
+              value={passwordAgain}
               onChange={this.handleInputChange}
             />
           </div>

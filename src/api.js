@@ -111,6 +111,8 @@ async function postImage(data = {}, endpoint) {
   const token = JSON.parse(window.localStorage.getItem("token"));
   const url = `${baseurl}${endpoint}`;
 
+
+  console.info(data);
   var form = new FormData();
   form.append("profile", "/home/adalsteinn95/Pictures/Screenshot from 2018-03-10 20-31-29.png");
 
