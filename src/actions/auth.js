@@ -69,6 +69,15 @@ function updateUsererror(message, user) {
   };
 }
 
+function requestUpdateUser() {
+  return {
+    type: LOGIN_REQUEST,
+    isFetching: true,
+    isAuthenticated: true,
+    message: null
+  };
+}
+
 /* todo fleiri action */
 
 /* todo async "thunk" fyrir tengingu við vefþjónustu */
@@ -107,6 +116,8 @@ export const logoutUser = () => {
 
 export const updateOneUser = ({ username, password } = {}) => {
   return async dispatch => {
+
+    dispatch(requestUpdateUser());
     let data;
     try {
       data = await api.update(username, password);
@@ -130,6 +141,7 @@ export const updateOneUser = ({ username, password } = {}) => {
 export const postImage = image => {
   return async dispatch => {
 
+    dispatch(requestUpdateUser());
     let data;
     try {
       data = await api.postImage(image,'/users/me/profile');
@@ -140,6 +152,7 @@ export const postImage = image => {
         throw error || errors;
       }
 
+      console.info(data);
       localStorage.setItem("user", JSON.stringify({ user: data }));
 
       dispatch(updateOneUserSucces(data,error));

@@ -17,6 +17,10 @@ class Profile extends Component {
     if (name) {
       this.setState({ [name]: value });
     }
+    
+    if (files) {
+      this.setState({ [name]: files[0]});
+    }
   };
 
   handleSubmit = e => {
@@ -64,6 +68,12 @@ class Profile extends Component {
 
     if(!match) {
       alert = <div>Password don't match!</div>;
+    }
+
+    if(isFetching) {
+      return (
+        <div>Loading...</div>
+      );
     }
 
     return (

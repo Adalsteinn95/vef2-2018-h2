@@ -106,27 +106,26 @@ async function post(data = {}, endpoint) {
   }
 }
 
-async function postImage(data = {}, endpoint) {
+async function postImage({ image } = {}, endpoint) {
 
   const token = JSON.parse(window.localStorage.getItem("token"));
   const url = `${baseurl}${endpoint}`;
 
-
-  console.info(data);
+  console.info(image);
   var form = new FormData();
-  form.append("profile", "/home/adalsteinn95/Pictures/Screenshot from 2018-03-10 20-31-29.png");
+  form.append("profile", image);
 
-  let response;
   const options = {
     method: "POST",
-    headers: {"Content-Type": "application/x-www-form-urlencoded"},
-    data: form,
-    mimeType: "multipart/form-data",
+    headers: {},
+    body: form,
   };
 
   if (token) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
+
+  let response;
   try {
     response = await fetch(url, options);
     const json = await response.json();
