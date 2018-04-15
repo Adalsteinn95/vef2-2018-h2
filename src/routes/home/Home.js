@@ -14,8 +14,8 @@ class Home extends Component {
           <h1>Velkominn á Bókasafnið!</h1>
           <p>
             Þú ert skráður notandi og getur því{" "}
-            <Link to="/books">skráð bækur</Link> og breytt{" "}
-            <Link to="/login">þeim sem til eru</Link>
+            <Link to="/books/new">skráð bækur</Link> og breytt{" "}
+            <Link to="/books">þeim sem til eru</Link>
           </p>
           <p>
             Einnig getur þú skoðað <Link to="/users">aðra notendur</Link>

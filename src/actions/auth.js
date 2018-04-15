@@ -59,11 +59,11 @@ function updateOneUserSucces(user,message) {
   };
 }
 
-function updateUsererror(message, user) {
+function updateUsererror(message, user, authentication) {
   return {
     type: UPDATEUSER_FAILURE,
     isFetching: false,
-    isAuthenticated: true,
+    isAuthenticated: authentication,
     message,
     user
   };
@@ -133,7 +133,12 @@ export const updateOneUser = ({ username, password } = {}) => {
       dispatch(updateOneUserSucces(data));
     } catch (error) {
       const user = JSON.parse(localStorage.getItem('user'));
-      dispatch(updateUsererror(error,user.user));
+
+      if(!user) {
+        dispatch(updateUsererror(error,null,false));
+      } else {
+        dispatch(updateUsererror(error,user.user));
+      }
     }
   };
 };
@@ -159,7 +164,11 @@ export const postImage = image => {
 
     } catch (error) {
       const user = JSON.parse(localStorage.getItem('user'));
-      dispatch(updateUsererror(error, user.user));
+      if(!user) {
+        dispatch(updateUsererror(error,null,false));
+      } else {
+        dispatch(updateUsererror(error,user.user));
+      }
     }
   };
 };
