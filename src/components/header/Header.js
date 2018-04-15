@@ -24,7 +24,6 @@ class Header extends Component {
   render() {
     const { user, isAuthenticated } = this.props;
 
-    console.info(user);
     return (
       <header className="header">
         <h1 className="header__heading">

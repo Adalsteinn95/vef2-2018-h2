@@ -50,12 +50,11 @@ export const fetchUsers = endpoint => {
 
     try {
       const data = await api.get(endpoint);
-      if(data.error) {
-        throw data.error;
-      }
+
+
       dispatch(getUsersSuccess(data));
     } catch (e) {
-
+      console.error("Error fetching data", e);
       dispatch(usersError(e));
     }
   };

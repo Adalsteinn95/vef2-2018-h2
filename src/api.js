@@ -1,7 +1,8 @@
+import { loginUser } from "./actions/auth";
+
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
-  console.log("base", baseurl);
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const url = `${baseurl}/${endpoint}`;
@@ -21,9 +22,16 @@ async function get(endpoint) {
 
     const data = await response.json();
 
+
+    if(data.error === 'expired token') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      throw data.error;
+    }
     return data;
   } catch (error) {
-    console.info(error);
+
+    throw error;
   }
 }
 
@@ -58,32 +66,94 @@ async function update(name, pass) {
     response = await fetch(url, options);
 
     const data = await response.json();
-    console.log("DATA", data);
+
+    if(data.error === 'expired token') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      throw data.error;
+    }
 
     return data;
+
   } catch (e) {
     console.info(e);
     throw e;
   }
 }
+
 async function post(data = {}, endpoint) {
+  const token = JSON.parse(window.localStorage.getItem("token"));
+
   const url = `${baseurl}${endpoint}`;
   let response;
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  };
+
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
+  }
   try {
-    response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
+    response = await fetch(url, options);
     const json = await response.json();
+
+    
     return json;
   } catch (error) {
     console.error(error);
   }
 }
 
+async function postImage({ image } = {}, endpoint) {
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
+  const url = `${baseurl}${endpoint}`;
+
+  console.info(image);
+  var form = new FormData();
+  form.append("profile", image);
+
+  const options = {
+    method: "POST",
+    headers: {},
+    body: form,
+  };
+
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
+  }
+
+  let response;
+  try {
+    response = await fetch(url, options);
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
+}
 export default {
   get,
   post,
-  update
+  update,
+  postImage
 };
+/*
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://localhost:3000/users/me/profile",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzMsImlhdCI6MTUyMzcxNjk0NSwiZXhwIjoxNTIzNzI2OTQ1fQ.EyG20jnhcngFwQLAxeV6bzAVEbDkXUxDsi3VxIw4u2A",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "7acf7734-3053-4262-9842-0992ce14f974"
+  },
+  "processData": false,
+  "contentType": false,
+  "mimeType": "multipart/form-data",
+  "data": form
+}*/
