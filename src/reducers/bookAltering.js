@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   isSending: false,
-  message: []
+  message: null
 };
 
 export default (state = initialState, action) => {
@@ -25,6 +25,7 @@ export default (state = initialState, action) => {
     case BOOK_UPDATED:
       return {
         ...state,
+        message: action.message,
         isSending: action.isSending
       };
     case BOOK_FAILURE:

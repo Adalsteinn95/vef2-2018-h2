@@ -11,17 +11,18 @@ function newBook() {
     isSending: true
   };
 }
-function alterBook() {
+function updateBook() {
   return {
     type: BOOK_ALTER,
     isSending: true
   };
 }
 
-function success() {
+function success(message) {
   return {
     type: BOOK_UPDATED,
-    isSending: false
+    isSending: false,
+    message
   };
 }
 
@@ -33,30 +34,29 @@ function errorAltering(message) {
   };
 }
 
-export const addBook = (data, endpoint) = {
+export const addBook = (data, endpoint) => {
   return async dispatch => {
     dispatch(newBook());
     try {
-        data = await api.post(data, endpoint);
-        dispatch(success())
-
+      data = await api.post(data, endpoint);
+      dispatch(success(data));
     } catch (e) {
       return dispatch(errorAltering(e));
     }
-  }
-}
+  };
+};
 
-export const alterBook = (data, endpoint) = {
+export const alterBook = (data, endpoint) => {
   return async dispatch => {
-    dispatch(newBook());
+    dispatch(updateBook());
     try {
-        data = await api.post(data, endpoint);
-        dispatch(success())
+      data = await api.update(data, endpoint);
+      dispatch(success());
     } catch (e) {
       return dispatch(errorAltering(e));
     }
-  }
-}
+  };
+};
 
 // export const registerUser = ({ username, password, name }, endpoint) => {
 //   return async dispatch => {
