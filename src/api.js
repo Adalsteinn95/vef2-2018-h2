@@ -72,6 +72,7 @@ async function update(name, pass) {
       localStorage.removeItem('user');
       throw data.error;
     }
+
     return data;
 
   } catch (e) {
@@ -111,7 +112,6 @@ async function postImage({ image } = {}, endpoint) {
   const token = JSON.parse(window.localStorage.getItem("token"));
   const url = `${baseurl}${endpoint}`;
 
-  console.info(image);
   var form = new FormData();
   form.append("profile", image);
 
@@ -134,9 +134,37 @@ async function postImage({ image } = {}, endpoint) {
     console.error(error);
   }
 }
+
+async function deleteRead(id, endpoint) {
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
+  const url = `${baseurl}${endpoint}/${id}`;
+
+
+  console.info(url);
+  const options = {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  };
+
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
+  }
+
+  let response;
+  try {
+    response = await fetch(url, options);
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export default {
   get,
   post,
   update,
-  postImage
+  postImage,
+  deleteRead
 };

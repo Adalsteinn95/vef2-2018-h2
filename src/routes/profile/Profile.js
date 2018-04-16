@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/button";
 import { updateOneUser, postImage } from "../../actions/auth";
+import { getRead, deleteRead } from "../../actions/books";
+import { Link } from "react-router-dom";
 
 class Profile extends Component {
   state = {
@@ -11,6 +13,15 @@ class Profile extends Component {
     image: null,
     match: true,
   };
+
+  componentDidMount() {
+    const {
+      dispatch,
+    } = this.props;
+
+    dispatch(getRead('users/me/read'));
+  }
+
   handleInputChange = e => {
     const { name, value, files } = e.target;
 
@@ -37,6 +48,18 @@ class Profile extends Component {
     }
   };
 
+  handleDelete = e => {
+    e.preventDefault();
+
+    const {
+      dispatch
+    } = this.props;
+    console.info(e.target.id);
+
+    dispatch(deleteRead(e.target.id, '/users/me/read'))
+
+  }
+
   handleImageSubmit = e => {
     e.preventDefault();
 
@@ -46,7 +69,7 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null } = this.props;
+    const { isFetching, message = null, reviews, isFetchingBooks } = this.props;
 
     const { username, password, passwordAgain, image, match } = this.state;
 
@@ -70,7 +93,7 @@ class Profile extends Component {
       alert = <div>Password don't match!</div>;
     }
 
-    if(isFetching) {
+    if(isFetching || isFetchingBooks) {
       return (
         <div>Loading...</div>
       );
@@ -131,15 +154,32 @@ class Profile extends Component {
           </div>
           <Button disabled={isFetching}>Uppfæra</Button>
         </form>
+        <div key={1}>
+          {reviews.items.map(book => {
+            console.info(book);
+            return (
+              <div key={book.id}>
+                <Link to={`/books/${book.id}`}>
+                  <h3>{book.title}</h3>
+                </Link>
+                <p>Einkunn: {book.rating}</p>
+                <button id={book.id} onClick={this.handleDelete}>Eyda</button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
 }
 const mapStateToProps = state => {
+  console.info(state);
   return {
     isFetching: state.auth.isFetching,
     message: state.auth.message,
-    user: state.auth.user
+    user: state.auth.user,
+    isFetchingBooks: state.books.isFetching,
+    reviews: state.books.reviews,
   };
 };
 

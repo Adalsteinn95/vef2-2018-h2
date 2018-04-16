@@ -157,7 +157,6 @@ export const postImage = image => {
         throw error || errors;
       }
 
-      console.info(data);
       localStorage.setItem("user", JSON.stringify({ user: data }));
 
       dispatch(updateOneUserSucces(data,error));

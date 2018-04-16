@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 
 import { Link } from "react-router-dom";
 
-import Button from '../button';
-import Search from '../search'
+import Button from "../button";
+import Search from "../search";
 
 import "./Header.css";
 
@@ -12,9 +12,7 @@ import { logoutUser } from "../../actions/auth";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
-
 class Header extends Component {
-
   handleLogout = e => {
     e.preventDefault();
     const { dispatch } = this.props;
@@ -22,7 +20,18 @@ class Header extends Component {
   };
 
   render() {
-    const { user, isAuthenticated } = this.props;
+    const { user, isAuthenticated, isFetching } = this.props;
+
+    if (isFetching) {
+      return (
+        <header className="header">
+          <h1 className="header__heading">
+            <Link to="/">Bókasafnið</Link>
+          </h1>
+          <div>Big Loading...</div>
+        </header>
+      );
+    }
 
     return (
       <header className="header">
@@ -30,7 +39,6 @@ class Header extends Component {
           <Link to="/">Bókasafnið</Link>
         </h1>
         <Search />
-
 
         {isAuthenticated && (
           <div>
@@ -60,7 +68,8 @@ class Header extends Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    isFetching: state.auth.isFetching
   };
 };
 
