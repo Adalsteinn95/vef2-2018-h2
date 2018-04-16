@@ -78,8 +78,8 @@ export const alterBook = (data, endpoint) => {
   return async dispatch => {
     dispatch(updateBook());
     try {
-      data = await api.update(data, endpoint);
-      dispatch(success());
+      data = await api.patch(data, endpoint);
+      dispatch(success(data));
     } catch (e) {
       return dispatch(errorAltering(e));
     }

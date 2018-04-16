@@ -36,7 +36,7 @@ class AddBook extends Component {
           pagecount: Number(this.state.pagecount),
           language: this.state.lang
         },
-        `/books/${this.props.match.params.id}`
+        "books"
       )
     );
   };
