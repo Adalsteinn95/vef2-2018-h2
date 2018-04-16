@@ -2,7 +2,9 @@ import {
   BOOK_ADD,
   BOOK_ALTER,
   BOOK_UPDATED,
-  BOOK_FAILURE
+  BOOK_FAILURE,
+  CATEGORIES_GET,
+  CATEGORIES_GOT
 } from "../actions/bookAltering";
 
 const initialState = {
@@ -27,6 +29,19 @@ export default (state = initialState, action) => {
         ...state,
         message: action.message,
         isSending: action.isSending
+      };
+    case CATEGORIES_GET:
+      return {
+        ...state,
+        message: action.message,
+        isFetchingCategories: action.isFetchingCategories
+      };
+    case CATEGORIES_GOT:
+      return {
+        ...state,
+        message: action.message,
+        isFetchingCategories: action.isFetchingCategories,
+        categories: action.categories
       };
     case BOOK_FAILURE:
       return {

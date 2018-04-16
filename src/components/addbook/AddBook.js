@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import BookForm from "../bookform";
-import { addBook } from "../../actions/bookAltering";
+import { addBook, getCategories } from "../../actions/bookAltering";
 
 class AddBook extends Component {
   state = {
@@ -17,6 +17,7 @@ class AddBook extends Component {
     pagecount: "",
     lang: ""
   };
+
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -43,12 +44,12 @@ class AddBook extends Component {
     );
   };
   render() {
-    const { isSending, message } = this.props;
+    const { isSending, message, categories, isFetchingCategories } = this.props;
     console.log(message);
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
-    console.log(message);
+    console.log("ping", message);
 
     return (
       <div>

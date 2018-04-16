@@ -1,8 +1,31 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 import Button from "../button";
+import { getAllCategories } from "../../actions/bookAltering";
 
 class BookForm extends Component {
+  componentDidMount() {
+    this.props.dispatch(getAllCategories("categories?limit=100"));
+  }
   render() {
+    const { isFetchingCategories, categories } = this.props;
+
+    let categoriesArr;
+    if (!isFetchingCategories && categories) {
+      categoriesArr = categories.items.map(category => {
+        console.log(category);
+        return (
+          <option
+            key={category.id}
+            value={category.title}
+            onChange={this.props.handleChange}
+          >
+            {category.title}
+          </option>
+        );
+      });
+    }
     return (
       <div>
         <form onSubmit={this.props.handleSubmit}>
@@ -34,23 +57,11 @@ class BookForm extends Component {
           </label>
           <label>
             Flokkur:
-            <select name="category" value={this.props.select.value}>
-              <option value="Fiction" onChange={this.props.handleChange}>
-                Fiction
-              </option>
-              <option value="Fiction" onChange={this.props.handleChange}>
-                Fiction
-              </option>
-              <option value="Fiction" onChange={this.props.handleChange}>
-                Fiction
-              </option>
-              <option value="Fiction" onChange={this.props.handleChange}>
-                Fiction
-              </option>
-              <option value="Fiction" onChange={this.props.handleChange}>
-                Fiction
-              </option>
-            </select>
+            {isFetchingCategories ? (
+              <p>Sæki flokka</p>
+            ) : (
+              <select name="category">{categoriesArr}</select>
+            )}
           </label>
           <label>
             ISBN10:
@@ -91,4 +102,11 @@ class BookForm extends Component {
   }
 }
 
-export default BookForm;
+const mapStateToProps = state => {
+  return {
+    categories: state.bookAltering.categories,
+    isFetchingCategories: state.bookAltering.isFetchingCategories
+  };
+};
+
+export default connect(mapStateToProps)(BookForm);

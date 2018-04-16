@@ -4,6 +4,8 @@ export const BOOK_ADD = "BOOK_ADD";
 export const BOOK_ALTER = "BOOK_ALTER";
 export const BOOK_UPDATED = "BOOK_UPDATED";
 export const BOOK_FAILURE = "BOOK_FAILURE";
+export const CATEGORIES_GET = "CATEGORIES_GET";
+export const CATEGORIES_GOT = "CATEGORIES_GOT";
 
 function newBook() {
   return {
@@ -15,6 +17,21 @@ function updateBook() {
   return {
     type: BOOK_ALTER,
     isSending: true
+  };
+}
+function getCategories() {
+  return {
+    type: CATEGORIES_GET,
+    isFetchingCategories: true
+  };
+}
+
+function gotCategories(categories) {
+  console.log(categories);
+  return {
+    type: CATEGORIES_GOT,
+    isFetchingCategories: false,
+    categories
   };
 }
 
@@ -33,6 +50,19 @@ function errorAltering(message) {
     message
   };
 }
+
+export const getAllCategories = endpoint => {
+  return async dispatch => {
+    dispatch(getCategories());
+    try {
+      let categories = await api.get(endpoint);
+      console.log(categories);
+      dispatch(gotCategories(categories));
+    } catch (e) {
+      return dispatch(errorAltering(e));
+    }
+  };
+};
 
 export const addBook = (data, endpoint) => {
   return async dispatch => {
@@ -57,25 +87,3 @@ export const alterBook = (data, endpoint) => {
     }
   };
 };
-
-// export const registerUser = ({ username, password, name }, endpoint) => {
-//   return async dispatch => {
-//     dispatch(requestRegister());
-//
-//     let login;
-//
-//     try {
-//       login = await api.post({ username, password, name }, endpoint);
-//     } catch (e) {
-//       return dispatch(errorRegister(e));
-//     }
-//
-//     if (login.errors) {
-//       dispatch(errorRegister(login.errors));
-//     }
-//
-//     if (!login.errors) {
-//       dispatch(userRegister(login));
-//     }
-//   };
-// };
