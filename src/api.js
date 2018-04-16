@@ -22,15 +22,13 @@ async function get(endpoint) {
 
     const data = await response.json();
 
-
-    if(data.error === 'expired token') {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+    if (data.error === "expired token") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       throw data.error;
     }
     return data;
   } catch (error) {
-
     throw error;
   }
 }
@@ -67,14 +65,13 @@ async function update(name, pass) {
 
     const data = await response.json();
 
-    if(data.error === 'expired token') {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+    if (data.error === "expired token") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       throw data.error;
     }
 
     return data;
-
   } catch (e) {
     console.info(e);
     throw e;
@@ -84,7 +81,6 @@ async function update(name, pass) {
 async function post(data, endpoint) {
   const token = JSON.parse(window.localStorage.getItem("token"));
 
-
   const url = `${baseurl}${endpoint}`;
   let response;
   const options = {
@@ -92,7 +88,7 @@ async function post(data, endpoint) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   };
-  
+
   if (token) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
@@ -100,7 +96,31 @@ async function post(data, endpoint) {
     response = await fetch(url, options);
     const json = await response.json();
 
-    
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
+}
+async function patch(data, endpoint) {
+  const token = JSON.parse(window.localStorage.getItem("token"));
+
+  const url = `${baseurl}${endpoint}`;
+  let response;
+  const options = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  };
+
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
+  }
+  try {
+    console.log(url, options);
+    response = await fetch(url, options);
+    console.log(response);
+    const json = await response.json();
+
     return json;
   } catch (error) {
     console.error(error);
@@ -108,7 +128,6 @@ async function post(data, endpoint) {
 }
 
 async function postImage({ image } = {}, endpoint) {
-
   const token = JSON.parse(window.localStorage.getItem("token"));
   const url = `${baseurl}${endpoint}`;
 
@@ -118,7 +137,7 @@ async function postImage({ image } = {}, endpoint) {
   const options = {
     method: "POST",
     headers: {},
-    body: form,
+    body: form
   };
 
   if (token) {
@@ -128,6 +147,7 @@ async function postImage({ image } = {}, endpoint) {
   let response;
   try {
     response = await fetch(url, options);
+
     const json = await response.json();
     return json;
   } catch (error) {
@@ -165,4 +185,6 @@ export default {
   update,
   postImage,
   deleteRead
+  patch,
+  postImage
 };
