@@ -184,7 +184,7 @@ export default {
   post,
   update,
   postImage,
-  deleteRead
+  deleteRead,
   patch,
   postImage
 };

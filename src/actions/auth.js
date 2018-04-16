@@ -94,6 +94,7 @@ export const loginUser = ({ username, password }, endpoint) => {
       return dispatch(errorLogin(e));
     }
 
+    console.info(login);
     if (login.error) {
       dispatch(errorLogin(login.error));
     }
