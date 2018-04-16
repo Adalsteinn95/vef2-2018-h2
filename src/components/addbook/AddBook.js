@@ -22,7 +22,6 @@ class AddBook extends Component {
     this.setState({ [name]: value });
   };
   handleSubmit = e => {
-    console.log(this.state);
     e.preventDefault();
     this.props.dispatch(
       addBook(
@@ -37,7 +36,7 @@ class AddBook extends Component {
           pagecount: Number(this.state.pagecount),
           language: this.state.lang
         },
-        "/books"
+        `/books/${this.props.match.params.id}`
       )
     );
   };
@@ -51,7 +50,6 @@ class AddBook extends Component {
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
-    console.log(formInfo);
 
     return (
       <div>

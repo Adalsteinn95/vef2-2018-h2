@@ -6,6 +6,7 @@ import { Route, NavLink, Link, Switch, withRouter } from "react-router-dom";
 import UserRoute from "./components/user-route";
 import Header from "./components/header";
 import AddBook from "./components/addbook";
+import UpdateBook from "./components/updatebook";
 
 import Home from "./routes/home";
 import Login from "./routes/login";
@@ -13,6 +14,7 @@ import Profile from "./routes/profile";
 import NotFound from "./routes/not-found";
 import Register from "./routes/register";
 import Books from "./routes/books";
+import Book from "./routes/book";
 import UserPage from "./routes/userpage";
 import AboutUser from "./routes/aboutUser";
 
@@ -35,6 +37,7 @@ class App extends Component {
             <Route path="/login" exact component={Login} />
 
             <Route path="/books" exact component={Books} />
+            <Route path="/books/:id(\d+)" exact component={Book} />
             <UserRoute
               path="/profile"
               authenticated={isAuthenticated}
@@ -47,6 +50,12 @@ class App extends Component {
               authenticated={isAuthenticated}
               exact
               component={AddBook}
+            />
+            <UserRoute
+              path="/books/:id/edit"
+              authenticated={isAuthenticated}
+              exact
+              component={UpdateBook}
             />
             <UserRoute
               path="/users"

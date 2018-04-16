@@ -41,7 +41,6 @@ class BookForm extends Component {
         </option>
       );
     }
-    console.log(categoriesArr);
     return (
       <div>
         <form onSubmit={this.props.handleSubmit}>
