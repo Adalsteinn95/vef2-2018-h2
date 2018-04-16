@@ -72,7 +72,6 @@ async function update(name, pass) {
       localStorage.removeItem('user');
       throw data.error;
     }
-
     return data;
 
   } catch (e) {
@@ -81,8 +80,9 @@ async function update(name, pass) {
   }
 }
 
-async function post(data = {}, endpoint) {
+async function post(data, endpoint) {
   const token = JSON.parse(window.localStorage.getItem("token"));
+
 
   const url = `${baseurl}${endpoint}`;
   let response;
@@ -91,7 +91,7 @@ async function post(data = {}, endpoint) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   };
-
+  
   if (token) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
@@ -140,20 +140,3 @@ export default {
   update,
   postImage
 };
-/*
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "http://localhost:3000/users/me/profile",
-  "method": "POST",
-  "headers": {
-    "Content-Type": "application/x-www-form-urlencoded",
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzMsImlhdCI6MTUyMzcxNjk0NSwiZXhwIjoxNTIzNzI2OTQ1fQ.EyG20jnhcngFwQLAxeV6bzAVEbDkXUxDsi3VxIw4u2A",
-    "Cache-Control": "no-cache",
-    "Postman-Token": "7acf7734-3053-4262-9842-0992ce14f974"
-  },
-  "processData": false,
-  "contentType": false,
-  "mimeType": "multipart/form-data",
-  "data": form
-}*/
