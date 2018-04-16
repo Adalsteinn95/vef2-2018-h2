@@ -34,19 +34,19 @@ function gotCategories(categories) {
   };
 }
 
-function success(formErrors) {
+function success(formInfo) {
   return {
     type: BOOK_UPDATED,
     isSending: false,
-    formErrors
+    formInfo
   };
 }
 
-function errorAltering(formErrors) {
+function errorAltering(formInfo) {
   return {
     type: BOOK_FAILURE,
     isSending: false,
-    formErrors
+    formInfo
   };
 }
 

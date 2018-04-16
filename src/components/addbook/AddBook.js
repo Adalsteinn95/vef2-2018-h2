@@ -6,7 +6,6 @@ import { addBook, getCategories } from "../../actions/bookAltering";
 
 class AddBook extends Component {
   state = {
-    select: {},
     title: "",
     author: "",
     desc: "",
@@ -23,20 +22,20 @@ class AddBook extends Component {
     this.setState({ [name]: value });
   };
   handleSubmit = e => {
+    console.log(this.state);
     e.preventDefault();
     this.props.dispatch(
       addBook(
         {
           title: this.state.title,
           author: this.state.author,
-          desc: this.state.desc,
+          description: this.state.desc,
           category: this.state.category,
           isbn10: this.state.isbn10,
           isbn13: this.state.isbn13,
-          date: this.state.date,
-          pagecount: this.state.pagecount,
-          lang: this.state.lang,
-          genre: this.state.select.value
+          published: this.state.date,
+          pagecount: Number(this.state.pagecount),
+          language: this.state.lang
         },
         "/books"
       )
@@ -45,19 +44,20 @@ class AddBook extends Component {
   render() {
     const {
       isSending,
-      formErrors,
+      formInfo = {},
       categories,
       isFetchingCategories
     } = this.props;
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
+    console.log(formInfo);
 
     return (
       <div>
         <h1>Skrá bók</h1>
-        {formErrors &&
-          formErrors.errors.map(error => {
+        {formInfo.hasOwnProperty("errors") &&
+          formInfo.errors.map(error => {
             return (
               <div key={error.field}>
                 <p>Field: {error.field}</p>
@@ -70,6 +70,9 @@ class AddBook extends Component {
           handleSubmit={this.handleSubmit}
           {...this.state}
         />
+        {formInfo.hasOwnProperty("title") && (
+          <h2>Bókin {formInfo.title} hefur verið skráð</h2>
+        )}
       </div>
     );
   }
@@ -78,7 +81,7 @@ class AddBook extends Component {
 const mapStateToProps = state => {
   return {
     isSending: state.bookAltering.isSending,
-    formErrors: state.bookAltering.formErrors
+    formInfo: state.bookAltering.formInfo
   };
 };
 

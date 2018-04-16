@@ -26,14 +26,14 @@ export default (state = initialState, action) => {
     case BOOK_UPDATED:
       return {
         ...state,
-        formErrors: action.formErrors,
+        formInfo: action.formInfo,
         isSending: action.isSending
       };
     case BOOK_FAILURE:
       return {
         ...state,
         isSending: action.isSending,
-        formErrors: action.formErrors
+        formInfo: action.formInfo
       };
     case CATEGORIES_GET:
       return {
