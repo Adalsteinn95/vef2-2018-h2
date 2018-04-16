@@ -66,8 +66,8 @@ class Books extends Component {
     }
 
     return (
-      <div>
-        {search ? <h2>Bókaleit: {search}</h2> : <h2>Bækur</h2>}
+      <div className='books--container'>
+        {search ? <h1>Bókaleit: {search}</h1> : <h1>Bækur</h1>}
         <div key={page}>
           {books.items.map(book => {
             return (
