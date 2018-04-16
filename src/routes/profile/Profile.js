@@ -2,15 +2,30 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/button";
 import { updateOneUser, postImage } from "../../actions/auth";
+import { getRead, deleteRead } from "../../actions/books";
+import { Link } from "react-router-dom";
+import queryString from "query-string";
 
 class Profile extends Component {
+  urlpage = Number(queryString.parse(this.props.location.search).page - 1);
+
   state = {
     username: "",
     password: "",
     passwordAgain: "",
     image: null,
     match: true,
+    page: this.urlpage > 0 ? this.urlpage : 0,
   };
+
+  componentDidMount() {
+    const {
+      dispatch,
+    } = this.props;
+
+    dispatch(getRead('users/me/read'));
+  }
+
   handleInputChange = e => {
     const { name, value, files } = e.target;
 
@@ -37,6 +52,17 @@ class Profile extends Component {
     }
   };
 
+  handleDelete = e => {
+    e.preventDefault();
+
+    const {
+      dispatch
+    } = this.props;
+
+    dispatch(deleteRead(e.target.id, '/users/me/read'))
+
+  }
+
   handleImageSubmit = e => {
     e.preventDefault();
 
@@ -46,9 +72,9 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null } = this.props;
+    const { isFetching, message = null, reviews, isFetchingBooks } = this.props;
 
-    const { username, password, passwordAgain, image, match } = this.state;
+    const { username, password, passwordAgain, image, match, page } = this.state;
 
     let alert;
     if (!Array.isArray(message) && message) {
@@ -70,7 +96,7 @@ class Profile extends Component {
       alert = <div>Password don't match!</div>;
     }
 
-    if(isFetching) {
+    if(isFetching || isFetchingBooks) {
       return (
         <div>Loading...</div>
       );
@@ -131,6 +157,32 @@ class Profile extends Component {
           </div>
           <Button disabled={isFetching}>Uppfæra</Button>
         </form>
+        <div key={1}>
+          {reviews.items.map(book => {
+            return (
+              <div key={book.id}>
+                <Link to={`/books/${book.id}`}>
+                  <h3>{book.title}</h3>
+                </Link>
+                <p>Einkunn: {book.rating}</p>
+                <button id={book.id} onClick={this.handleDelete}>Eyda</button>
+              </div>
+            );
+          })}
+          {page > 0 && (
+          <Button
+            onClick={() => this.handlePageClick("prev")}
+            children={"Fyrri síða"}
+          />
+        )}
+        <span>Síða {page + 1}</span>
+        {reviews.items.length === 10 && (
+          <Button
+            onClick={() => this.handlePageClick("next")}
+            children={"Næsta síða"}
+          />
+        )}
+        </div>
       </div>
     );
   }
@@ -139,7 +191,9 @@ const mapStateToProps = state => {
   return {
     isFetching: state.auth.isFetching,
     message: state.auth.message,
-    user: state.auth.user
+    user: state.auth.user,
+    isFetchingBooks: state.books.isFetching,
+    reviews: state.books.reviews,
   };
 };
 

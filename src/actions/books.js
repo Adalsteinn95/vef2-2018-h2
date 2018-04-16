@@ -120,14 +120,28 @@ export const addReadBook = (values, endpoint) => {
     }
   };
 };
+
 export const getRead = endpoint => {
   return async dispatch => {
     dispatch(requestAddBook());
     try {
       const data = await api.get(endpoint);
-      console.log(data);
       dispatch(getReadsSuccess(data));
-      console.log("actions", data);
+    } catch (e) {
+      dispatch(getReadsError(e));
+    }
+  };
+};
+
+export const deleteRead = (id, endpoint) => {
+  return async dispatch => {
+    dispatch(requestAddBook());
+
+    try {
+      await api.deleteRead(id,endpoint);
+
+      const data = await api.get('users/me/read');
+      dispatch(getReadsSuccess(data));
     } catch (e) {
       console.error("Error fetching data", e);
       dispatch(getReadsError(e));

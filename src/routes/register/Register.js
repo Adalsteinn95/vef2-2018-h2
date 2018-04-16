@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/register";
-
-/* todo sækja actions frá ./actions */
+import Button from "../../components/button";
+import { Link } from "react-router-dom";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import "./Register.css";
 
@@ -57,51 +58,64 @@ class Register extends Component {
     }
 
     return (
-      <div>
-        {message &&
-          message.map((item, index) => {
-            return (
-              <div key={index}>
-                <p>{item.field}</p>
-                <p>{item.message}</p>
-              </div>
-            );
-          })}
-        <p>Nýskráning</p>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor="username">Username: </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={username}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password: </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="name">Name: </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value={name}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <button disabled={isFetching}>Nýskrá</button>
-        </form>
-      </div>
+      <ReactCSSTransitionGroup
+        transitionName="registerAnimation"
+        transitionAppear={true}
+        transitionAppearTimeout={1500}
+        transitionEnter={false}
+        transitionLeave={false}
+      >
+        <div className="register--container">
+          {message &&
+            message.map((item, index) => {
+              return (
+                <div key={index}>
+                  <p>{item.field}</p>
+                  <p>{item.message}</p>
+                </div>
+              );
+            })}
+          <h1>Nýskráning</h1>
+          <form onSubmit={this.handleSubmit}>
+            <div className="register--input">
+              <label htmlFor="username">Username: </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                value={username}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="register--input">
+              <label htmlFor="password">Password: </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="register--input">
+              <label htmlFor="name">Name: </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={name}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div>
+              <Button disabled={isFetching}>Nýskrá</Button>
+            </div>
+            <div>
+              <Link to="/login">innskráðning</Link>
+            </div>
+          </form>
+        </div>
+      </ReactCSSTransitionGroup>
     );
   }
 }

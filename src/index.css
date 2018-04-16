@@ -19,6 +19,11 @@ body {
   font-family: 'Open sans', sans-serif;
 }
 
+.main__content {
+  width: 1200px;
+  margin: 20px auto;
+}
+
 h1,
 h2,
 h3 {
