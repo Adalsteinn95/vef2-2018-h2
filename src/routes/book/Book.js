@@ -54,6 +54,7 @@ class Book extends Component {
     }
 
     const { id } = this.props.match.params;
+    console.log(book);
     return (
       <React.Fragment>
         <div>
@@ -61,6 +62,7 @@ class Book extends Component {
           <p>Eftir {book.author}</p>
           <p>ISBN13: {book.isbn13}</p>
           <p>{book.categorytitle}</p>
+          <p>{book.description}</p>
           <p>{book.review}</p>
           <p>{book.pagecount} síður</p>
           <p>Gefin út {book.published}</p>
