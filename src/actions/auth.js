@@ -49,23 +49,32 @@ function logout() {
   };
 }
 
-function updateOneUserSucces(user) {
+function updateOneUserSucces(user,message) {
   return {
     type: UPDATEUSER_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
     user,
-    message: null
+    message,
   };
 }
 
-function updateUsererror(message, user) {
+function updateUsererror(message, user, authentication) {
   return {
     type: UPDATEUSER_FAILURE,
     isFetching: false,
+    isAuthenticated: authentication,
+    message,
+    user
+  };
+}
+
+function requestUpdateUser() {
+  return {
+    type: LOGIN_REQUEST,
+    isFetching: true,
     isAuthenticated: true,
-    user,
-    message
+    message: null
   };
 }
 
@@ -81,6 +90,7 @@ export const loginUser = ({ username, password }, endpoint) => {
     try {
       login = await api.post({ username, password }, endpoint);
     } catch (e) {
+      console.info(e);
       return dispatch(errorLogin(e));
     }
 
@@ -104,9 +114,10 @@ export const logoutUser = () => {
   };
 };
 
-export const updateOneUser = ({ username, password, image } = {}) => {
+export const updateOneUser = ({ username, password } = {}) => {
   return async dispatch => {
-    console.info(image);
+
+    dispatch(requestUpdateUser());
     let data;
     try {
       data = await api.update(username, password);
@@ -121,9 +132,43 @@ export const updateOneUser = ({ username, password, image } = {}) => {
 
       dispatch(updateOneUserSucces(data));
     } catch (error) {
-      const user = JSON.parse(localStorage.getItem("user" || "null"));
+      const user = JSON.parse(localStorage.getItem('user'));
 
-      dispatch(updateUsererror(error, user.user));
+      if(!user) {
+        dispatch(updateUsererror(error,null,false));
+      } else {
+        dispatch(updateUsererror(error,user.user));
+      }
+    }
+  };
+};
+
+export const postImage = image => {
+  return async dispatch => {
+
+    dispatch(requestUpdateUser());
+    let data;
+    try {
+      data = await api.postImage(image,'/users/me/profile');
+
+      const { error, errors } = data;
+
+      if (error || errors) {
+        throw error || errors;
+      }
+
+      console.info(data);
+      localStorage.setItem("user", JSON.stringify({ user: data }));
+
+      dispatch(updateOneUserSucces(data,error));
+
+    } catch (error) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if(!user) {
+        dispatch(updateUsererror(error,null,false));
+      } else {
+        dispatch(updateUsererror(error,user.user));
+      }
     }
   };
 };

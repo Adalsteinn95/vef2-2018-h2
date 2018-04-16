@@ -1,3 +1,5 @@
+import { loginUser } from "./actions/auth";
+
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
@@ -20,9 +22,16 @@ async function get(endpoint) {
 
     const data = await response.json();
 
+
+    if(data.error === 'expired token') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      throw data.error;
+    }
     return data;
   } catch (error) {
-    console.info(error);
+
+    throw error;
   }
 }
 
@@ -58,7 +67,13 @@ async function update(name, pass) {
 
     const data = await response.json();
 
+    if(data.error === 'expired token') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      throw data.error;
+    }
     return data;
+
   } catch (e) {
     console.info(e);
     throw e;
@@ -67,6 +82,8 @@ async function update(name, pass) {
 
 async function post(data, endpoint) {
   const token = JSON.parse(window.localStorage.getItem("token"));
+
+
   const url = `${baseurl}${endpoint}`;
   let response;
   const options = {
@@ -74,9 +91,41 @@ async function post(data, endpoint) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   };
+  
   if (token) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
+  try {
+    response = await fetch(url, options);
+    const json = await response.json();
+
+    
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function postImage({ image } = {}, endpoint) {
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
+  const url = `${baseurl}${endpoint}`;
+
+  console.info(image);
+  var form = new FormData();
+  form.append("profile", image);
+
+  const options = {
+    method: "POST",
+    headers: {},
+    body: form,
+  };
+
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
+  }
+
+  let response;
   try {
     response = await fetch(url, options);
     const json = await response.json();
@@ -85,9 +134,9 @@ async function post(data, endpoint) {
     console.error(error);
   }
 }
-
 export default {
   get,
   post,
-  update
+  update,
+  postImage
 };
