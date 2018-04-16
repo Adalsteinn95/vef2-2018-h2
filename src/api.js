@@ -141,10 +141,9 @@ async function deleteRead(id, endpoint) {
   const url = `${baseurl}${endpoint}/${id}`;
 
 
-  console.info(url);
   const options = {
     method: "DELETE",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json"},
   };
 
   if (token) {
@@ -154,8 +153,7 @@ async function deleteRead(id, endpoint) {
   let response;
   try {
     response = await fetch(url, options);
-    const json = await response.json();
-    return json;
+    return response;
   } catch (error) {
     console.error(error);
   }

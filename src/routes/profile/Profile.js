@@ -4,14 +4,18 @@ import Button from "../../components/button";
 import { updateOneUser, postImage } from "../../actions/auth";
 import { getRead, deleteRead } from "../../actions/books";
 import { Link } from "react-router-dom";
+import queryString from "query-string";
 
 class Profile extends Component {
+  urlpage = Number(queryString.parse(this.props.location.search).page - 1);
+
   state = {
     username: "",
     password: "",
     passwordAgain: "",
     image: null,
     match: true,
+    page: this.urlpage > 0 ? this.urlpage : 0,
   };
 
   componentDidMount() {
@@ -54,7 +58,6 @@ class Profile extends Component {
     const {
       dispatch
     } = this.props;
-    console.info(e.target.id);
 
     dispatch(deleteRead(e.target.id, '/users/me/read'))
 
@@ -71,7 +74,7 @@ class Profile extends Component {
   render() {
     const { isFetching, message = null, reviews, isFetchingBooks } = this.props;
 
-    const { username, password, passwordAgain, image, match } = this.state;
+    const { username, password, passwordAgain, image, match, page } = this.state;
 
     let alert;
     if (!Array.isArray(message) && message) {
@@ -156,7 +159,6 @@ class Profile extends Component {
         </form>
         <div key={1}>
           {reviews.items.map(book => {
-            console.info(book);
             return (
               <div key={book.id}>
                 <Link to={`/books/${book.id}`}>
@@ -167,13 +169,25 @@ class Profile extends Component {
               </div>
             );
           })}
+          {page > 0 && (
+          <Button
+            onClick={() => this.handlePageClick("prev")}
+            children={"Fyrri síða"}
+          />
+        )}
+        <span>Síða {page + 1}</span>
+        {reviews.items.length === 10 && (
+          <Button
+            onClick={() => this.handlePageClick("next")}
+            children={"Næsta síða"}
+          />
+        )}
         </div>
       </div>
     );
   }
 }
 const mapStateToProps = state => {
-  console.info(state);
   return {
     isFetching: state.auth.isFetching,
     message: state.auth.message,
