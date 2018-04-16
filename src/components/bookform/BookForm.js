@@ -10,11 +10,9 @@ class BookForm extends Component {
   }
   render() {
     const { isFetchingCategories, categories } = this.props;
-
     let categoriesArr;
     if (!isFetchingCategories && categories) {
       categoriesArr = categories.items.map(category => {
-        console.log(category);
         return (
           <option
             key={category.id}

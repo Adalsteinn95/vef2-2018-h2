@@ -8,8 +8,7 @@ import {
 } from "../actions/bookAltering";
 
 const initialState = {
-  isSending: false,
-  message: null
+  isSending: false
 };
 
 export default (state = initialState, action) => {
@@ -27,8 +26,14 @@ export default (state = initialState, action) => {
     case BOOK_UPDATED:
       return {
         ...state,
-        message: action.message,
+        formErrors: action.formErrors,
         isSending: action.isSending
+      };
+    case BOOK_FAILURE:
+      return {
+        ...state,
+        isSending: action.isSending,
+        formErrors: action.formErrors
       };
     case CATEGORIES_GET:
       return {
@@ -42,12 +47,6 @@ export default (state = initialState, action) => {
         message: action.message,
         isFetchingCategories: action.isFetchingCategories,
         categories: action.categories
-      };
-    case BOOK_FAILURE:
-      return {
-        ...state,
-        isSending: action.isSending,
-        message: action.message
       };
 
     default:

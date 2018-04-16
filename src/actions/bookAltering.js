@@ -27,7 +27,6 @@ function getCategories() {
 }
 
 function gotCategories(categories) {
-  console.log(categories);
   return {
     type: CATEGORIES_GOT,
     isFetchingCategories: false,
@@ -35,19 +34,19 @@ function gotCategories(categories) {
   };
 }
 
-function success(message) {
+function success(formErrors) {
   return {
     type: BOOK_UPDATED,
     isSending: false,
-    message
+    formErrors
   };
 }
 
-function errorAltering(message) {
+function errorAltering(formErrors) {
   return {
     type: BOOK_FAILURE,
     isSending: false,
-    message
+    formErrors
   };
 }
 
@@ -56,7 +55,6 @@ export const getAllCategories = endpoint => {
     dispatch(getCategories());
     try {
       let categories = await api.get(endpoint);
-      console.log(categories);
       dispatch(gotCategories(categories));
     } catch (e) {
       return dispatch(errorAltering(e));

@@ -24,7 +24,6 @@ class AddBook extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
     this.props.dispatch(
       addBook(
         {
@@ -44,18 +43,21 @@ class AddBook extends Component {
     );
   };
   render() {
-    const { isSending, message, categories, isFetchingCategories } = this.props;
-    console.log(message);
+    const {
+      isSending,
+      formErrors,
+      categories,
+      isFetchingCategories
+    } = this.props;
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
-    console.log("ping", message);
 
     return (
       <div>
         <h1>Skrá bók</h1>
-        {message &&
-          message.errors.map(error => {
+        {formErrors &&
+          formErrors.errors.map(error => {
             return (
               <div key={error.field}>
                 <p>Field: {error.field}</p>
@@ -76,7 +78,7 @@ class AddBook extends Component {
 const mapStateToProps = state => {
   return {
     isSending: state.bookAltering.isSending,
-    message: state.bookAltering.message
+    formErrors: state.bookAltering.formErrors
   };
 };
 
