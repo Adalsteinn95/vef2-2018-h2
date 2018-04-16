@@ -37,6 +37,7 @@ class Books extends Component {
     const offset = `offset=${page * 10}`;
     const searchLink = `search=${this.state.search}`;
     this.props.dispatch(fetchBooks(`books?${searchLink}&${offset}`));
+
     const newSearchUrl = search !== "" ? `search=${search}` : null;
     const newPageUrl = page > 0 ? `page=${page + 1}` : "";
     const newUrl = newSearchUrl
