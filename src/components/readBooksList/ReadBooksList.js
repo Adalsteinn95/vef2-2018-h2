@@ -8,9 +8,8 @@ import { getRead, deleteRead } from "../../actions/books";
 class readBooksList extends Component {
   urlpage = Number(queryString.parse(this.props.location).page - 1);
 
-
   state = {
-    page: this.urlpage > 0 ? this.urlpage : 0,
+    page: this.urlpage > 0 ? this.urlpage : 0
   };
 
   componentDidMount() {
@@ -35,17 +34,12 @@ class readBooksList extends Component {
   }
 
   render() {
-    const { isFetching, message = null, reviews } = this.props;
+    const { isFetching, message = null, reviews, deleteOption } = this.props;
 
+    const { page } = this.state;
 
-    const {
-      page
-    } = this.state;
-    
-    if(isFetching) {
-      return (
-        <div>Loading...</div>
-      );
+    if (isFetching) {
+      return <div>Loading...</div>;
     }
 
     return (
@@ -57,9 +51,11 @@ class readBooksList extends Component {
                 <h3>{book.title}</h3>
               </Link>
               <p>Einkunn: {book.rating}</p>
-              <Button className="danger" onClick={this.handleDelete}>
-                Eyda
-              </Button>
+              {deleteOption && (
+                <Button className="danger" onClick={this.handleDelete}>
+                  Eyda
+                </Button>
+              )}
             </form>
           );
         })}

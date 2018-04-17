@@ -27,8 +27,6 @@ import "./App.css";
 class App extends Component {
   render() {
     const { isAuthenticated } = this.props;
-    //this.props.dispatch(checkToken("users/me"));
-    console.log("AUTH", isAuthenticated);
 
     return (
       <main className="main">

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchOneUser } from "../../actions/getAllUsers";
 import { getRead } from '../../actions/books'
-
+import ReadBooks from '../../components/readBooksList';
 
 class AboutUser extends Component {
   state = {
@@ -37,8 +37,6 @@ class AboutUser extends Component {
   render() {
     const { user, isFetching, message } = this.props;
 
-    console.info(user);
-
     if (message) {
       return <div>{message}</div>;
     }
@@ -51,14 +49,13 @@ class AboutUser extends Component {
       <div>
         <img src={user.image || "/profile.jpg"} alt="profile" />
         <h1>{user.name}</h1>
+        <ReadBooks deleteOption={false} />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  /* todo stilla redux ef það er notað */
-  console.info(state);
   return {
     isFetching: state.getAllUsers.isFetching,
     message: state.getAllUsers.message,

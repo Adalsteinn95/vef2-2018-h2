@@ -153,7 +153,7 @@ class Profile extends Component {
           </div>
           <Button disabled={isFetching}>Uppfæra</Button>
         </form>
-        <ReadBooks />
+        <ReadBooks deleteOption={true} />
       </div>
     );
   }
