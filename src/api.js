@@ -93,11 +93,19 @@ async function post(data, endpoint) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
   try {
+    console.log(url, options);
     response = await fetch(url, options);
-    const json = await response.json();
+    const data = await response.json();
+    console.log(data);
+    if (data.error === "expired token") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      throw data.error;
+    }
 
-    return json;
+    return data;
   } catch (error) {
+    console.log("ping");
     console.error(error);
   }
 }
@@ -119,9 +127,14 @@ async function patch(data, endpoint) {
     console.log(url, options);
     response = await fetch(url, options);
     console.log(response);
-    const json = await response.json();
+    const data = await response.json();
+    if (data.error === "expired token") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      throw data.error;
+    }
 
-    return json;
+    return data;
   } catch (error) {
     console.error(error);
   }
@@ -148,22 +161,25 @@ async function postImage({ image } = {}, endpoint) {
   try {
     response = await fetch(url, options);
 
-    const json = await response.json();
-    return json;
+    const data = await response.json();
+    if (data.error === "expired token") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      throw data.error;
+    }
+    return data;
   } catch (error) {
     console.error(error);
   }
 }
 
 async function deleteRead(id, endpoint) {
-
   const token = JSON.parse(window.localStorage.getItem("token"));
   const url = `${baseurl}${endpoint}/${id}`;
 
-
   const options = {
     method: "DELETE",
-    headers: { "Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" }
   };
 
   if (token) {
@@ -173,6 +189,12 @@ async function deleteRead(id, endpoint) {
   let response;
   try {
     response = await fetch(url, options);
+    const data = await response.json();
+    if (data.error === "expired token") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      throw data.error;
+    }
     return response;
   } catch (error) {
     console.error(error);

@@ -8,13 +8,13 @@ class AddBook extends Component {
   state = {
     title: "",
     author: "",
-    desc: "",
+    description: "",
     category: "",
     isbn10: "",
     isbn13: "",
-    date: "",
+    published: "",
     pagecount: "",
-    lang: ""
+    language: ""
   };
 
   handleChange = e => {
@@ -28,15 +28,15 @@ class AddBook extends Component {
         {
           title: this.state.title,
           author: this.state.author,
-          description: this.state.desc,
+          description: this.state.description,
           category: this.state.category,
           isbn10: this.state.isbn10,
           isbn13: this.state.isbn13,
-          published: this.state.date,
+          published: this.state.published,
           pagecount: Number(this.state.pagecount),
-          language: this.state.lang
+          language: this.state.language
         },
-        "books"
+        "/books"
       )
     );
   };

@@ -3,18 +3,28 @@ import { connect } from "react-redux";
 
 import BookForm from "../bookform";
 import { alterBook, getCategories } from "../../actions/bookAltering";
+import { fetchBooks } from "../../actions/books";
 
 class UpdateBook extends Component {
+  async componentDidMount() {
+    await this.props.dispatch(
+      fetchBooks(`books/${this.props.match.params.id}`, null, true)
+    );
+
+    this.setState({
+      ...this.props.book
+    });
+  }
   state = {
     title: "",
     author: "",
-    desc: "",
+    description: "",
     category: "",
     isbn10: "",
     isbn13: "",
-    date: "",
+    published: "",
     pagecount: "",
-    lang: ""
+    language: ""
   };
 
   handleChange = e => {
@@ -23,28 +33,8 @@ class UpdateBook extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-
-    console.log(this.state);
-    const data = {
-      title: this.state.title,
-      author: this.state.author,
-      description: this.state.desc,
-      category: this.state.category,
-      isbn10: this.state.isbn10,
-      isbn13: this.state.isbn13,
-      published: this.state.date,
-      pagecount: Number(this.state.pagecount),
-      language: this.state.lang
-    };
-    // delete falsy values(that havent been changed)
-    Object.keys(data).forEach(function(i) {
-      if (!data[i]) {
-        delete data[i];
-      }
-    });
-
     this.props.dispatch(
-      alterBook(data, `/books/${this.props.match.params.id}`)
+      alterBook({ ...this.state }, `/books/${this.props.match.params.id}`)
     );
   };
   render() {
@@ -86,7 +76,10 @@ class UpdateBook extends Component {
 const mapStateToProps = state => {
   return {
     isSending: state.bookAltering.isSending,
-    formInfo: state.bookAltering.formInfo
+    formInfo: state.bookAltering.formInfo,
+    isFetching: state.books.isFetching,
+    message: state.books.message,
+    book: state.books.singleBook
   };
 };
 
