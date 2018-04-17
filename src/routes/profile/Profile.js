@@ -6,8 +6,9 @@ import { getRead, deleteRead } from "../../actions/books";
 import { Link } from "react-router-dom";
 import queryString from "query-string";
 
+import ReadBooks from '../../components/readBooksList';
+
 class Profile extends Component {
-  urlpage = Number(queryString.parse(this.props.location.search).page - 1);
 
   state = {
     username: "",
@@ -17,14 +18,7 @@ class Profile extends Component {
     match: true,
     page: this.urlpage > 0 ? this.urlpage : 0,
   };
-
-  componentDidMount() {
-    const {
-      dispatch,
-    } = this.props;
-
-    dispatch(getRead('users/me/read'));
-  }
+  
 
   handleInputChange = e => {
     const { name, value, files } = e.target;
@@ -59,7 +53,7 @@ class Profile extends Component {
       dispatch
     } = this.props;
 
-    dispatch(deleteRead(e.target.id, '/users/me/read'))
+    dispatch(deleteRead(e.target.parentNode.id, '/users/me/read'))
 
   }
 
@@ -72,7 +66,8 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null, reviews, isFetchingBooks } = this.props;
+
+    const { isFetching, message = null, reviews } = this.props;
 
     const { username, password, passwordAgain, image, match, page } = this.state;
 
@@ -96,11 +91,13 @@ class Profile extends Component {
       alert = <div>Password don't match!</div>;
     }
 
-    if(isFetching || isFetchingBooks) {
+    if(isFetching) {
       return (
         <div>Loading...</div>
       );
     }
+
+    console.info(this.urlpage);
 
     return (
       <div>
@@ -157,32 +154,7 @@ class Profile extends Component {
           </div>
           <Button disabled={isFetching}>Uppfæra</Button>
         </form>
-        <div key={1}>
-          {reviews.items.map(book => {
-            return (
-              <div key={book.id}>
-                <Link to={`/books/${book.id}`}>
-                  <h3>{book.title}</h3>
-                </Link>
-                <p>Einkunn: {book.rating}</p>
-                <button id={book.id} onClick={this.handleDelete}>Eyda</button>
-              </div>
-            );
-          })}
-          {page > 0 && (
-          <Button
-            onClick={() => this.handlePageClick("prev")}
-            children={"Fyrri síða"}
-          />
-        )}
-        <span>Síða {page + 1}</span>
-        {reviews.items.length === 10 && (
-          <Button
-            onClick={() => this.handlePageClick("next")}
-            children={"Næsta síða"}
-          />
-        )}
-        </div>
+        <ReadBooks />
       </div>
     );
   }
@@ -192,8 +164,6 @@ const mapStateToProps = state => {
     isFetching: state.auth.isFetching,
     message: state.auth.message,
     user: state.auth.user,
-    isFetchingBooks: state.books.isFetching,
-    reviews: state.books.reviews,
   };
 };
 

@@ -1,0 +1,13 @@
+.book--container {
+    display: flex;
+    flex-direction: column;
+}
+
+.book--container button {
+    max-width: 150px;
+    margin: 20px 0;
+}
+
+.book--container a {
+    margin-bottom: 50px;
+}

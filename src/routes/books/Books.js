@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import queryString from "query-string";
 import { fetchBooks } from "../../actions/books";
 import Button from "../../components/button";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 /* todo sækja actions frá ./actions */
 
@@ -66,6 +67,13 @@ class Books extends Component {
     }
 
     return (
+      <ReactCSSTransitionGroup
+        transitionName="registerAnimation"
+        transitionAppear={true}
+        transitionAppearTimeout={1500}
+        transitionEnter={false}
+        transitionLeave={false}
+      >
       <div className='books--container'>
         {search ? <h1>Bókaleit: {search}</h1> : <h1>Bækur</h1>}
         <div key={page}>
@@ -94,6 +102,7 @@ class Books extends Component {
           />
         )}
       </div>
+      </ReactCSSTransitionGroup>
     );
   }
 }

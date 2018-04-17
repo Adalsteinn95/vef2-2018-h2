@@ -64,13 +64,13 @@ class UserPage extends Component {
           {users.items.map((item, index )=> {
             const {
               id,
-              username,
+              name,
             } = item;
 
             const url = `users/${id.toString()}`;
             return (
               <div key={index}>
-                <Link to={url}>{username}</Link>
+                <Link to={url}>{name}</Link>
               </div>
             );
           })}

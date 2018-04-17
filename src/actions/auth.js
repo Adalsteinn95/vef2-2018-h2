@@ -89,22 +89,23 @@ export const loginUser = ({ username, password }, endpoint) => {
     let login;
     try {
       login = await api.post({ username, password }, endpoint);
+
+      if (login.error) {
+        dispatch(errorLogin(login.error));
+      }
+  
+      if (!login.error) {
+        const { user } = login;
+        localStorage.setItem("user", JSON.stringify({ user }));
+        localStorage.setItem("token", JSON.stringify({ token: login.token }));
+        dispatch(userLogin(user));
+      }
     } catch (e) {
       console.info(e);
       return dispatch(errorLogin(e));
     }
 
     console.info(login);
-    if (login.error) {
-      dispatch(errorLogin(login.error));
-    }
-
-    if (!login.error) {
-      const { user } = login;
-      localStorage.setItem("user", JSON.stringify({ user }));
-      localStorage.setItem("token", JSON.stringify({ token: login.token }));
-      dispatch(userLogin(user));
-    }
   };
 };
 
@@ -132,6 +133,7 @@ export const updateOneUser = ({ username, password } = {}) => {
       localStorage.setItem("user", JSON.stringify({ user: data }));
 
       dispatch(updateOneUserSucces(data));
+
     } catch (error) {
       const user = JSON.parse(localStorage.getItem('user'));
 

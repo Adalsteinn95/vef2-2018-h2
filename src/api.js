@@ -99,6 +99,8 @@ async function post(data, endpoint) {
     return json;
   } catch (error) {
     console.error(error);
+
+    throw error;
   }
 }
 async function patch(data, endpoint) {

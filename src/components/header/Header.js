@@ -33,6 +33,8 @@ class Header extends Component {
       );
     }
 
+    console.info(isAuthenticated);
+
     return (
       <header className="header">
         <ReactCSSTransitionGroup
@@ -47,7 +49,8 @@ class Header extends Component {
           </h1>
           <Search />
 
-          {isAuthenticated && (
+          {/* Mogulega gera seperated component */}
+          {isAuthenticated && user && (
             <React.Fragment>
               <div className="profile--header">
                 <img src={user.image || "/profile.jpg"} alt="profile" />
