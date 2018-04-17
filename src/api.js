@@ -133,7 +133,7 @@ async function patch(data, endpoint) {
       localStorage.removeItem("user");
       throw data.error;
     }
-
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

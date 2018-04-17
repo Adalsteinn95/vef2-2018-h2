@@ -26,15 +26,7 @@ class AddBook extends Component {
     this.props.dispatch(
       addBook(
         {
-          title: this.state.title,
-          author: this.state.author,
-          description: this.state.description,
-          category: this.state.category,
-          isbn10: this.state.isbn10,
-          isbn13: this.state.isbn13,
-          published: this.state.published,
-          pagecount: Number(this.state.pagecount),
-          language: this.state.language
+          ...this.state
         },
         "/books"
       )
