@@ -33,8 +33,12 @@ class UpdateBook extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
+    const bookData = Object.assign({}, this.state);
+    bookData.pageCount = bookData.pagecount;
+    delete bookData.pagecount;
+
     this.props.dispatch(
-      alterBook({ ...this.state }, `/books/${this.props.match.params.id}`)
+      alterBook({ ...bookData }, `/books/${this.props.match.params.id}`)
     );
   };
   render() {

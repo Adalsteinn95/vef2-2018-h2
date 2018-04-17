@@ -50,6 +50,7 @@ class Book extends Component {
     }
 
     if (message) {
+      return <div>Villa við að sækja gögn</div>;
     }
 
     if (book.hasOwnProperty("error")) {

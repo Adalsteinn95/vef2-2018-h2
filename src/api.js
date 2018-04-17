@@ -197,6 +197,18 @@ async function deleteRead(id, endpoint) {
   }
 }
 
+async function checkToken(endpoint) {
+  /* todo framkvæma get */
+
+  try {
+    const response = await fetch(endpoint, {});
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export default {
   get,
   post,

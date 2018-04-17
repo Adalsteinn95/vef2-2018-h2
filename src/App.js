@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import Helmet from "react-helmet";
 import { Route, NavLink, Link, Switch, withRouter } from "react-router-dom";
 
+import { checkToken } from "./actions/auth";
+
 import UserRoute from "./components/user-route";
 import Header from "./components/header";
 import AddBook from "./components/addbook";
@@ -25,6 +27,8 @@ import "./App.css";
 class App extends Component {
   render() {
     const { isAuthenticated } = this.props;
+    //this.props.dispatch(checkToken("users/me"));
+    console.log("AUTH", isAuthenticated);
 
     return (
       <main className="main">
