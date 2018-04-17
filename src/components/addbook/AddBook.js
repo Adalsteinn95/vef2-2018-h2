@@ -8,13 +8,13 @@ class AddBook extends Component {
   state = {
     title: "",
     author: "",
-    desc: "",
+    description: "",
     category: "",
     isbn10: "",
     isbn13: "",
-    date: "",
+    published: "",
     pagecount: "",
-    lang: ""
+    language: ""
   };
 
   handleChange = e => {
@@ -26,17 +26,9 @@ class AddBook extends Component {
     this.props.dispatch(
       addBook(
         {
-          title: this.state.title,
-          author: this.state.author,
-          description: this.state.desc,
-          category: this.state.category,
-          isbn10: this.state.isbn10,
-          isbn13: this.state.isbn13,
-          published: this.state.date,
-          pagecount: Number(this.state.pagecount),
-          language: this.state.lang
+          ...this.state
         },
-        "books"
+        "/books"
       )
     );
   };
