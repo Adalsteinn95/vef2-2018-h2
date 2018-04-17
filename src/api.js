@@ -105,6 +105,8 @@ async function post(data, endpoint) {
   } catch (error) {
     console.log("ping");
     console.error(error);
+
+    throw error;
   }
 }
 async function patch(data, endpoint) {

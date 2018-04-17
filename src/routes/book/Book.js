@@ -61,7 +61,7 @@ class Book extends Component {
 
     const { id } = this.props.match.params;
     return (
-      <React.Fragment>
+      <div className='book--container'>
         <div>
           <h1>{book.title}</h1>
           <p>Eftir {book.author}</p>
@@ -102,9 +102,11 @@ class Book extends Component {
             <Button children={"Vista"} />
           </form>
         )}
+        <Link to= {`/books/${book.id}/edit`}>Breyta bók</Link>
+
         <Button onClick={this.onClick} children={"Lesin bók"} />
         <Button onClick={this.onClick} children={"Til Baka"} />
-      </React.Fragment>
+      </div>
     );
   }
 }

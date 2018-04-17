@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loginUser, logoutUser } from "../../actions/auth";
 import Button from "../../components/button";
-
-/* todo sækja actions frá ./actions */
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { Link } from "react-router-dom";
 
 import "./Login.css";
 
@@ -43,7 +43,7 @@ class Login extends Component {
     const { isAuthenticated, isFetching, message } = this.props;
 
     if (isAuthenticated) {
-      return <button onClick={this.handleLogout}>Útskrá</button>;
+      return <Button onClick={this.handleLogout}>Útskrá</Button>;
     }
 
     if (isFetching) {
@@ -71,33 +71,46 @@ class Login extends Component {
     }
 
     return (
-      <div>
-        <p>Innskráning</p>
-        {alert}
-        <form onSubmit={this.handleSubmit}>
+      <ReactCSSTransitionGroup
+        transitionName="registerAnimation"
+        transitionAppear={true}
+        transitionAppearTimeout={1500}
+        transitionEnter={false}
+        transitionLeave={false}
+      >
+        <div className="register--container">
+          <h1>Innskráning</h1>
+          {alert}
+          <form onSubmit={this.handleSubmit}>
+            <div className="register--input">
+              <label htmlFor="username">Username: </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                value={username}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="register--input">
+              <label htmlFor="password">Password: </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="login--button">
+              <Button disabled={isFetching}>Innskrá</Button>
+            </div>
+          </form>
           <div>
-            <label htmlFor="username">Username: </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={username}
-              onChange={this.handleInputChange}
-            />
+            <Link to="/register">Nýskráning</Link>
           </div>
-          <div>
-            <label htmlFor="password">Password: </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <Button disabled={isFetching}>Innskrá</Button>
-        </form>
-      </div>
+        </div>
+      </ReactCSSTransitionGroup>
     );
   }
 }

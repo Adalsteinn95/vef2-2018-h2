@@ -57,6 +57,22 @@ class Register extends Component {
       );
     }
 
+    let alert;
+    if (!Array.isArray(message) && message) {
+      alert = <div>{message}</div>;
+    } else {
+      alert =
+        message &&
+        message.map((item, index) => {
+          return (
+            <div key={index}>
+              <p>{item.field}</p>
+              <p>{item.message}</p>
+            </div>
+          );
+        });
+    }
+
     return (
       <ReactCSSTransitionGroup
         transitionName="registerAnimation"
@@ -66,15 +82,7 @@ class Register extends Component {
         transitionLeave={false}
       >
         <div className="register--container">
-          {message &&
-            message.map((item, index) => {
-              return (
-                <div key={index}>
-                  <p>{item.field}</p>
-                  <p>{item.message}</p>
-                </div>
-              );
-            })}
+          {alert}
           <h1>Nýskráning</h1>
           <form onSubmit={this.handleSubmit}>
             <div className="register--input">

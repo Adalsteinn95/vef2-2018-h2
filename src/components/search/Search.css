@@ -1,0 +1,15 @@
+.search--container input{
+    padding: 5px 10px;
+    margin-right: 10px;
+}
+
+.search--container button {
+    padding: 5px 10px;
+}
+
+
+@media  screen and (max-width: 600px) {
+    .search--container {
+        visibility: hidden
+    }
+}
