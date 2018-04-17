@@ -93,10 +93,8 @@ async function post(data, endpoint) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
   try {
-    console.log(url, options);
     response = await fetch(url, options);
     const data = await response.json();
-    console.log(data);
     if (data.error === "expired token") {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
@@ -124,9 +122,7 @@ async function patch(data, endpoint) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
   try {
-    console.log(url, options);
     response = await fetch(url, options);
-    console.log(response);
     const data = await response.json();
     if (data.error === "expired token") {
       localStorage.removeItem("token");

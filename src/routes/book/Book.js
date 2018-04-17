@@ -50,11 +50,15 @@ class Book extends Component {
     }
 
     if (message) {
-      return <div>Villa við að senda gögn</div>;
+    }
+
+    if (book.hasOwnProperty("error")) {
+      if ((book.error = "Book not found")) {
+        return <div>Bók fannst ekki</div>;
+      }
     }
 
     const { id } = this.props.match.params;
-    console.log(book);
     return (
       <React.Fragment>
         <div>
