@@ -14,13 +14,13 @@ class BookForm extends Component {
       categories,
       title,
       author,
-      desc,
+      description,
       category,
       isbn10,
       isbn13,
-      date,
+      published,
       pagecount,
-      lang
+      language
     } = this.props;
     let categoriesArr;
     if (!isFetchingCategories && categories) {
@@ -65,8 +65,8 @@ class BookForm extends Component {
           <label>
             Lýsing:
             <textarea
-              value={desc}
-              name="desc"
+              value={description}
+              name="description"
               rows="8"
               cols="10"
               type="text"
@@ -108,8 +108,8 @@ class BookForm extends Component {
           <label>
             Útgefin:
             <input
-              value={date}
-              name="date"
+              value={published}
+              name="published"
               type="text"
               onChange={this.props.handleChange}
             />
@@ -126,8 +126,8 @@ class BookForm extends Component {
           <label>
             Tungumál:
             <input
-              value={lang}
-              name="lang"
+              value={language}
+              name="language"
               type="text"
               onChange={this.props.handleChange}
             />
