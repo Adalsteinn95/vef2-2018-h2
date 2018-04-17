@@ -16,7 +16,6 @@ class Profile extends Component {
     passwordAgain: "",
     image: null,
     match: true,
-    page: this.urlpage > 0 ? this.urlpage : 0,
   };
   
 
