@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Helmet from "react-helmet";
 import { Route, NavLink, Link, Switch, withRouter } from "react-router-dom";
 
-import { checkToken } from "./actions/auth";
+import { checkToken, logoutUser } from "./actions/auth";
 
 import UserRoute from "./components/user-route";
 import Header from "./components/header";
@@ -26,8 +26,13 @@ import "./App.css";
 
 class App extends Component {
   render() {
-    const { isAuthenticated } = this.props;
-    //this.props.dispatch(checkToken("users/me"));
+    const { isAuthenticated, isFetching, user } = this.props;
+    console.log("USER", user);
+    console.log("ISFETCHING", isFetching);
+    if (user) {
+      console.log("should log out");
+      this.props.dispatch(checkToken("/users/me"));
+    }
     console.log("AUTH", isAuthenticated);
 
     return (
@@ -85,6 +90,7 @@ const mapStateToProps = state => {
   /* todo stilla redux ef það er notað */
   return {
     isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
     username: state.auth.user ? state.auth.user.username : "",
     name: state.auth.user ? state.auth.user.name : "",
     isFetching: state.books.isFetching,
