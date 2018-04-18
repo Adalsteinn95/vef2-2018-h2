@@ -115,9 +115,7 @@ export const checkToken = endpoint => {
     let token;
     try {
       token = await api.checkToken(endpoint);
-      console.log("token", token);
       if (token.status === 401) {
-        console.log("it works");
         dispatch(logout());
       } else {
       }
