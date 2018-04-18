@@ -27,13 +27,9 @@ import "./App.css";
 class App extends Component {
   render() {
     const { isAuthenticated, isFetching, user } = this.props;
-    console.log("USER", user);
-    console.log("ISFETCHING", isFetching);
     if (user) {
-      console.log("should log out");
       this.props.dispatch(checkToken("/users/me"));
     }
-    console.log("AUTH", isAuthenticated);
 
     return (
       <main className="main">

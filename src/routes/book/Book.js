@@ -46,7 +46,7 @@ class Book extends Component {
   };
 
   render() {
-    const { book, isFetching, message = null } = this.props;
+    const { book, isFetching, message = null, user } = this.props;
 
     if (isFetching || !book) {
       return <div>Sæki gögn...</div>;
@@ -106,8 +106,7 @@ class Book extends Component {
           </form>
         )}
         <Link to={`/books/${book.id}/edit`}>Breyta bók</Link>
-
-        <Button onClick={this.onClickRead} children={"Lesin bók"} />
+        {user && <Button onClick={this.onClickRead} children={"Lesin bók"} />}
         <Button onClick={this.onClickBack} children={"Til Baka"} />
       </div>
     );
