@@ -9,6 +9,7 @@ export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGIN_LOGOUT = "LOGIN_LOGOUT";
+export const BIG_ERROR = "BIG_ERROR";
 export const UPDATEUSER_SUCCESS = "UPDATEUSER_SUCCESS";
 export const UPDATEUSER_FAILURE = "UPDATEUSER_FAILURE";
 
@@ -32,7 +33,6 @@ function userLogin(user) {
 }
 
 function errorLogin(message) {
-  console.log("MESSAGE", message);
   return {
     type: LOGIN_FAILURE,
     isFetching: false,
@@ -41,8 +41,14 @@ function errorLogin(message) {
   };
 }
 
+function bigError(error) {
+  return {
+    type: BIG_ERROR,
+    superError: error
+  };
+}
+
 function logout() {
-  console.log("i logged you out");
   return {
     type: LOGIN_LOGOUT,
     isFetching: false,
@@ -117,7 +123,6 @@ export const checkToken = endpoint => {
     try {
       token = await api.checkToken(endpoint);
       if (token.status === 401) {
-        console.log("WTFFFFFFFFFFFFFFFFFFFFFF");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         dispatch(logout());
@@ -127,7 +132,7 @@ export const checkToken = endpoint => {
       // þetta er að valda böggum
       // localStorage.removeItem("token");
       // localStorage.removeItem("user");
-      return dispatch(errorLogin("úps eitthvað óvænt kom upp!"));
+      dispatch(bigError("Næ ekki sambandi við vefþjónustu"));
     }
   };
 };

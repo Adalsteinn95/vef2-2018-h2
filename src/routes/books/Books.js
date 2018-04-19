@@ -59,7 +59,7 @@ class Books extends Component {
     const { books: booksData, isFetching, message } = this.props;
     const { books } = booksData;
     const { page, search } = this.state;
-    if (message) {
+    if (message && !isFetching) {
       return <div>Villa við að sækja gögn</div>;
     }
     if (isFetching || !books) {

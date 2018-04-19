@@ -16,21 +16,11 @@ class Search extends Component {
     this.setState({ searchvalue: value });
   };
 
-  handleSubmit = e => {
-    this.props.dispatch(fetchBooks("books", this.state.searchvalue));
-    //history.push(`/books?search=${this.state.searchvalue}`);
-  };
-
   render() {
     const { searchvalue } = this.state;
     return (
       <React.Fragment>
-        <form
-          method="GET"
-          action="/books"
-          className="search--container"
-          onSubmit={this.handleSubmit}
-        >
+        <form method="GET" action="/books" className="search--container">
           <input
             placeholder="Bókaleit"
             value={searchvalue}
