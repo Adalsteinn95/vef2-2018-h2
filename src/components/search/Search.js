@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Link } from "react-router-dom";
 import createHistory from "history/createBrowserHistory";
 import { fetchBooks } from "../../actions/books";
 import Button from "../button";
@@ -26,7 +25,7 @@ class Search extends Component {
     const { searchvalue } = this.state;
     return (
       <React.Fragment>
-        <form className='search--container' onSubmit={this.handleSubmit}>
+        <form className="search--container" onSubmit={this.handleSubmit}>
           <input
             placeholder="Bókaleit"
             value={searchvalue}

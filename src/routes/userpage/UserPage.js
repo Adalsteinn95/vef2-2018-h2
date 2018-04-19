@@ -20,7 +20,6 @@ class UserPage extends Component {
   };
 
   async componentDidMount() {
-    const { dispatch } = this.props;
     this.fetchUsers("users");
   }
 

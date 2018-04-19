@@ -1,5 +1,3 @@
-import { loginUser } from "./actions/auth";
-
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
@@ -47,7 +45,6 @@ async function update(name, pass) {
   }
 
   const options = {
-    headers: {},
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name: name, password: pass })
@@ -231,6 +228,5 @@ export default {
   postImage,
   deleteRead,
   patch,
-  postImage,
   checkToken
 };

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import BookForm from "../bookform";
-import { addBook, getCategories } from "../../actions/bookAltering";
+import { addBook } from "../../actions/bookAltering";
 
 class AddBook extends Component {
   state = {
@@ -33,12 +33,7 @@ class AddBook extends Component {
     );
   };
   render() {
-    const {
-      isSending,
-      formInfo = {},
-      categories,
-      isFetchingCategories
-    } = this.props;
+    const { isSending, formInfo = {} } = this.props;
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }

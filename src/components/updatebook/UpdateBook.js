@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import BookForm from "../bookform";
-import { alterBook, getCategories } from "../../actions/bookAltering";
+import { alterBook } from "../../actions/bookAltering";
 import { fetchBooks } from "../../actions/books";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -45,12 +45,7 @@ class UpdateBook extends Component {
     );
   };
   render() {
-    const {
-      isSending,
-      formInfo = {},
-      categories,
-      isFetchingCategories
-    } = this.props;
+    const { isSending, formInfo = {} } = this.props;
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }

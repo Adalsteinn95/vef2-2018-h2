@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import queryString from "query-string";
-import { fetchBooks, addReadBook, getRead } from "../../actions/books";
+import { fetchBooks, addReadBook } from "../../actions/books";
 import Button from "../../components/button";
-import Review from "../review";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./Book.css";
 
@@ -62,7 +60,6 @@ class Book extends Component {
       }
     }
 
-    const { id } = this.props.match.params;
     return (
       <ReactCSSTransitionGroup
         transitionName="registerAnimation"

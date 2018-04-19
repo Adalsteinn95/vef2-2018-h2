@@ -38,7 +38,7 @@ class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { dispatch, history, isAuthenticated } = this.props;
+    const { dispatch } = this.props;
     const { username, password } = this.state;
 
     dispatch(loginUser({ username, password }, "/login")).then(() => {

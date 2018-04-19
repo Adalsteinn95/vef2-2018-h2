@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/button";
 import { updateOneUser, postImage } from "../../actions/auth";
-import { getRead, deleteRead } from "../../actions/books";
-import { Link } from "react-router-dom";
-import queryString from "query-string";
+import { deleteRead } from "../../actions/books";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import ReadBooks from "../../components/readBooksList";
@@ -61,16 +59,9 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null, reviews } = this.props;
+    const { isFetching, message = null } = this.props;
 
-    const {
-      username,
-      password,
-      passwordAgain,
-      image,
-      match,
-      page
-    } = this.state;
+    const { username, password, passwordAgain, match } = this.state;
 
     let alert;
     if (!Array.isArray(message) && message) {

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Button from "../../components/button";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
-import { getRead, deleteRead } from "../../actions/books";
+import { getRead } from "../../actions/books";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./ReadbooksList.css";
 
@@ -38,7 +38,7 @@ class readBooksList extends Component {
   }
 
   render() {
-    const { isFetching, message = null, reviews, deleteOption } = this.props;
+    const { isFetching, reviews, deleteOption } = this.props;
 
     const { page } = this.state;
 
