@@ -33,7 +33,7 @@ class AddBook extends Component {
     );
   };
   render() {
-    const { isSending, formInfo = {} } = this.props;
+    const { isSending, formInfo = {}, version } = this.props;
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
@@ -42,6 +42,7 @@ class AddBook extends Component {
       <div>
         <h1>Skrá bók</h1>
         {formInfo.hasOwnProperty("errors") &&
+          version === "add" &&
           formInfo.errors.map(error => {
             return (
               <div key={error.field}>
@@ -66,7 +67,8 @@ class AddBook extends Component {
 const mapStateToProps = state => {
   return {
     isSending: state.bookAltering.isSending,
-    formInfo: state.bookAltering.formInfo
+    formInfo: state.bookAltering.formInfo,
+    version: state.bookAltering.version
   };
 };
 

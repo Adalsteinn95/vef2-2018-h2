@@ -45,7 +45,7 @@ class UpdateBook extends Component {
     );
   };
   render() {
-    const { isSending, formInfo = {} } = this.props;
+    const { isSending, formInfo = {}, version } = this.props;
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
@@ -62,6 +62,7 @@ class UpdateBook extends Component {
           <h1>Breyta bók</h1>
         </ReactCSSTransitionGroup>
         {formInfo.hasOwnProperty("errors") &&
+          version === "update" &&
           formInfo.errors.map(error => {
             return (
               <div key={error.field}>
@@ -76,7 +77,7 @@ class UpdateBook extends Component {
           {...this.state}
         />
         {formInfo.hasOwnProperty("title") && (
-          <h2>Bókinni {formInfo.title} hefur breytt</h2>
+          <h2>Bókinni {formInfo.title} hefur verið breytt</h2>
         )}
       </div>
     );
@@ -86,6 +87,7 @@ class UpdateBook extends Component {
 const mapStateToProps = state => {
   return {
     isSending: state.bookAltering.isSending,
+    version: state.bookAltering.version,
     formInfo: state.bookAltering.formInfo,
     isFetching: state.books.isFetching,
     message: state.books.message,

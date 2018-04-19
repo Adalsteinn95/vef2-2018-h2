@@ -86,6 +86,7 @@ class Login extends Component {
           );
         });
     }
+    console.log(message, alert);
 
     return (
       <ReactCSSTransitionGroup

@@ -32,6 +32,7 @@ function userLogin(user) {
 }
 
 function errorLogin(message) {
+  console.log("MESSAGE", message);
   return {
     type: LOGIN_FAILURE,
     isFetching: false,
@@ -92,7 +93,7 @@ export const loginUser = ({ username, password }, endpoint) => {
       login = await api.post({ username, password }, endpoint);
 
       if (login.error) {
-        dispatch(errorLogin(login.error));
+        dispatch(errorLogin(login.error.message));
       }
 
       if (!login.error) {
@@ -104,7 +105,7 @@ export const loginUser = ({ username, password }, endpoint) => {
       }
     } catch (e) {
       console.info(e);
-      return dispatch(errorLogin(e));
+      return dispatch(errorLogin("Náði ekki sambandi við vefþjónustu"));
     }
 
     console.info(login);
@@ -121,7 +122,9 @@ export const checkToken = endpoint => {
       } else {
       }
     } catch (e) {
-      console.info(e);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      console.log("BIG ERRRROOOORRR");
       return dispatch(errorLogin(e));
     }
   };

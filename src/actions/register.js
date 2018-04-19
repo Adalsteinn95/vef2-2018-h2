@@ -47,7 +47,7 @@ export const registerUser = ({ username, password, name }, endpoint) => {
     try {
       login = await api.post({ username, password, name }, endpoint);
     } catch (e) {
-      return dispatch(errorRegister(e));
+      return dispatch(errorRegister("Náði ekki sambandi við vefþjónustu"));
     }
 
     if (login.errors) {
