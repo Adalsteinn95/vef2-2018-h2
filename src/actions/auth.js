@@ -125,7 +125,7 @@ export const checkToken = endpoint => {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       console.log("BIG ERRRROOOORRR");
-      return dispatch(errorLogin(e));
+      return dispatch(errorLogin("úps eitthvað óvænt kom upp!"));
     }
   };
 };

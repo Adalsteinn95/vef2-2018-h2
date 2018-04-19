@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Helmet from "react-helmet";
 
 import BookForm from "../bookform";
 import { alterBook } from "../../actions/bookAltering";
@@ -52,6 +53,7 @@ class UpdateBook extends Component {
 
     return (
       <div>
+        <Helmet title={`Breyta ${this.state.title}`} />
         <ReactCSSTransitionGroup
           transitionName="bookHeader"
           transitionAppear={true}

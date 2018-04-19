@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Helmet from "react-helmet";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -44,6 +45,7 @@ class UserPage extends Component {
 
   render() {
     const { isFetching, users, message } = this.props;
+    const { page } = this.state;
     if (isFetching) {
       return <div>Sæki gögn...</div>;
     }
@@ -64,6 +66,8 @@ class UserPage extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
+        <Helmet title={`Notendur - síða ${page + 1}`} />
+
         <div className="users--container">
           <h2>Notendur</h2>
           <div key={this.state.page}>

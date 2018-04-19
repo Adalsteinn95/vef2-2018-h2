@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Helmet from "react-helmet";
 import { loginUser, logoutUser } from "../../actions/auth";
 import Button from "../../components/button";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -96,6 +97,7 @@ class Login extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
+        <Helmet title="Innskráning" />
         <div className="register--container">
           <h1>Innskráning</h1>
           {alert}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import Helmet from "react-helmet";
 import BookForm from "../bookform";
 import { addBook } from "../../actions/bookAltering";
 
@@ -40,6 +40,7 @@ class AddBook extends Component {
 
     return (
       <div>
+        <Helmet title="Skrá bók" />
         <h1>Skrá bók</h1>
         {formInfo.hasOwnProperty("errors") &&
           version === "add" &&

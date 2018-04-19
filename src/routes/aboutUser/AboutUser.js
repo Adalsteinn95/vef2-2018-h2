@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchOneUser } from "../../actions/getAllUsers";
 import { getRead } from "../../actions/books";
+import Helmet from "react-helmet";
 import ReadBooks from "../../components/readBooksList";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./AboutUser.css";
@@ -54,6 +55,7 @@ class AboutUser extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
+        <Helmet title={`Notandi ${user.username}`} />
         <div>
           <div className="user--container">
             <img src={user.image || "/profile.jpg"} alt="profile" />

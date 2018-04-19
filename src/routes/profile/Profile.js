@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/button";
+import Helmet from "react-helmet";
 import { updateOneUser, postImage } from "../../actions/auth";
 import { deleteRead } from "../../actions/books";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -59,7 +60,7 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null } = this.props;
+    const { isFetching, message = null, user } = this.props;
 
     const { username, password, passwordAgain, match } = this.state;
 
@@ -94,6 +95,7 @@ class Profile extends Component {
           transitionEnter={false}
           transitionLeave={false}
         >
+          <Helmet title={` Prófíll - ${user.username}`} />
           <div className="register--container">
             <form
               method="post"

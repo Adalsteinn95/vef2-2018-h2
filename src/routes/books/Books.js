@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Helmet from "react-helmet";
 import { connect } from "react-redux";
 import queryString from "query-string";
 import { fetchBooks } from "../../actions/books";
@@ -73,6 +74,7 @@ class Books extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
+        <Helmet title={`Bækur - síða ${page + 1}`} />
         <div className="books--container">
           {search ? <h1>Bókaleit: {search}</h1> : <h1>Bækur</h1>}
           <div key={page}>

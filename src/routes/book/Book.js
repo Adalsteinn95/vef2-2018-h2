@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Helmet from "react-helmet";
 import { connect } from "react-redux";
 import { fetchBooks, addReadBook } from "../../actions/books";
 import Button from "../../components/button";
@@ -12,12 +13,13 @@ class Book extends Component {
     this.props.dispatch(
       fetchBooks(`books/${this.props.match.params.id}`, null, true)
     );
-    //þurfum ekki lestrana í þessum component, kannski færa ef þarf
-    //this.props.dispatch(getRead("users/me/read"));
   }
 
   onClickRead = e => {
     this.setState({ addRead: true });
+  };
+  closeReview = e => {
+    this.setState({ addRead: false });
   };
   onClickBack = e => {
     this.props.history.goBack();
@@ -68,6 +70,7 @@ class Book extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
+        <Helmet title={book.title} />
         <div className="book--container">
           <div>
             <h1>{book.title}</h1>
@@ -83,7 +86,7 @@ class Book extends Component {
           <Link to={`/books/${book.id}/edit`}>Breyta bók</Link>
           {this.state.addRead && (
             <form className="review--container" onSubmit={this.handleSubmit}>
-              <label for="review">Um bók:</label>
+              <label htmlFor="review">Um bók:</label>
               <textarea
                 rows="8"
                 cols="50"
@@ -91,7 +94,7 @@ class Book extends Component {
                 value={this.state.review}
                 onChange={this.handleChange}
               />
-              <label for="rating">Einkunn:</label>
+              <label htmlFor="rating">Einkunn:</label>
               <select
                 name="rating"
                 value={this.state.rating}
@@ -105,7 +108,11 @@ class Book extends Component {
               </select>
               <div className="review--buttons">
                 <Button children={"Vista"} />
-                <Button className="danger" children={"Hætta við"} />
+                <Button
+                  onClick={this.closeReview}
+                  className="danger"
+                  children={"Hætta við"}
+                />
               </div>
             </form>
           )}
