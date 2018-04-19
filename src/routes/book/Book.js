@@ -18,8 +18,11 @@ class Book extends Component {
     //this.props.dispatch(getRead("users/me/read"));
   }
 
-  onClick = e => {
+  onClickRead = e => {
     this.setState({ addRead: true });
+  };
+  onClickBack = e => {
+    this.props.history.goBack();
   };
 
   handleChange = e => {
@@ -43,7 +46,7 @@ class Book extends Component {
   };
 
   render() {
-    const { book, isFetching, message = null } = this.props;
+    const { book, isFetching, message = null, user } = this.props;
 
     if (isFetching || !book) {
       return <div>Sæki gögn...</div>;
@@ -61,7 +64,7 @@ class Book extends Component {
 
     const { id } = this.props.match.params;
     return (
-      <div className='book--container'>
+      <div className="book--container">
         <div>
           <h1>{book.title}</h1>
           <p>Eftir {book.author}</p>
@@ -102,10 +105,9 @@ class Book extends Component {
             <Button children={"Vista"} />
           </form>
         )}
-        <Link to= {`/books/${book.id}/edit`}>Breyta bók</Link>
-
-        <Button onClick={this.onClick} children={"Lesin bók"} />
-        <Button onClick={this.onClick} children={"Til Baka"} />
+        <Link to={`/books/${book.id}/edit`}>Breyta bók</Link>
+        {user && <Button onClick={this.onClickRead} children={"Lesin bók"} />}
+        <Button onClick={this.onClickBack} children={"Til Baka"} />
       </div>
     );
   }

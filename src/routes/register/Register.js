@@ -66,8 +66,8 @@ class Register extends Component {
         message.map((item, index) => {
           return (
             <div key={index}>
-              <p>{item.field}</p>
-              <p>{item.message}</p>
+              <p>Field:{item.field}</p>
+              <p>Message:{item.message}</p>
             </div>
           );
         });
@@ -119,7 +119,7 @@ class Register extends Component {
               <Button disabled={isFetching}>Nýskrá</Button>
             </div>
             <div>
-              <Link to="/login">innskráðning</Link>
+              <Link to="/login">Innskráning</Link>
             </div>
           </form>
         </div>

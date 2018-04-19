@@ -200,10 +200,23 @@ async function deleteRead(id, endpoint) {
 }
 
 async function checkToken(endpoint) {
-  /* todo framkvæma get */
+  const url = `${baseurl}${endpoint}`;
+  const token = JSON.parse(window.localStorage.getItem("token"));
+  const options = {
+    method: "GET",
+    headers: {}
+  };
+
+  if (token) {
+    options.headers["Authorization"] = `Bearer ${token.token}`;
+  }
 
   try {
-    const response = await fetch(endpoint, {});
+    const response = await fetch(url, options);
+    if (response.status === 401) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    }
 
     return response;
   } catch (error) {
@@ -218,5 +231,6 @@ export default {
   postImage,
   deleteRead,
   patch,
-  postImage
+  postImage,
+  checkToken
 };
