@@ -13,6 +13,14 @@ class Login extends Component {
     password: ""
   };
 
+  componentDidMount() {
+    this.maybeRedirect();
+  }
+
+  getDerivedStateFromProps() {
+    console.log("getDerivedStateFromProps");
+  }
+
   handleInputChange = e => {
     const { name, value } = e.target;
     if (name) {
@@ -20,13 +28,22 @@ class Login extends Component {
     }
   };
 
+  maybeRedirect = () => {
+    const { isAuthenticated, history } = this.props;
+    if (isAuthenticated) {
+      history.push("/");
+    }
+  };
+
   handleSubmit = e => {
     e.preventDefault();
 
-    const { dispatch } = this.props;
+    const { dispatch, history, isAuthenticated } = this.props;
     const { username, password } = this.state;
 
-    dispatch(loginUser({ username, password }, "/login"));
+    dispatch(loginUser({ username, password }, "/login")).then(() => {
+      this.maybeRedirect();
+    });
   };
 
   handleLogout = e => {

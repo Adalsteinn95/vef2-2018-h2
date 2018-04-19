@@ -100,6 +100,7 @@ export const loginUser = ({ username, password }, endpoint) => {
         localStorage.setItem("user", JSON.stringify({ user }));
         localStorage.setItem("token", JSON.stringify({ token: login.token }));
         dispatch(userLogin(user));
+        return Promise.resolve();
       }
     } catch (e) {
       console.info(e);
