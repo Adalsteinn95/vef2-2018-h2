@@ -99,7 +99,6 @@ class Profile extends Component {
       <div>
         {alert}
         <h1>Upplýsingar</h1>
-
         <div className="register--container">
           <form
             method="post"

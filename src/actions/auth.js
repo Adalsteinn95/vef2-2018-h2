@@ -41,6 +41,7 @@ function errorLogin(message) {
 }
 
 function logout() {
+  console.log("i logged you out");
   return {
     type: LOGIN_LOGOUT,
     isFetching: false,
@@ -93,7 +94,7 @@ export const loginUser = ({ username, password }, endpoint) => {
       if (login.error) {
         dispatch(errorLogin(login.error));
       }
-  
+
       if (!login.error) {
         const { user } = login;
         localStorage.setItem("user", JSON.stringify({ user }));
@@ -115,7 +116,7 @@ export const checkToken = endpoint => {
     try {
       token = await api.checkToken(endpoint);
       if (token.status === 401) {
-        dispatch(logout);
+        dispatch(logout());
       } else {
       }
     } catch (e) {
@@ -148,7 +149,6 @@ export const updateOneUser = ({ username, password } = {}) => {
       localStorage.setItem("user", JSON.stringify({ user: data }));
 
       dispatch(updateOneUserSucces(data));
-
     } catch (error) {
       const user = JSON.parse(localStorage.getItem("user"));
 
