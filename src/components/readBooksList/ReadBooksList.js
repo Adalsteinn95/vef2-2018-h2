@@ -52,7 +52,7 @@ class readBooksList extends Component {
         >
       <div className="readbooks--container" key={1}>
         <h1>Lesnar Bækur</h1>
-        {reviews.items.map(book => {
+        {reviews && reviews.items.map(book => {
           return (
             <form key={book.id} id={book.id} onSubmit={this.handleDelete}>
               <Link to={`/books/${book.book_id}`}>
@@ -77,7 +77,7 @@ class readBooksList extends Component {
           />
         )}
         <span>Síða {page + 1}</span>
-        {reviews.items.length === 10 && (
+        {reviews && reviews.items.length === 10 && (
           <Button
             onClick={() => this.handlePageClick("next")}
             children={"Næsta síða"}

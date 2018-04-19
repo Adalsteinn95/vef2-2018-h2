@@ -77,7 +77,7 @@ class Books extends Component {
       <div className='books--container'>
         {search ? <h1>Bókaleit: {search}</h1> : <h1>Bækur</h1>}
         <div key={page}>
-          {books.items.map(book => {
+          {books && books.items.map(book => {
             return (
               <div key={book.id}>
                 <Link to={`/books/${book.id}`}>
@@ -95,7 +95,7 @@ class Books extends Component {
           />
         )}
         <span>Síða {page + 1}</span>
-        {books.items.length === 10 && (
+        {books && books.items.length === 10 && (
           <Button
             onClick={() => this.handlePageClick("next")}
             children={"Næsta síða"}

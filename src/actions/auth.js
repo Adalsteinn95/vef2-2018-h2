@@ -151,11 +151,11 @@ export const updateOneUser = ({ username, password } = {}) => {
       dispatch(updateOneUserSucces(data));
     } catch (error) {
       const user = JSON.parse(localStorage.getItem("user"));
-
-      if (!user) {
+      
+      if (!user.user) {
         dispatch(updateUsererror(error, null, false));
       } else {
-        dispatch(updateUsererror(error, user.user));
+        dispatch(updateUsererror(error, user, true));
       }
     }
   };
