@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 
 import Button from "../button";
 import { getAllCategories } from "../../actions/bookAltering";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
+import './bookform.css';
 class BookForm extends Component {
   componentDidMount() {
     this.props.dispatch(getAllCategories("categories?limit=100"));
@@ -42,28 +44,35 @@ class BookForm extends Component {
       );
     }
     return (
-      <div>
+      <ReactCSSTransitionGroup
+          transitionName="bookUpdate"
+          transitionAppear={true }
+          transitionAppearTimeout={1500}
+          transitionEnter={false}
+          transitionLeave={false}
+        >
+      <div className="register--container">
         <form onSubmit={this.props.handleSubmit}>
-          <label>
-            Titill:
+          <div className="register--input">
+            <label for="title">Titill:</label>
             <input
               value={title}
               name="title"
               type="text"
               onChange={this.props.handleChange}
             />
-          </label>
-          <label>
-            Höfundur:
+          </div>
+          <div className="register--input">
+            <label for="author">Höfundur:</label>
             <input
               value={author}
               name="author"
               type="text"
               onChange={this.props.handleChange}
             />
-          </label>
-          <label>
-            Lýsing:
+          </div>
+          <div className='description--input'>
+            <label for="description">Lýsing:</label>
             <textarea
               value={description}
               name="description"
@@ -72,9 +81,9 @@ class BookForm extends Component {
               type="text"
               onChange={this.props.handleChange}
             />
-          </label>
-          <label>
-            Flokkur:
+          </div>
+          <div className="register--input">
+            <label for="category">Flokkur:</label>
             {isFetchingCategories ? (
               <p>Sæki flokka</p>
             ) : (
@@ -86,55 +95,58 @@ class BookForm extends Component {
                 {categoriesArr}
               </select>
             )}
-          </label>
-          <label>
-            ISBN10:
+          </div>
+          <div className="register--input">
+            <label for="isbn10">ISBN10:</label>
             <input
               value={isbn10}
               name="isbn10"
               type="text"
               onChange={this.props.handleChange}
             />
-          </label>
-          <label>
-            ISBN13:
+          </div>
+
+          <div className="register--input">
+            <label for="isbn13">ISBN13:</label>
             <input
               value={isbn13}
               name="isbn13"
               type="text"
               onChange={this.props.handleChange}
             />
-          </label>
-          <label>
-            Útgefin:
+          </div>
+          <div className="register--input">
+            <label for="published">Útgefin:</label>
             <input
               value={published}
               name="published"
               type="text"
               onChange={this.props.handleChange}
             />
-          </label>
-          <label>
-            Fjöldi síða:
+          </div>
+          <div className="register--input">
+            <label for="pagecount">Fjöldi síða:</label>
             <input
               value={pagecount}
               name="pagecount"
               type="text"
               onChange={this.props.handleChange}
             />
-          </label>
-          <label>
-            Tungumál:
+          </div>
+
+          <div className='register--input'>
+            <label for="language">Tungumál:</label>
             <input
               value={language}
               name="language"
               type="text"
               onChange={this.props.handleChange}
             />
-          </label>
+          </div>
           <Button type="submit" children={"Vista"} />
         </form>
       </div>
+      </ReactCSSTransitionGroup>
     );
   }
 }

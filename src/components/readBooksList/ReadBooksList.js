@@ -4,21 +4,19 @@ import Button from "../../components/button";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
 import { getRead, deleteRead } from "../../actions/books";
+import './ReadbooksList.css'
 
 class readBooksList extends Component {
   urlpage = Number(queryString.parse(this.props.location).page - 1);
 
-
   state = {
-    page: this.urlpage > 0 ? this.urlpage : 0,
+    page: this.urlpage > 0 ? this.urlpage : 0
   };
 
   componentDidMount() {
     const { dispatch } = this.props;
     const { page } = this.state;
     const offset = `offset=${page * 10}`;
-
-    console.info(offset);
     dispatch(getRead(`users/me/read?${offset}`));
   }
 
@@ -35,21 +33,17 @@ class readBooksList extends Component {
   }
 
   render() {
-    const { isFetching, message = null, reviews } = this.props;
+    const { isFetching, message = null, reviews, deleteOption } = this.props;
 
+    const { page } = this.state;
 
-    const {
-      page
-    } = this.state;
-    
-    if(isFetching) {
-      return (
-        <div>Loading...</div>
-      );
+    if (isFetching) {
+      return <div>Loading...</div>;
     }
 
     return (
-      <div key={1}>
+      <div className="readbooks--container" key={1}>
+        <h1>Lesnar Bækur</h1>
         {reviews.items.map(book => {
           return (
             <form key={book.id} id={book.id} onSubmit={this.handleDelete}>
@@ -57,9 +51,14 @@ class readBooksList extends Component {
                 <h3>{book.title}</h3>
               </Link>
               <p>Einkunn: {book.rating}</p>
-              <Button className="danger" onClick={this.handleDelete}>
-                Eyda
-              </Button>
+              {book.review && (
+                <p>Um bókina: {book.review}</p>
+              )}
+              {deleteOption && (
+                <Button className="danger" onClick={this.handleDelete}>
+                  Eyda
+                </Button>
+              )}
             </form>
           );
         })}

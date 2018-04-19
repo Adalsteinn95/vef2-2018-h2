@@ -95,68 +95,69 @@ class Profile extends Component {
       return <div>Loading...</div>;
     }
 
-    console.info(this.urlpage);
-
     return (
       <div>
         {alert}
         <h1>Upplýsingar</h1>
+        <div className="register--container">
+          <form
+            method="post"
+            encType="multipart/form-data"
+            onSubmit={this.handleImageSubmit}
+          >
+            <div className="register--input">
+              <input
+                id="image"
+                name="image"
+                type="file"
+                onChange={this.handleInputChange}
+              />
+              <Button disabled={isFetching}>Uppfæra</Button>
+            </div>
+          </form>
+        </div>
+        <div className="register--container">
+          <form onSubmit={this.handleSubmit}>
+            <div className="register--input">
+              <label htmlFor="username">Username: </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                value={username}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <Button children="Uppfæra nafn" disabled={isFetching} />
+          </form>
+        </div>
 
-        <form
-          method="post"
-          encType="multipart/form-data"
-          onSubmit={this.handleImageSubmit}
-        >
-          <div>
-            <label htmlFor="image">Mynd: </label>
-            <input
-              id="image"
-              name="image"
-              type="file"
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <Button disabled={isFetching}>Uppfæra</Button>
-        </form>
-
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor="username">Notendanafn: </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={username}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <Button disabled={isFetching}>Uppfæra</Button>
-        </form>
-
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor="password">Lykilorð: </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="passwordAgain">Lykilorð aftur: </label>
-            <input
-              id="passwordAgain"
-              name="passwordAgain"
-              type="password"
-              value={passwordAgain}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <Button disabled={isFetching}>Uppfæra</Button>
-        </form>
-        <ReadBooks />
+        <div className='register--container'>
+          <form onSubmit={this.handleSubmit}>
+            <div className='register--input'>
+              <label htmlFor="password">Password: </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className='register--input'>
+              <label htmlFor="passwordAgain">Password Again: </label>
+              <input
+                id="passwordAgain"
+                name="passwordAgain"
+                type="password"
+                value={passwordAgain}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <Button children='Uppfæra lykilorð' disabled={isFetching}></Button>
+          </form>
+        </div>
+        <ReadBooks deleteOption={true} />
       </div>
     );
   }

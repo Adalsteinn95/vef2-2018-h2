@@ -26,6 +26,7 @@ import "./App.css";
 
 class App extends Component {
   render() {
+
     const { isAuthenticated, isFetching, user } = this.props;
     if (user) {
       this.props.dispatch(checkToken("/users/me"));

@@ -1,0 +1,15 @@
+.description--input {
+  display: flex;
+  flex-direction: column;
+}
+
+.bookUpdate-appear {
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.bookUpdate-appear.bookUpdate-appear-active {
+  opacity: 1;
+  transform: translateX(0px);
+  transition: all 0.5s ease-in;
+}

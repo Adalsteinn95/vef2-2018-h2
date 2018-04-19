@@ -1,37 +1,36 @@
-.register--container h1{
-    margin-bottom: 0.5em;
+.register--container h1 {
+  margin-bottom: 0.5em;
 }
 
 .register--container {
-    max-width: 400px;
+  max-width: 500px;
 }
 
 .register--container form div {
-    display: flex;
-    margin-bottom: 1em;
+  display: flex;
+  margin-bottom: 1em;
 }
 
 .register--input label {
-    font-size: 1em;
-    min-width: 150px;
-    padding-right: 3rem;
-    text-align: left;
-    flex: 1;
+  font-size: 1em;
+  min-width: 200px;
+  padding-right: 3rem;
+  text-align: left;
+  flex: 1;
 }
 
 .register--input input {
-    width: 100%;
-    font-size: 1em;
+  width: 100%;
+  font-size: 1em;
 }
 
 .registerAnimation-appear {
-    opacity: 0;
-    transform: translateX(400px);
-  }
-  
-  .registerAnimation-appear.registerAnimation-appear-active {
-    opacity: 1;
-    transform: translateX(0px);
-    transition: all 0.5s ease-in;
-  }
-  
+  opacity: 0;
+  transform: translateX(400px);
+}
+
+.registerAnimation-appear.registerAnimation-appear-active {
+  opacity: 1;
+  transform: translateX(0px);
+  transition: all 0.5s ease-in;
+}

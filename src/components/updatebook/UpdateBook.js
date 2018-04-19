@@ -5,6 +5,9 @@ import BookForm from "../bookform";
 import { alterBook, getCategories } from "../../actions/bookAltering";
 import { fetchBooks } from "../../actions/books";
 
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import "./updatebook.css";
+
 class UpdateBook extends Component {
   async componentDidMount() {
     await this.props.dispatch(
@@ -54,7 +57,15 @@ class UpdateBook extends Component {
 
     return (
       <div>
-        <h1>Breyta bók</h1>
+        <ReactCSSTransitionGroup
+          transitionName="bookHeader"
+          transitionAppear={true}
+          transitionAppearTimeout={1500}
+          transitionEnter={false}
+          transitionLeave={false}
+        >
+          <h1>Breyta bók</h1>
+        </ReactCSSTransitionGroup>
         {formInfo.hasOwnProperty("errors") &&
           formInfo.errors.map(error => {
             return (
