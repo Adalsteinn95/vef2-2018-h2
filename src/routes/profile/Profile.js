@@ -163,7 +163,7 @@ class Profile extends Component {
             </form>
           </div>
         </ReactCSSTransitionGroup>
-        <ReadBooks deleteOption={true} />
+        <ReadBooks meReadBooks={true} deleteOption={true} />
       </div>
     );
   }
