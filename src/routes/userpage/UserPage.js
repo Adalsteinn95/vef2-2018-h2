@@ -9,7 +9,7 @@ import { fetchUsers } from "../../actions/getAllUsers";
 
 /* comp */
 import Button from "../../components/button";
-import './userpage.css';
+import "./userpage.css";
 
 class UserPage extends Component {
   urlpage = Number(queryString.parse(this.props.location.search).page - 1);
@@ -44,7 +44,7 @@ class UserPage extends Component {
 
   render() {
     const { isFetching, users, message } = this.props;
-
+    console.log(users);
     if (isFetching) {
       return <div>Sæki gögn...</div>;
     }
@@ -65,16 +65,16 @@ class UserPage extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
-        <div className='users--container'>
+        <div className="users--container">
           <h2>Notendur</h2>
           <div key={this.state.page}>
             {users.items.map((item, index) => {
-              const { id, name } = item;
+              const { id, username } = item;
 
               const url = `users/${id.toString()}`;
               return (
                 <div key={index}>
-                  <Link to={url}>{name}</Link>
+                  <Link to={url}>{username}</Link>
                 </div>
               );
             })}
