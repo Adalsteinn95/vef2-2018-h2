@@ -4,6 +4,7 @@ import Button from "../../components/button";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
 import { getRead, deleteRead } from "../../actions/books";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import './ReadbooksList.css'
 
 class readBooksList extends Component {
@@ -42,6 +43,13 @@ class readBooksList extends Component {
     }
 
     return (
+      <ReactCSSTransitionGroup
+          transitionName="bookUpdate"
+          transitionAppear={true}
+          transitionAppearTimeout={1500}
+          transitionEnter={false}
+          transitionLeave={false}
+        >
       <div className="readbooks--container" key={1}>
         <h1>Lesnar Bækur</h1>
         {reviews.items.map(book => {
@@ -76,6 +84,7 @@ class readBooksList extends Component {
           />
         )}
       </div>
+      </ReactCSSTransitionGroup>
     );
   }
 }

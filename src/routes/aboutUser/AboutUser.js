@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { fetchOneUser } from "../../actions/getAllUsers";
 import { getRead } from "../../actions/books";
 import ReadBooks from "../../components/readBooksList";
-import './AboutUser.css'
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import "./AboutUser.css";
 class AboutUser extends Component {
   state = {
     id: null
@@ -44,13 +45,21 @@ class AboutUser extends Component {
     }
 
     return (
-      <div>
-        <div className='user--container'>
-          <img src={user.image || "/profile.jpg"} alt="profile" />
-          <h1>{user.name}</h1>
+      <ReactCSSTransitionGroup
+        transitionName="registerAnimation"
+        transitionAppear={true}
+        transitionAppearTimeout={1500}
+        transitionEnter={false}
+        transitionLeave={false}
+      >
+        <div>
+          <div className="user--container">
+            <img src={user.image || "/profile.jpg"} alt="profile" />
+            <h1>{user.name}</h1>
+          </div>
+          <ReadBooks deleteOption={false} />
         </div>
-        <ReadBooks deleteOption={false} />
-      </div>
+      </ReactCSSTransitionGroup>
     );
   }
 }

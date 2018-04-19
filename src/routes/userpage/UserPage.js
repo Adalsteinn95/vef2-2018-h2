@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import queryString from "query-string";
-import { Link } from 'react-router-dom'
-
+import { Link } from "react-router-dom";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 /* action */
 
 import { fetchUsers } from "../../actions/getAllUsers";
 
 /* comp */
 import Button from "../../components/button";
+import './userpage.css';
 
 class UserPage extends Component {
   urlpage = Number(queryString.parse(this.props.location.search).page - 1);
 
   state = {
     page: this.urlpage > 0 ? this.urlpage : 0,
-    user: null,
+    user: null
   };
 
   async componentDidMount() {
@@ -32,7 +33,6 @@ class UserPage extends Component {
 
     //history.push(newPageUrl);
   }
-
 
   handlePageClick = key => {
     this.setState((prevState, props) => {
@@ -53,42 +53,47 @@ class UserPage extends Component {
       return <div>{message}</div>;
     }
 
-    if(!users ){
+    if (!users) {
       return <div>Sæki gögn...</div>;
     }
 
     return (
-      <div>
-        <h2>Notendur</h2>
-        <div key={this.state.page}>
-          {users.items.map((item, index )=> {
-            const {
-              id,
-              name,
-            } = item;
+      <ReactCSSTransitionGroup
+        transitionName="registerAnimation"
+        transitionAppear={true}
+        transitionAppearTimeout={1500}
+        transitionEnter={false}
+        transitionLeave={false}
+      >
+        <div className='users--container'>
+          <h2>Notendur</h2>
+          <div key={this.state.page}>
+            {users.items.map((item, index) => {
+              const { id, name } = item;
 
-            const url = `users/${id.toString()}`;
-            return (
-              <div key={index}>
-                <Link to={url}>{name}</Link>
-              </div>
-            );
-          })}
+              const url = `users/${id.toString()}`;
+              return (
+                <div key={index}>
+                  <Link to={url}>{name}</Link>
+                </div>
+              );
+            })}
+          </div>
+          {this.state.page > 0 && (
+            <Button
+              onClick={() => this.handlePageClick("prev")}
+              children={"Fyrri síða"}
+            />
+          )}
+          <span>Síða {this.state.page + 1}</span>
+          {users.items.length === 10 && (
+            <Button
+              onClick={() => this.handlePageClick("next")}
+              children={"Næsta síða"}
+            />
+          )}
         </div>
-        {this.state.page > 0 && (
-          <Button
-            onClick={() => this.handlePageClick("prev")}
-            children={"Fyrri síða"}
-          />
-        )}
-        <span>Síða {this.state.page + 1}</span>
-        {users.items.length === 10 && (
-          <Button
-            onClick={() => this.handlePageClick("next")}
-            children={"Næsta síða"}
-          />
-        )}
-      </div>
+      </ReactCSSTransitionGroup>
     );
   }
 }

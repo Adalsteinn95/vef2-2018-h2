@@ -5,6 +5,7 @@ import { updateOneUser, postImage } from "../../actions/auth";
 import { getRead, deleteRead } from "../../actions/books";
 import { Link } from "react-router-dom";
 import queryString from "query-string";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import ReadBooks from "../../components/readBooksList";
 
@@ -99,64 +100,72 @@ class Profile extends Component {
       <div>
         {alert}
         <h1>Upplýsingar</h1>
-        <div className="register--container">
-          <form
-            method="post"
-            encType="multipart/form-data"
-            onSubmit={this.handleImageSubmit}
-          >
-            <div className="register--input">
-              <input
-                id="image"
-                name="image"
-                type="file"
-                onChange={this.handleInputChange}
-              />
-              <Button disabled={isFetching}>Uppfæra</Button>
-            </div>
-          </form>
-        </div>
-        <div className="register--container">
-          <form onSubmit={this.handleSubmit}>
-            <div className="register--input">
-              <label htmlFor="username">Username: </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={username}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <Button children="Uppfæra nafn" disabled={isFetching} />
-          </form>
-        </div>
+        <ReactCSSTransitionGroup
+          transitionName="registerAnimation"
+          transitionAppear={true}
+          transitionAppearTimeout={1500}
+          transitionEnter={false}
+          transitionLeave={false}
+        >
+          <div className="register--container">
+            <form
+              method="post"
+              encType="multipart/form-data"
+              onSubmit={this.handleImageSubmit}
+            >
+              <div className="register--input">
+                <input
+                  id="image"
+                  name="image"
+                  type="file"
+                  onChange={this.handleInputChange}
+                />
+                <Button disabled={isFetching}>Uppfæra</Button>
+              </div>
+            </form>
+          </div>
+          <div className="register--container">
+            <form onSubmit={this.handleSubmit}>
+              <div className="register--input">
+                <label htmlFor="username">Username: </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  value={username}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <Button children="Uppfæra nafn" disabled={isFetching} />
+            </form>
+          </div>
 
-        <div className='register--container'>
-          <form onSubmit={this.handleSubmit}>
-            <div className='register--input'>
-              <label htmlFor="password">Password: </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className='register--input'>
-              <label htmlFor="passwordAgain">Password Again: </label>
-              <input
-                id="passwordAgain"
-                name="passwordAgain"
-                type="password"
-                value={passwordAgain}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <Button children='Uppfæra lykilorð' disabled={isFetching}></Button>
-          </form>
-        </div>
+          <div className="register--container">
+            <form onSubmit={this.handleSubmit}>
+              <div className="register--input">
+                <label htmlFor="password">Password: </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <div className="register--input">
+                <label htmlFor="passwordAgain">Password Again: </label>
+                <input
+                  id="passwordAgain"
+                  name="passwordAgain"
+                  type="password"
+                  value={passwordAgain}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <Button children="Uppfæra lykilorð" disabled={isFetching} />
+            </form>
+          </div>
+        </ReactCSSTransitionGroup>
         <ReadBooks deleteOption={true} />
       </div>
     );

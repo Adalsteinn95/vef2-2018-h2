@@ -55,7 +55,7 @@ class Header extends Component {
               <div className="profile--header">
                 <img src={user.image || "/profile.jpg"} alt="profile" />
                 <div className='profile--item'>
-                  <p>{user.name}</p>
+                  <Link to='/profile/me'>{user.name}</Link>
                   <Button onClick={this.handleLogout} children="Útskrá" />
                 </div>
               </div>

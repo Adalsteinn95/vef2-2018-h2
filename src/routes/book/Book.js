@@ -5,7 +5,7 @@ import queryString from "query-string";
 import { fetchBooks, addReadBook, getRead } from "../../actions/books";
 import Button from "../../components/button";
 import Review from "../review";
-
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./Book.css";
 
 class Book extends Component {
@@ -64,52 +64,58 @@ class Book extends Component {
 
     const { id } = this.props.match.params;
     return (
-      <div className="book--container">
-        <div>
-          <h1>{book.title}</h1>
-          <p>Eftir {book.author}</p>
-          <p>ISBN13: {book.isbn13}</p>
-          <p>{book.categorytitle}</p>
-          <p>{book.description}</p>
-          <p>{book.review}</p>
-          <p>{book.pagecount} síður</p>
-          <p>Gefin út {book.published}</p>
-          <p>Tungumál {book.language}</p>
+      <ReactCSSTransitionGroup
+        transitionName="registerAnimation"
+        transitionAppear={true}
+        transitionAppearTimeout={1500}
+        transitionEnter={false}
+        transitionLeave={false}
+      >
+        <div className="book--container">
+          <div>
+            <h1>{book.title}</h1>
+            <p>Eftir {book.author}</p>
+            <p>ISBN13: {book.isbn13}</p>
+            <p>{book.categorytitle}</p>
+            <p>{book.description}</p>
+            <p>{book.review}</p>
+            <p>{book.pagecount} síður</p>
+            <p>Gefin út {book.published}</p>
+            <p>Tungumál {book.language}</p>
+          </div>
+          <Link to={`/books/${book.id}/edit`}>Breyta bók</Link>
+          {this.state.addRead && (
+            <form className="review--container" onSubmit={this.handleSubmit}>
+              <label for="review">Um bók:</label>
+              <textarea
+                rows="8"
+                cols="50"
+                name="review"
+                value={this.state.review}
+                onChange={this.handleChange}
+              />
+              <label for="rating">Einkunn:</label>
+              <select
+                name="rating"
+                value={this.state.rating}
+                onChange={this.handleChange}
+              >
+                <option value="1">1 </option>
+                <option value="2">2</option>
+                <option value="3">3 </option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <div className="review--buttons">
+                <Button children={"Vista"} />
+                <Button className="danger" children={"Hætta við"} />
+              </div>
+            </form>
+          )}
+          {user && <Button onClick={this.onClickRead} children={"Lesin bók"} />}
+          <Button onClick={this.onClickBack} children={"Til Baka"} />
         </div>
-        <Link to={`/books/${book.id}/edit`}>Breyta bók</Link>
-        {this.state.addRead && (
-          <form className="review--container" onSubmit={this.handleSubmit}>
-            <label for="review">Um bók:</label>
-            <textarea
-              rows="8"
-              cols="50"
-              name="review"
-              value={this.state.review}
-              onChange={this.handleChange}
-            />
-            <label for="rating">Einkunn:</label>
-            <select
-              name="rating"
-              value={this.state.rating}
-              onChange={this.handleChange}
-            >
-              <option value="1">1 </option>
-              <option value="2">2</option>
-              <option value="3">3 </option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <div className='review--buttons'>
-              <Button children={"Vista"} />
-              <Button className="danger" children={"Hætta við"} />
-            </div>
-          </form>
-        )}
-
-        <Link to={`/books/${book.id}/edit`}>Breyta bók</Link>
-        {user && <Button onClick={this.onClickRead} children={"Lesin bók"} />}
-        <Button onClick={this.onClickBack} children={"Til Baka"} />
-      </div>
+      </ReactCSSTransitionGroup>
     );
   }
 }
