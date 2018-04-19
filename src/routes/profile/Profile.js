@@ -18,11 +18,15 @@ class Profile extends Component {
     match: true
   };
 
+  componentDidUpdate() {
+    //this.checkMatch();
+  }
+
   handleInputChange = e => {
     const { name, value, files } = e.target;
 
     if (name) {
-      this.setState({ [name]: value });
+      this.setState({ [name]: value }, this.checkMatch.bind(false));
     }
 
     if (files) {
@@ -30,18 +34,24 @@ class Profile extends Component {
     }
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-
+  checkMatch = letsGo => {
     const { dispatch } = this.props;
     const { username, password, passwordAgain } = this.state;
-
     if (password !== passwordAgain) {
       this.setState({ match: false });
     } else {
+      if (letsGo) {
+        dispatch(updateOneUser({ username, password }));
+      }
       this.setState({ match: true });
-      dispatch(updateOneUser({ username, password }));
     }
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const { password, passwordAgain } = this.state;
+    this.checkMatch(true);
   };
 
   handleDelete = e => {
@@ -81,11 +91,8 @@ class Profile extends Component {
         });
     }
 
-
     if (!match) {
-      alert = (
-        <div className="alert--danger">Password don't match!</div>
-      );
+      alert = <div className="alert--danger">Password don't match!</div>;
     }
     if (isFetching) {
       return <div>Loading...</div>;
@@ -93,7 +100,6 @@ class Profile extends Component {
 
     return (
       <div>
-        {alert}
         <h1>Upplýsingar</h1>
         <ReactCSSTransitionGroup
           transitionName="registerAnimation"
@@ -159,7 +165,11 @@ class Profile extends Component {
                   onChange={this.handleInputChange}
                 />
               </div>
-              <Button children="Uppfæra lykilorð" disabled={isFetching} />
+              <Button
+                className={match ? "" : "disable"}
+                children="Uppfæra lykilorð"
+                disabled={isFetching}
+              />
             </form>
           </div>
         </ReactCSSTransitionGroup>
