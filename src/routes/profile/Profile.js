@@ -88,10 +88,6 @@ class Profile extends Component {
         });
     }
 
-    if (!match) {
-      alert = <div>Password don't match!</div>;
-    }
-
     if (isFetching) {
       return <div>Loading...</div>;
     }
@@ -141,6 +137,7 @@ class Profile extends Component {
           </div>
 
           <div className="register--container">
+            {!match && <div>Passwords don't match!</div>}
             <form onSubmit={this.handleSubmit}>
               <div className="register--input">
                 <label htmlFor="password">Password: </label>
