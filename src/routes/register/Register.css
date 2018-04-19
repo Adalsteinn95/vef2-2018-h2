@@ -3,7 +3,7 @@
 }
 
 .register--container {
-  max-width: 400px;
+  max-width: 500px;
 }
 
 .register--container form div {
@@ -13,7 +13,7 @@
 
 .register--input label {
   font-size: 1em;
-  min-width: 150px;
+  min-width: 200px;
   padding-right: 3rem;
   text-align: left;
   flex: 1;

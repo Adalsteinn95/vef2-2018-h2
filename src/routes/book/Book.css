@@ -11,3 +11,21 @@
 .book--container a {
     margin-bottom: 50px;
 }
+.review--container {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+}
+
+.review--container select {
+    max-width: 100px;
+}
+
+.review--container textarea {
+    margin-bottom: 20px;    
+}
+
+.review--buttons {
+    display: flex;
+    justify-content: space-between;
+}

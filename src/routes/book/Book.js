@@ -61,7 +61,7 @@ class Book extends Component {
 
     const { id } = this.props.match.params;
     return (
-      <div className='book--container'>
+      <div className="book--container">
         <div>
           <h1>{book.title}</h1>
           <p>Eftir {book.author}</p>
@@ -73,36 +73,35 @@ class Book extends Component {
           <p>Gefin út {book.published}</p>
           <p>Tungumál {book.language}</p>
         </div>
+        <Link to={`/books/${book.id}/edit`}>Breyta bók</Link>
         {this.state.addRead && (
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Um bók:
-              <textarea
-                rows="8"
-                cols="50"
-                name="review"
-                value={this.state.review}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label>
-              Einkunn:
-              <select
-                name="rating"
-                value={this.state.rating}
-                onChange={this.handleChange}
-              >
-                <option value="1">1 </option>
-                <option value="2">2</option>
-                <option value="3">3 </option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </label>
-            <Button children={"Vista"} />
+          <form className="review--container" onSubmit={this.handleSubmit}>
+            <label for="review">Um bók:</label>
+            <textarea
+              rows="8"
+              cols="50"
+              name="review"
+              value={this.state.review}
+              onChange={this.handleChange}
+            />
+            <label for="rating">Einkunn:</label>
+            <select
+              name="rating"
+              value={this.state.rating}
+              onChange={this.handleChange}
+            >
+              <option value="1">1 </option>
+              <option value="2">2</option>
+              <option value="3">3 </option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <div className='review--buttons'>
+              <Button children={"Vista"} />
+              <Button className="danger" children={"Hætta við"} />
+            </div>
           </form>
         )}
-        <Link to= {`/books/${book.id}/edit`}>Breyta bók</Link>
 
         <Button onClick={this.onClick} children={"Lesin bók"} />
         <Button onClick={this.onClick} children={"Til Baka"} />

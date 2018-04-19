@@ -1,0 +1,7 @@
+.user--container {
+    display: flex;
+}
+
+.user--container h1 {
+    margin-left: 0.5em;
+}

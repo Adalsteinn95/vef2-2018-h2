@@ -6,18 +6,16 @@ import { getRead, deleteRead } from "../../actions/books";
 import { Link } from "react-router-dom";
 import queryString from "query-string";
 
-import ReadBooks from '../../components/readBooksList';
+import ReadBooks from "../../components/readBooksList";
 
 class Profile extends Component {
-
   state = {
     username: "",
     password: "",
     passwordAgain: "",
     image: null,
-    match: true,
+    match: true
   };
-  
 
   handleInputChange = e => {
     const { name, value, files } = e.target;
@@ -25,9 +23,9 @@ class Profile extends Component {
     if (name) {
       this.setState({ [name]: value });
     }
-    
+
     if (files) {
-      this.setState({ [name]: files[0]});
+      this.setState({ [name]: files[0] });
     }
   };
 
@@ -37,10 +35,10 @@ class Profile extends Component {
     const { dispatch } = this.props;
     const { username, password, passwordAgain } = this.state;
 
-    if(password !== passwordAgain){
-      this.setState({match: false});
+    if (password !== passwordAgain) {
+      this.setState({ match: false });
     } else {
-      this.setState({match: true});
+      this.setState({ match: true });
       dispatch(updateOneUser({ username, password }));
     }
   };
@@ -48,13 +46,10 @@ class Profile extends Component {
   handleDelete = e => {
     e.preventDefault();
 
-    const {
-      dispatch
-    } = this.props;
+    const { dispatch } = this.props;
 
-    dispatch(deleteRead(e.target.parentNode.id, '/users/me/read'))
-
-  }
+    dispatch(deleteRead(e.target.parentNode.id, "/users/me/read"));
+  };
 
   handleImageSubmit = e => {
     e.preventDefault();
@@ -65,10 +60,16 @@ class Profile extends Component {
   };
 
   render() {
-
     const { isFetching, message = null, reviews } = this.props;
 
-    const { username, password, passwordAgain, image, match, page } = this.state;
+    const {
+      username,
+      password,
+      passwordAgain,
+      image,
+      match,
+      page
+    } = this.state;
 
     let alert;
     if (!Array.isArray(message) && message) {
@@ -86,73 +87,77 @@ class Profile extends Component {
         });
     }
 
-    if(!match) {
+    if (!match) {
       alert = <div>Password don't match!</div>;
     }
 
-    if(isFetching) {
-      return (
-        <div>Loading...</div>
-      );
+    if (isFetching) {
+      return <div>Loading...</div>;
     }
-
-    console.info(this.urlpage);
 
     return (
       <div>
         {alert}
         <h1>Upplýsingar</h1>
 
-        <form method='post' encType="multipart/form-data" onSubmit={this.handleImageSubmit}>
-          <div>
-            <label htmlFor="image">image: </label>
-            <input
-              id="image"
-              name="image"
-              type="file"
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <Button disabled={isFetching}>Uppfæra</Button>
-        </form>
+        <div className="register--container">
+          <form
+            method="post"
+            encType="multipart/form-data"
+            onSubmit={this.handleImageSubmit}
+          >
+            <div className="register--input">
+              <input
+                id="image"
+                name="image"
+                type="file"
+                onChange={this.handleInputChange}
+              />
+              <Button disabled={isFetching}>Uppfæra</Button>
+            </div>
+          </form>
+        </div>
+        <div className="register--container">
+          <form onSubmit={this.handleSubmit}>
+            <div className="register--input">
+              <label htmlFor="username">Username: </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                value={username}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <Button children="Uppfæra nafn" disabled={isFetching} />
+          </form>
+        </div>
 
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor="username">Username: </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={username}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <Button disabled={isFetching}>Uppfæra</Button>
-        </form>
-
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor="password">Password: </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="passwordAgain">Password Again: </label>
-            <input
-              id="passwordAgain"
-              name="passwordAgain"
-              type="password"
-              value={passwordAgain}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <Button disabled={isFetching}>Uppfæra</Button>
-        </form>
+        <div className='register--container'>
+          <form onSubmit={this.handleSubmit}>
+            <div className='register--input'>
+              <label htmlFor="password">Password: </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className='register--input'>
+              <label htmlFor="passwordAgain">Password Again: </label>
+              <input
+                id="passwordAgain"
+                name="passwordAgain"
+                type="password"
+                value={passwordAgain}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <Button children='Uppfæra lykilorð' disabled={isFetching}></Button>
+          </form>
+        </div>
         <ReadBooks deleteOption={true} />
       </div>
     );
@@ -162,7 +167,7 @@ const mapStateToProps = state => {
   return {
     isFetching: state.auth.isFetching,
     message: state.auth.message,
-    user: state.auth.user,
+    user: state.auth.user
   };
 };
 

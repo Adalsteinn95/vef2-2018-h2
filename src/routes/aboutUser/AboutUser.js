@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchOneUser } from "../../actions/getAllUsers";
-import { getRead } from '../../actions/books'
-import ReadBooks from '../../components/readBooksList';
-
+import { getRead } from "../../actions/books";
+import ReadBooks from "../../components/readBooksList";
+import './AboutUser.css'
 class AboutUser extends Component {
   state = {
     id: null
@@ -18,8 +18,6 @@ class AboutUser extends Component {
     const offset = `offset=${page * 10}`;
     dispatch(getRead(`users/me/read?${offset}`));
   }
-
-  
 
   async componentDidUpdate(prevProps, prevState) {
     const { dispatch } = this.props;
@@ -47,8 +45,10 @@ class AboutUser extends Component {
 
     return (
       <div>
-        <img src={user.image || "/profile.jpg"} alt="profile" />
-        <h1>{user.name}</h1>
+        <div className='user--container'>
+          <img src={user.image || "/profile.jpg"} alt="profile" />
+          <h1>{user.name}</h1>
+        </div>
         <ReadBooks deleteOption={false} />
       </div>
     );
