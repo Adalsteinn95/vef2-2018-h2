@@ -66,8 +66,7 @@ class Register extends Component {
         message.map((item, index) => {
           return (
             <div key={index}>
-              <p>Field:{item.field}</p>
-              <p>Message:{item.message}</p>
+              <p className='alert--text'>{item.message}</p>
             </div>
           );
         });
@@ -77,12 +76,19 @@ class Register extends Component {
       <ReactCSSTransitionGroup
         transitionName="registerAnimation"
         transitionAppear={true}
-        transitionAppearTimeout={1500}
         transitionEnter={false}
         transitionLeave={false}
       >
         <div className="register--container">
-          {alert}
+          <ReactCSSTransitionGroup
+            transitionName="messageAnimation"
+            transitionAppear={true}
+            transitionAppearTimeout={2000}
+            transitionEnter={false}
+            transitionLeave={false}
+          >
+            {alert}
+          </ReactCSSTransitionGroup>
           <h1>Nýskráning</h1>
           <form onSubmit={this.handleSubmit}>
             <div className="register--input">

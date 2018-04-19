@@ -80,7 +80,15 @@ class Login extends Component {
       >
         <div className="register--container">
           <h1>Innskráning</h1>
-          {alert}
+          <ReactCSSTransitionGroup
+            transitionName="messageAnimation"
+            transitionAppear={true}
+            transitionAppearTimeout={10000}
+            transitionEnter={false}
+            transitionLeave={false}
+          >
+            {alert}
+          </ReactCSSTransitionGroup>
           <form onSubmit={this.handleSubmit}>
             <div className="register--input">
               <label htmlFor="username">Username: </label>

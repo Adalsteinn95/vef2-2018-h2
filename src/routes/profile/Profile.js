@@ -8,6 +8,7 @@ import queryString from "query-string";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import ReadBooks from "../../components/readBooksList";
+import "./Profile.css";
 
 class Profile extends Component {
   state = {
@@ -89,7 +90,9 @@ class Profile extends Component {
     }
 
     if (!match) {
-      alert = <div>Password don't match!</div>;
+      alert = (
+        <div className="alert--danger">Password don't match!</div>
+      );
     }
 
     if (isFetching) {

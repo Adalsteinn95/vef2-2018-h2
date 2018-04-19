@@ -34,3 +34,73 @@
   transform: translateX(0px);
   transition: all 0.5s ease-in;
 }
+
+.messageAnimation-appear {
+  font-size: 5em;
+  color: yellow;
+}
+
+.messageAnimation-appear.messageAnimation-appear-active {
+  font-size: 1em;
+  transition: 1s;
+  color: crimson;
+  animation: nudge 2s linear;
+}
+
+
+@keyframes nudge {
+  100% {
+    transform: translateX(0px);
+    color: yellow;
+  }
+
+  90% {
+    transform: translateX(0px);
+    color: crimson;
+  }
+
+  80% {
+    transform: translateX(50px);
+    color: yellow;
+  }
+
+  70% {
+    transform: translateX(0px);
+    color: crimson;
+  }
+
+  60% {
+    transform: translateX(100px);
+    color: yellow;
+  }
+
+  50% {
+    transform: translateX(0px);
+    color: crimson;
+  }
+
+  40% {
+    transform: translateX(150px);
+    color: yellow;
+  }
+
+  30% {
+    transform: translateX(0px);
+    color: crimson;
+  }
+
+  20% {
+    transform: translateX(200px);
+    color: yellow;
+  }
+
+  10% {
+    transform: translateX(0px);
+    color: crimson;
+  }
+
+  0% {
+    transform: translateX(250px);
+    color: yellow;
+  }
+}
