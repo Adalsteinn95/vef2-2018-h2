@@ -93,7 +93,7 @@ export const loginUser = ({ username, password }, endpoint) => {
       login = await api.post({ username, password }, endpoint);
 
       if (login.error) {
-        dispatch(errorLogin(login.error.message));
+        dispatch(errorLogin(login.error));
       }
 
       if (!login.error) {
@@ -156,10 +156,10 @@ export const updateOneUser = ({ username, password } = {}) => {
     } catch (error) {
       const user = JSON.parse(localStorage.getItem("user"));
       
-      if (!user.user) {
+      if (!user) {
         dispatch(updateUsererror(error, null, false));
       } else {
-        dispatch(updateUsererror(error, user, true));
+        dispatch(updateUsererror(error, user.user, true));
       }
     }
   };
