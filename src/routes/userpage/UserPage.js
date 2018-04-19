@@ -29,9 +29,10 @@ class UserPage extends Component {
     const { dispatch, history } = this.props;
     const offset = `offset=${page * 10}`;
     dispatch(fetchUsers(`users?${offset}`));
-    const newPageUrl = page > 0 ? `page=${page + 1}` : "";
-
-    //history.push(newPageUrl);
+    const newPageUrl = page > 0 ? `/users/?page=${page + 1}` : "";
+    if (newPageUrl) {
+      history.push(newPageUrl);
+    }
   }
 
   handlePageClick = key => {
@@ -44,7 +45,6 @@ class UserPage extends Component {
 
   render() {
     const { isFetching, users, message } = this.props;
-    console.log(users);
     if (isFetching) {
       return <div>Sæki gögn...</div>;
     }
