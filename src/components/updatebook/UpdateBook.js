@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Helmet from "react-helmet";
 
 import BookForm from "../bookform";
-import { alterBook, getCategories } from "../../actions/bookAltering";
+import { alterBook } from "../../actions/bookAltering";
 import { fetchBooks } from "../../actions/books";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -45,18 +46,14 @@ class UpdateBook extends Component {
     );
   };
   render() {
-    const {
-      isSending,
-      formInfo = {},
-      categories,
-      isFetchingCategories
-    } = this.props;
+    const { isSending, formInfo = {}, version } = this.props;
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
 
     return (
       <div>
+        <Helmet title={`Breyta ${this.state.title}`} />
         <ReactCSSTransitionGroup
           transitionName="bookHeader"
           transitionAppear={true}
@@ -67,6 +64,7 @@ class UpdateBook extends Component {
           <h1>Breyta bók</h1>
         </ReactCSSTransitionGroup>
         {formInfo.hasOwnProperty("errors") &&
+          version === "update" &&
           formInfo.errors.map(error => {
             return (
               <ReactCSSTransitionGroup
@@ -88,7 +86,7 @@ class UpdateBook extends Component {
           {...this.state}
         />
         {formInfo.hasOwnProperty("title") && (
-          <h2>Bókinni {formInfo.title} hefur breytt</h2>
+          <h2>Bókinni {formInfo.title} hefur verið breytt</h2>
         )}
       </div>
     );
@@ -98,6 +96,7 @@ class UpdateBook extends Component {
 const mapStateToProps = state => {
   return {
     isSending: state.bookAltering.isSending,
+    version: state.bookAltering.version,
     formInfo: state.bookAltering.formInfo,
     isFetching: state.books.isFetching,
     message: state.books.message,

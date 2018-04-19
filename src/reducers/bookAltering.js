@@ -27,13 +27,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         formInfo: action.formInfo,
-        isSending: action.isSending
+        isSending: action.isSending,
+        version: action.version
       };
     case BOOK_FAILURE:
       return {
         ...state,
         isSending: action.isSending,
-        formInfo: action.formInfo
+        formInfo: action.formInfo,
+        version: action.version
       };
     case CATEGORIES_GET:
       return {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchOneUser } from "../../actions/getAllUsers";
 import { getRead } from "../../actions/books";
+import Helmet from "react-helmet";
 import ReadBooks from "../../components/readBooksList";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./AboutUser.css";
@@ -18,6 +19,7 @@ class AboutUser extends Component {
     const { page } = this.state;
     const offset = `offset=${page * 10}`;
     dispatch(getRead(`users/me/read?${offset}`));
+    //dispatch(getRead(`users/me/read?${offset}`));
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -35,6 +37,7 @@ class AboutUser extends Component {
 
   render() {
     const { user, isFetching, message } = this.props;
+    const { id } = this.props.match.params;
 
     if (message) {
       return <div>{message}</div>;
@@ -52,12 +55,13 @@ class AboutUser extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
+        <Helmet title={`Notandi ${user.username}`} />
         <div>
           <div className="user--container">
             <img src={user.image || "/profile.jpg"} alt="profile" />
             <h1>{user.name}</h1>
           </div>
-          <ReadBooks deleteOption={false} />
+          <ReadBooks userId={id} meReadBooks={false} deleteOption={false} />
         </div>
       </ReactCSSTransitionGroup>
     );

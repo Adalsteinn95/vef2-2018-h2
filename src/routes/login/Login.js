@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Helmet from "react-helmet";
 import { loginUser, logoutUser } from "../../actions/auth";
 import Button from "../../components/button";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -13,10 +14,25 @@ class Login extends Component {
     password: ""
   };
 
+  componentDidMount() {
+    this.maybeRedirect();
+  }
+
+  getDerivedStateFromProps() {
+    console.log("getDerivedStateFromProps");
+  }
+
   handleInputChange = e => {
     const { name, value } = e.target;
     if (name) {
       this.setState({ [name]: value });
+    }
+  };
+
+  maybeRedirect = () => {
+    const { isAuthenticated, history } = this.props;
+    if (isAuthenticated) {
+      history.push("/");
     }
   };
 
@@ -26,7 +42,9 @@ class Login extends Component {
     const { dispatch } = this.props;
     const { username, password } = this.state;
 
-    dispatch(loginUser({ username, password }, "/login"));
+    dispatch(loginUser({ username, password }, "/login")).then(() => {
+      this.maybeRedirect();
+    });
   };
 
   handleLogout = e => {
@@ -69,6 +87,7 @@ class Login extends Component {
           );
         });
     }
+    console.log(message, alert);
 
     return (
       <ReactCSSTransitionGroup
@@ -78,6 +97,7 @@ class Login extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
+        <Helmet title="Innskráning" />
         <div className="register--container">
           <h1>Innskráning</h1>
           <ReactCSSTransitionGroup

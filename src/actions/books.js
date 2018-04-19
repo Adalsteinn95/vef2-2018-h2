@@ -78,14 +78,6 @@ function bookAddReadError(message) {
   };
 }
 
-function requestReads() {
-  return {
-    type: BOOK_GETREAD,
-    isFetching: true,
-    message: null
-  };
-}
-
 function getReadsSuccess(reviews) {
   return {
     type: BOOK_GETREAD_SUCCESS,
@@ -113,7 +105,7 @@ export const addReadBook = (values, endpoint) => {
     dispatch(requestAddBook());
     try {
       const data = await api.post(values, endpoint);
-      dispatch(addBookSuccess());
+      dispatch(addBookSuccess(data));
     } catch (e) {
       console.error("Error fetching data", e);
       dispatch(bookAddReadError(e));
@@ -138,9 +130,9 @@ export const deleteRead = (id, endpoint) => {
     dispatch(requestAddBook());
 
     try {
-      await api.deleteRead(id,endpoint);
+      await api.deleteRead(id, endpoint);
 
-      const data = await api.get('users/me/read');
+      const data = await api.get("users/me/read");
       dispatch(getReadsSuccess(data));
     } catch (e) {
       console.error("Error fetching data", e);

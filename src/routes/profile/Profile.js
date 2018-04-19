@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/button";
+import Helmet from "react-helmet";
 import { updateOneUser, postImage } from "../../actions/auth";
-import { getRead, deleteRead } from "../../actions/books";
-import { Link } from "react-router-dom";
-import queryString from "query-string";
+import { deleteRead } from "../../actions/books";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import ReadBooks from "../../components/readBooksList";
@@ -62,16 +61,9 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null, reviews } = this.props;
+    const { isFetching, message = null, user } = this.props;
 
-    const {
-      username,
-      password,
-      passwordAgain,
-      image,
-      match,
-      page
-    } = this.state;
+    const { username, password, passwordAgain, match } = this.state;
 
     let alert;
     if (!Array.isArray(message) && message) {
@@ -89,12 +81,12 @@ class Profile extends Component {
         });
     }
 
+
     if (!match) {
       alert = (
         <div className="alert--danger">Password don't match!</div>
       );
     }
-
     if (isFetching) {
       return <div>Loading...</div>;
     }
@@ -110,6 +102,7 @@ class Profile extends Component {
           transitionEnter={false}
           transitionLeave={false}
         >
+          <Helmet title={` Prófíll - ${user.username}`} />
           <div className="register--container">
             <form
               method="post"
@@ -144,6 +137,7 @@ class Profile extends Component {
           </div>
 
           <div className="register--container">
+            {!match && <div>Passwords don't match!</div>}
             <form onSubmit={this.handleSubmit}>
               <div className="register--input">
                 <label htmlFor="password">Password: </label>
@@ -169,7 +163,7 @@ class Profile extends Component {
             </form>
           </div>
         </ReactCSSTransitionGroup>
-        <ReadBooks deleteOption={true} />
+        <ReadBooks meReadBooks={true} deleteOption={true} />
       </div>
     );
   }

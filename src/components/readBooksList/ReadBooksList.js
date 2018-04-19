@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import Button from "../../components/button";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
-import { getRead, deleteRead } from "../../actions/books";
+import { getRead } from "../../actions/books";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import './ReadbooksList.css'
+import "./ReadbooksList.css";
 
 class readBooksList extends Component {
   urlpage = Number(queryString.parse(this.props.location).page - 1);
@@ -15,10 +15,14 @@ class readBooksList extends Component {
   };
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, meReadBooks, userId } = this.props;
     const { page } = this.state;
     const offset = `offset=${page * 10}`;
-    dispatch(getRead(`users/me/read?${offset}`));
+    if (meReadBooks) {
+      dispatch(getRead(`users/me/read?${offset}`));
+    } else {
+      dispatch(getRead(`users/${userId}/read?${offset}`));
+    }
   }
 
   handlePageClick = key => {
@@ -34,7 +38,7 @@ class readBooksList extends Component {
   }
 
   render() {
-    const { isFetching, message = null, reviews, deleteOption } = this.props;
+    const { isFetching, reviews, deleteOption } = this.props;
 
     const { page } = this.state;
 

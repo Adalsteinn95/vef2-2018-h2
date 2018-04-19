@@ -2,15 +2,14 @@ import {
   GETUSERS_REQUEST,
   GETUSERS_SUCCESS,
   GETUSERS_ERROR,
-  GETONEUSER_SUCCESS,
-  UPDATEUSER_SUCCESS,
+  GETONEUSER_SUCCESS
   /* todo fleiri actions */
 } from "../actions/getAllUsers";
 
 const initialState = {
   isFetching: true,
   users: [],
-  user: null,
+  user: null
 };
 
 export default (state = initialState, action) => {
@@ -19,7 +18,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetching: action.isFetching,
-        users: action.users,
+        users: action.users
       };
     case GETUSERS_SUCCESS:
       return {
@@ -31,7 +30,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isFetching: action.isFetching,
-        user: action.user,
+        user: action.user
       };
     case GETUSERS_ERROR:
       return {

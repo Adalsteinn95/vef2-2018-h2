@@ -9,13 +9,15 @@ export const CATEGORIES_GOT = "CATEGORIES_GOT";
 function newBook() {
   return {
     type: BOOK_ADD,
-    isSending: true
+    isSending: true,
+    formInfo: null
   };
 }
 function updateBook() {
   return {
     type: BOOK_ALTER,
-    isSending: true
+    isSending: true,
+    formInfo: null
   };
 }
 function getCategories() {
@@ -33,19 +35,21 @@ function gotCategories(categories) {
   };
 }
 
-function success(formInfo) {
+function success(formInfo, version) {
   return {
     type: BOOK_UPDATED,
     isSending: false,
-    formInfo
+    formInfo,
+    version
   };
 }
 
-function errorAltering(formInfo) {
+function errorAltering(formInfo, version) {
   return {
     type: BOOK_FAILURE,
     isSending: false,
-    formInfo
+    formInfo,
+    version
   };
 }
 
@@ -66,9 +70,9 @@ export const addBook = (data, endpoint) => {
     dispatch(newBook());
     try {
       data = await api.post(data, endpoint);
-      dispatch(success(data));
+      dispatch(success(data, "add"));
     } catch (e) {
-      return dispatch(errorAltering(e));
+      return dispatch(errorAltering(e, "add"));
     }
   };
 };
@@ -78,9 +82,9 @@ export const alterBook = (data, endpoint) => {
     dispatch(updateBook());
     try {
       data = await api.patch(data, endpoint);
-      dispatch(success(data));
+      dispatch(success(data, "update"));
     } catch (e) {
-      return dispatch(errorAltering(e));
+      return dispatch(errorAltering(e, "update"));
     }
   };
 };

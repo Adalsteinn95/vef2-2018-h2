@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Helmet from "react-helmet";
-import { Route, NavLink, Link, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 
-import { checkToken, logoutUser } from "./actions/auth";
+import { checkToken } from "./actions/auth";
 
 import UserRoute from "./components/user-route";
 import Header from "./components/header";
@@ -26,8 +26,7 @@ import "./App.css";
 
 class App extends Component {
   render() {
-
-    const { isAuthenticated, isFetching, user } = this.props;
+    const { isAuthenticated, user } = this.props;
     if (user) {
       this.props.dispatch(checkToken("/users/me"));
     }

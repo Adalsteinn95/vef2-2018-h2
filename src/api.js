@@ -1,5 +1,3 @@
-import { loginUser } from "./actions/auth";
-
 const baseurl = process.env.REACT_APP_SERVICE_URL;
 
 async function get(endpoint) {
@@ -47,7 +45,6 @@ async function update(name, pass) {
   }
 
   const options = {
-    headers: {},
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name: name, password: pass })
@@ -103,7 +100,6 @@ async function post(data, endpoint) {
 
     return data;
   } catch (error) {
-    console.log("ping");
     console.error(error);
 
     throw error;
@@ -131,7 +127,6 @@ async function patch(data, endpoint) {
       localStorage.removeItem("user");
       throw data.error;
     }
-    console.log(data);
     return data;
   } catch (error) {
     console.error(error);
@@ -231,6 +226,5 @@ export default {
   postImage,
   deleteRead,
   patch,
-  postImage,
   checkToken
 };

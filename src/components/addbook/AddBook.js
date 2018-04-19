@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import Helmet from "react-helmet";
 import BookForm from "../bookform";
-import { addBook, getCategories } from "../../actions/bookAltering";
+import { addBook } from "../../actions/bookAltering";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class AddBook extends Component {
@@ -34,20 +34,17 @@ class AddBook extends Component {
     );
   };
   render() {
-    const {
-      isSending,
-      formInfo = {},
-      categories,
-      isFetchingCategories
-    } = this.props;
+    const { isSending, formInfo = {}, version } = this.props;
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
 
     return (
       <div>
+        <Helmet title="Skrá bók" />
         <h1>Skrá bók</h1>
         {formInfo.hasOwnProperty("errors") &&
+          version === "add" &&
           formInfo.errors.map(error => {
             return (
               <ReactCSSTransitionGroup
@@ -79,7 +76,8 @@ class AddBook extends Component {
 const mapStateToProps = state => {
   return {
     isSending: state.bookAltering.isSending,
-    formInfo: state.bookAltering.formInfo
+    formInfo: state.bookAltering.formInfo,
+    version: state.bookAltering.version
   };
 };
 

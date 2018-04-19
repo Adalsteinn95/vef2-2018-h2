@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Helmet from "react-helmet";
 import { registerUser } from "../../actions/register";
 import Button from "../../components/button";
 import { Link } from "react-router-dom";
@@ -79,6 +80,7 @@ class Register extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
+        <Helmet title="Nýskráning" />
         <div className="register--container">
           <ReactCSSTransitionGroup
             transitionName="messageAnimation"

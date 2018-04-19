@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Helmet from "react-helmet";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -9,7 +10,7 @@ import { fetchUsers } from "../../actions/getAllUsers";
 
 /* comp */
 import Button from "../../components/button";
-import './userpage.css';
+import "./userpage.css";
 
 class UserPage extends Component {
   urlpage = Number(queryString.parse(this.props.location.search).page - 1);
@@ -20,7 +21,6 @@ class UserPage extends Component {
   };
 
   async componentDidMount() {
-    const { dispatch } = this.props;
     this.fetchUsers("users");
   }
 
@@ -29,9 +29,10 @@ class UserPage extends Component {
     const { dispatch, history } = this.props;
     const offset = `offset=${page * 10}`;
     dispatch(fetchUsers(`users?${offset}`));
-    const newPageUrl = page > 0 ? `page=${page + 1}` : "";
-
-    //history.push(newPageUrl);
+    const newPageUrl = page > 0 ? `/users/?page=${page + 1}` : "";
+    if (newPageUrl) {
+      history.push(newPageUrl);
+    }
   }
 
   handlePageClick = key => {
@@ -44,7 +45,7 @@ class UserPage extends Component {
 
   render() {
     const { isFetching, users, message } = this.props;
-
+    const { page } = this.state;
     if (isFetching) {
       return <div>Sæki gögn...</div>;
     }
@@ -65,16 +66,19 @@ class UserPage extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
-        <div className='users--container'>
+        <Helmet title={`Notendur - síða ${page + 1}`} />
+
+        <div className="users--container">
           <h2>Notendur</h2>
           <div key={this.state.page}>
             {users.items.map((item, index) => {
-              const { id, name } = item;
+              const { id, username } = item;
 
-              const url = `users/${id.toString()}`;
+              const url = `/users/${id.toString()}`;
+              console.log(url);
               return (
                 <div key={index}>
-                  <Link to={url}>{name}</Link>
+                  <Link to={url}>{username}</Link>
                 </div>
               );
             })}
