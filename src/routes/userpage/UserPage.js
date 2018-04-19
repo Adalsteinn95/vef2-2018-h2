@@ -71,7 +71,8 @@ class UserPage extends Component {
             {users.items.map((item, index) => {
               const { id, username } = item;
 
-              const url = `users/${id.toString()}`;
+              const url = `/users/${id.toString()}`;
+              console.log(url);
               return (
                 <div key={index}>
                   <Link to={url}>{username}</Link>
