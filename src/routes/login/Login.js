@@ -18,10 +18,6 @@ class Login extends Component {
     this.maybeRedirect();
   }
 
-  getDerivedStateFromProps() {
-    console.log("getDerivedStateFromProps");
-  }
-
   handleInputChange = e => {
     const { name, value } = e.target;
     if (name) {

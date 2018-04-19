@@ -5,6 +5,8 @@ async function get(endpoint) {
 
   const url = `${baseurl}/${endpoint}`;
 
+  console.log("bookurl", url);
+
   const options = {
     headers: {}
   };
@@ -205,9 +207,9 @@ async function checkToken(endpoint) {
   if (token) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
-
   try {
     const response = await fetch(url, options);
+    console.log(response);
     if (response.status === 401) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
@@ -215,6 +217,7 @@ async function checkToken(endpoint) {
 
     return response;
   } catch (error) {
+    console.log("HALLO", error);
     throw error;
   }
 }

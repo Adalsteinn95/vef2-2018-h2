@@ -95,7 +95,6 @@ export const loginUser = ({ username, password }, endpoint) => {
       if (login.error) {
         dispatch(errorLogin(login.error.message));
       }
-
       if (!login.error) {
         const { user } = login;
         localStorage.setItem("user", JSON.stringify({ user }));
@@ -118,13 +117,16 @@ export const checkToken = endpoint => {
     try {
       token = await api.checkToken(endpoint);
       if (token.status === 401) {
+        console.log("WTFFFFFFFFFFFFFFFFFFFFFF");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         dispatch(logout());
       } else {
       }
     } catch (e) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      console.log("BIG ERRRROOOORRR");
+      // þetta er að valda böggum
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("user");
       return dispatch(errorLogin("úps eitthvað óvænt kom upp!"));
     }
   };
@@ -155,7 +157,7 @@ export const updateOneUser = ({ username, password } = {}) => {
       dispatch(updateOneUserSucces(data));
     } catch (error) {
       const user = JSON.parse(localStorage.getItem("user"));
-      
+
       if (!user.user) {
         dispatch(updateUsererror(error, null, false));
       } else {

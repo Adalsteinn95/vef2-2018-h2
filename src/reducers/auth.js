@@ -4,7 +4,7 @@ import {
   LOGIN_FAILURE,
   LOGIN_LOGOUT,
   UPDATEUSER_SUCCESS,
-  UPDATEUSER_FAILURE,
+  UPDATEUSER_FAILURE
 } from "../actions/auth";
 
 /* konnum hvort token se i localstorage annars null */

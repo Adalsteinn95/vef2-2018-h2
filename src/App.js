@@ -25,12 +25,14 @@ import AboutUser from "./routes/aboutUser";
 import "./App.css";
 
 class App extends Component {
-  render() {
+  componentDidUpdate() {
     const { isAuthenticated, user } = this.props;
     if (user) {
       this.props.dispatch(checkToken("/users/me"));
     }
-
+  }
+  render() {
+    const { isAuthenticated, user } = this.props;
     return (
       <main className="main">
         <Helmet defaultTitle="Bókasafnið" titleTemplate="%s – Bókasafnið" />

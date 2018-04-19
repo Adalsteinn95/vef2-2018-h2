@@ -28,18 +28,16 @@ class Header extends Component {
           <h1 className="header__heading">
             <Link to="/">Bókasafnið</Link>
           </h1>
-          <div>Big Loading...</div>
+          <div>Loading...</div>
         </header>
       );
     }
-
-    console.info(isAuthenticated);
 
     return (
       <header className="header">
         <ReactCSSTransitionGroup
           transitionName="headerAnimation"
-          transitionAppear={true }
+          transitionAppear={true}
           transitionAppearTimeout={1500}
           transitionEnter={false}
           transitionLeave={false}
@@ -50,17 +48,18 @@ class Header extends Component {
           <Search />
 
           {/* Mogulega gera seperated component */}
-          {isAuthenticated && user && (
-            <React.Fragment>
-              <div className="profile--header">
-                <img src={user.image || "/profile.jpg"} alt="profile" />
-                <div className='profile--item'>
-                  <Link to='/profile/me'>{user.name}</Link>
-                  <Button onClick={this.handleLogout} children="Útskrá" />
+          {isAuthenticated &&
+            user && (
+              <React.Fragment>
+                <div className="profile--header">
+                  <img src={user.image || "/profile.jpg"} alt="profile" />
+                  <div className="profile--item">
+                    <Link to="/profile/me">{user.name}</Link>
+                    <Button onClick={this.handleLogout} children="Útskrá" />
+                  </div>
                 </div>
-              </div>
-            </React.Fragment>
-          )}
+              </React.Fragment>
+            )}
 
           {!isAuthenticated && <Link to="/login">Innskráning</Link>}
         </ReactCSSTransitionGroup>
