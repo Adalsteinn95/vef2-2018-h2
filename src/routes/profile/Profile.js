@@ -7,6 +7,7 @@ import { deleteRead } from "../../actions/books";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import ReadBooks from "../../components/readBooksList";
+import "./Profile.css";
 
 class Profile extends Component {
   state = {
@@ -80,6 +81,12 @@ class Profile extends Component {
         });
     }
 
+
+    if (!match) {
+      alert = (
+        <div className="alert--danger">Password don't match!</div>
+      );
+    }
     if (isFetching) {
       return <div>Loading...</div>;
     }

@@ -1,7 +1,14 @@
-.update--container {
-
-}
 
 .update--container form {
-    margin-bottom: 2em;
+  margin-bottom: 2em;
+}
+
+.alert--danger {
+  color: crimson;
+  opacity: 0;
+  font-size: 5em;
+}
+
+#image {
+    align-self: center;
 }

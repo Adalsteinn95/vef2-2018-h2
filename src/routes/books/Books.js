@@ -74,35 +74,35 @@ class Books extends Component {
         transitionEnter={false}
         transitionLeave={false}
       >
-        <Helmet title={`Bækur - síða ${page + 1}`} />
-        <div className="books--container">
-          {search ? <h1>Bókaleit: {search}</h1> : <h1>Bækur</h1>}
-          <div key={page}>
-            {books.items.map(book => {
-              return (
-                <div key={book.id}>
-                  <Link to={`/books/${book.id}`}>
-                    <h3>{book.title}</h3>
-                  </Link>
-                  <p>Eftir {book.author}</p>
-                </div>
-              );
-            })}
-          </div>
-          {page > 0 && (
-            <Button
-              onClick={() => this.handlePageClick("prev")}
-              children={"Fyrri síða"}
-            />
-          )}
-          <span>Síða {page + 1}</span>
-          {books.items.length === 10 && (
-            <Button
-              onClick={() => this.handlePageClick("next")}
-              children={"Næsta síða"}
-            />
-          )}
+ <Helmet title={`Bækur - síða ${page + 1}`} />
+      <div className='books--container'>
+        {search ? <h1>Bókaleit: {search}</h1> : <h1>Bækur</h1>}
+        <div key={page}>
+          {books && books.items.map(book => {
+            return (
+              <div key={book.id}>
+                <Link to={`/books/${book.id}`}>
+                  <h3>{book.title}</h3>
+                </Link>
+                <p>Eftir {book.author}</p>
+              </div>
+            );
+          })}
         </div>
+        {page > 0 && (
+          <Button
+            onClick={() => this.handlePageClick("prev")}
+            children={"Fyrri síða"}
+          />
+        )}
+        <span>Síða {page + 1}</span>
+        {books && books.items.length === 10 && (
+          <Button
+            onClick={() => this.handlePageClick("next")}
+            children={"Næsta síða"}
+          />
+        )}
+      </div>
       </ReactCSSTransitionGroup>
     );
   }

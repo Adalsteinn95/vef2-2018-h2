@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Helmet from "react-helmet";
 import BookForm from "../bookform";
 import { addBook } from "../../actions/bookAltering";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class AddBook extends Component {
   state = {
@@ -46,10 +47,17 @@ class AddBook extends Component {
           version === "add" &&
           formInfo.errors.map(error => {
             return (
-              <div key={error.field}>
-                <p>Field: {error.field}</p>
-                <p>Villa: {error.message}</p>
-              </div>
+              <ReactCSSTransitionGroup
+                transitionName="messageAnimation"
+                transitionAppear={true}
+                transitionAppearTimeout={10000}
+                transitionEnter={false}
+                transitionLeave={false}
+              >
+                <div key={error.field}>
+                  <p>Villa: {error.message}</p>
+                </div>
+              </ReactCSSTransitionGroup>
             );
           })}
         <BookForm

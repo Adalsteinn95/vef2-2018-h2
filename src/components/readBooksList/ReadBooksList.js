@@ -48,44 +48,46 @@ class readBooksList extends Component {
 
     return (
       <ReactCSSTransitionGroup
-        transitionName="bookUpdate"
-        transitionAppear={true}
-        transitionAppearTimeout={1500}
-        transitionEnter={false}
-        transitionLeave={false}
-      >
-        <div className="readbooks--container" key={1}>
-          <h1>Lesnar Bækur</h1>
-          {reviews.items.map(book => {
-            return (
-              <form key={book.id} id={book.id} onSubmit={this.handleDelete}>
-                <Link to={`/books/${book.book_id}`}>
-                  <h3>{book.title}</h3>
-                </Link>
-                <p>Einkunn: {book.rating}</p>
-                {book.review && <p>Um bókina: {book.review}</p>}
-                {deleteOption && (
-                  <Button className="danger" onClick={this.handleDelete}>
-                    Eyda
-                  </Button>
-                )}
-              </form>
-            );
-          })}
-          {page > 0 && (
-            <Button
-              onClick={() => this.handlePageClick("prev")}
-              children={"Fyrri síða"}
-            />
-          )}
-          <span>Síða {page + 1}</span>
-          {reviews.items.length === 10 && (
-            <Button
-              onClick={() => this.handlePageClick("next")}
-              children={"Næsta síða"}
-            />
-          )}
-        </div>
+          transitionName="bookUpdate"
+          transitionAppear={true}
+          transitionAppearTimeout={1500}
+          transitionEnter={false}
+          transitionLeave={false}
+        >
+      <div className="readbooks--container" key={1}>
+        <h1>Lesnar Bækur</h1>
+        {reviews && reviews.items.map(book => {
+          return (
+            <form key={book.id} id={book.id} onSubmit={this.handleDelete}>
+              <Link to={`/books/${book.book_id}`}>
+                <h3>{book.title}</h3>
+              </Link>
+              <p>Einkunn: {book.rating}</p>
+              {book.review && (
+                <p>Um bókina: {book.review}</p>
+              )}
+              {deleteOption && (
+                <Button className="danger" onClick={this.handleDelete}>
+                  Eyda
+                </Button>
+              )}
+            </form>
+          );
+        })}
+        {page > 0 && (
+          <Button
+            onClick={() => this.handlePageClick("prev")}
+            children={"Fyrri síða"}
+          />
+        )}
+        <span>Síða {page + 1}</span>
+        {reviews && reviews.items.length === 10 && (
+          <Button
+            onClick={() => this.handlePageClick("next")}
+            children={"Næsta síða"}
+          />
+        )}
+      </div>
       </ReactCSSTransitionGroup>
     );
   }
