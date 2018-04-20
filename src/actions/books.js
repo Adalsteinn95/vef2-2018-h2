@@ -98,7 +98,6 @@ export const addReadBook = (values, endpoint) => {
       const data = await api.post(values, endpoint);
       dispatch(addBookSuccess(data));
     } catch (e) {
-      console.error("Error fetching data", e);
       dispatch(bookAddReadError(e));
     }
   };
@@ -126,7 +125,6 @@ export const deleteRead = (id, endpoint) => {
       const data = await api.get("users/me/read");
       dispatch(getReadsSuccess(data));
     } catch (e) {
-      console.error("Error fetching data", e);
       dispatch(getReadsError(e));
     }
   };
@@ -143,7 +141,6 @@ export const fetchBooks = (endpoint, search, shouldGetOneBook) => {
         ? dispatch(bookSuccess(null, search, data))
         : dispatch(bookSuccess(data, search));
     } catch (e) {
-      console.error("Error fetching data", e);
       dispatch(bookError(e));
     }
   };
