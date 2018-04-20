@@ -56,6 +56,7 @@ class Login extends Component {
 
     const { isAuthenticated, isFetching, message } = this.props;
 
+    console.info(this.props);
     if (isAuthenticated) {
       return <Button onClick={this.handleLogout}>Útskrá</Button>;
     }

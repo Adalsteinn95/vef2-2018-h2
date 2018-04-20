@@ -1,12 +1,41 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class Home extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    history: PropTypes.shape({
+      action: PropTypes.string,
+      block: PropTypes.func,
+      go: PropTypes.func,
+      goBack: PropTypes.func,
+      goForward: PropTypes.func,
+      length: PropTypes.number,
+      listen: PropTypes.func
+    }),
+    location: PropTypes.shape({
+      hash: PropTypes.string,
+      key: PropTypes.string,
+      pathname: PropTypes.string,
+      search: PropTypes.string
+    }),
+    match: PropTypes.shape({
+      path: PropTypes.string,
+      url: PropTypes.string,
+      isExact: PropTypes.bool,
+      params: PropTypes.shape({
+        id: PropTypes.number
+      })
+    }),
+    isAuthenticated: PropTypes.bool,
+  }
   render() {
     const { isAuthenticated } = this.props;
 
     /* todo birta mismunandi upplýsingar ef innskráður notandi eða ekki */
+
 
     if (isAuthenticated) {
       return (

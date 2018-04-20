@@ -53,7 +53,8 @@ function logout() {
     type: LOGIN_LOGOUT,
     isFetching: false,
     isAuthenticated: false,
-    user: null
+    user: null,
+    message: null
   };
 }
 
@@ -166,7 +167,7 @@ export const updateOneUser = ({ username, password } = {}) => {
       if (!user.user) {
         dispatch(updateUsererror(error, null, false));
       } else {
-        dispatch(updateUsererror(error, user, true));
+        dispatch(updateUsererror(error, user.user, true));
       }
     }
   };

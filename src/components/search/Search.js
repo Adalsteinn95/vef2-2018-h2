@@ -4,16 +4,27 @@ import { connect } from "react-redux";
 import createHistory from "history/createBrowserHistory";
 import { fetchBooks } from "../../actions/books";
 import Button from "../button";
-
+import PropTypes from 'prop-types';
 import "./Search.css";
 const history = createHistory();
 
 class Search extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+  }
   state = { searchvalue: "" };
 
   handleChange = e => {
     const { value } = e.target;
     this.setState({ searchvalue: value });
+  };
+
+  handleSubmit = e => {
+    const {
+      dispatch
+    } = this.props;
+    dispatch(fetchBooks("books", this.state.searchvalue));
+    history.push(`/books?search=${this.state.searchvalue}`);
   };
 
   render() {
@@ -37,10 +48,8 @@ class Search extends Component {
 
 const mapStateToProps = state => {
   return {
-    searchUrl: state.books.search,
-    user: state.auth.user,
-    isAuthenticated: state.auth.isAuthenticated
-  };
+    
+  }
 };
 
 export default connect(mapStateToProps)(Search);

@@ -6,8 +6,51 @@ import { fetchBooks, addReadBook } from "../../actions/books";
 import Button from "../../components/button";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./Book.css";
+import PropTypes from 'prop-types';
 
 class Book extends Component {
+  static propTypes = {
+    book: PropTypes.shape({
+      author: PropTypes.string,
+      category: PropTypes.number,
+      categorytitle: PropTypes.string,
+      description: PropTypes.string,
+      id: PropTypes.number,
+      isbn10: PropTypes.string,
+      isbn13: PropTypes.string,
+      language: PropTypes.string,
+      pagecount: PropTypes.stirng,
+      published: PropTypes.string,
+      title: PropTypes.string,
+    }),
+    dispatch: PropTypes.func,
+    history: PropTypes.shape({
+      action: PropTypes.string,
+      block: PropTypes.func,
+      createHref: PropTypes.func,
+      go: PropTypes.func,
+      goBack: PropTypes.func,
+      goForward: PropTypes.func,
+      length: PropTypes.number,
+      listen: PropTypes.func,
+    }),
+    location: PropTypes.shape({
+      hash: PropTypes.string,
+      key: PropTypes.string,
+      pathname: PropTypes.string,
+      search: PropTypes.string,
+    }),
+    match: PropTypes.shape({
+      path: PropTypes.string,
+      url: PropTypes.string,
+      isExact: PropTypes.bool,
+      params: PropTypes.shape({
+        id: PropTypes.string,
+      })
+    }),
+    message: PropTypes.array,
+    
+  } 
   state = { addRead: false, rating: 1, review: "" };
   async componentDidMount() {
     this.props.dispatch(
@@ -61,6 +104,8 @@ class Book extends Component {
         return <div>Bók fannst ekki</div>;
       }
     }
+
+    console.info(this.props);
 
     return (
       <ReactCSSTransitionGroup

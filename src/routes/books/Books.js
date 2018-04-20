@@ -6,12 +6,46 @@ import queryString from "query-string";
 import { fetchBooks } from "../../actions/books";
 import Button from "../../components/button";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-
+import PropTypes from "prop-types";
 /* todo sækja actions frá ./actions */
 
 import "./Books.css";
 
 class Books extends Component {
+  static propTypes = {
+    books: PropTypes.shape({
+      isFetching: PropTypes.bool.isRequired,
+      message: PropTypes.array,
+      searchUrl: PropTypes.string
+    }),
+    dispatch: PropTypes.func,
+    history: PropTypes.shape({
+      action: PropTypes.string,
+      block: PropTypes.func,
+      go: PropTypes.func,
+      goBack: PropTypes.func,
+      goForward: PropTypes.func,
+      length: PropTypes.number,
+      listen: PropTypes.func
+    }),
+    location: PropTypes.shape({
+      hash: PropTypes.string,
+      key: PropTypes.string,
+      pathname: PropTypes.string,
+      search: PropTypes.string
+    }),
+    match: PropTypes.shape({
+      path: PropTypes.string,
+      url: PropTypes.string,
+      isExact: PropTypes.bool,
+      params: PropTypes.shape({
+        id: PropTypes.number
+      })
+    }),
+    message: PropTypes.array,
+    searchUrl: PropTypes.string,
+  };
+
   urlpage = Number(queryString.parse(this.props.location.search).page - 1);
   urlsearch = queryString.parse(this.props.location.search).search;
   state = {
@@ -65,7 +99,6 @@ class Books extends Component {
     if (isFetching || !books) {
       return <div>Sæki gögn...</div>;
     }
-
     return (
       <ReactCSSTransitionGroup
         transitionName="registerAnimation"

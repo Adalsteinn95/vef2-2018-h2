@@ -78,6 +78,7 @@ class Register extends Component {
         transitionName="registerAnimation"
         transitionAppear={true}
         transitionEnter={false}
+        transitionAppearTimeout={2000}
         transitionLeave={false}
       >
         <Helmet title="Nýskráning" />

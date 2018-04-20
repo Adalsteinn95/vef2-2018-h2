@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/button";
-import Helmet from "react-helmet";
 import { updateOneUser, postImage } from "../../actions/auth";
-import { deleteRead } from "../../actions/books";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { getRead, deleteRead } from "../../actions/books";
+import { Link } from "react-router-dom";
+import queryString from "query-string";
 
 import ReadBooks from "../../components/readBooksList";
-import "./Profile.css";
 
 class Profile extends Component {
   state = {
@@ -47,21 +46,6 @@ class Profile extends Component {
     }
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-
-    const { password, passwordAgain } = this.state;
-    this.checkMatch(true);
-  };
-
-  handleDelete = e => {
-    e.preventDefault();
-
-    const { dispatch } = this.props;
-
-    dispatch(deleteRead(e.target.parentNode.id, "/users/me/read"));
-  };
-
   handleImageSubmit = e => {
     e.preventDefault();
 
@@ -71,9 +55,16 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null, user } = this.props;
+    const { isFetching, message = null, reviews } = this.props;
 
-    const { username, password, passwordAgain, match } = this.state;
+    const {
+      username,
+      password,
+      passwordAgain,
+      image,
+      match,
+      page
+    } = this.state;
 
     let alert;
     if (!Array.isArray(message) && message) {
@@ -92,8 +83,9 @@ class Profile extends Component {
     }
 
     if (!match) {
-      alert = <div className="alert--danger">Password don't match!</div>;
+      alert = <div className="alert--danger">Passwords don't match!</div>;
     }
+
     if (isFetching) {
       return <div>Loading...</div>;
     }

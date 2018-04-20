@@ -11,8 +11,20 @@ import "./Header.css";
 import { logoutUser } from "../../actions/auth";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import PropTypes from 'prop-types';
 
 class Header extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    isAuthenticated: PropTypes.bool,
+    isFetching: PropTypes.bool,
+    user: PropTypes.shape({
+      id: PropTypes.number,
+      username: PropTypes.string,
+      name: PropTypes.string,
+      image: PropTypes.string,
+    })
+  }
   handleLogout = e => {
     e.preventDefault();
     const { dispatch } = this.props;
