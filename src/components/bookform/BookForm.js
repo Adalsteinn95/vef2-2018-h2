@@ -7,7 +7,7 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import "./bookform.css";
 class BookForm extends Component {
-  static propTypes = {
+  static PropTypes = {
     dispatch: PropTypes.func,
     isFetchingCategories: PropTypes.bool,
     categories: PropTypes.shape({
@@ -170,6 +170,7 @@ class BookForm extends Component {
             </div>
             <Button type="submit" children={"Vista"} />
           </form>
+          <Button onClick={this.props.handleClickBack} children={"Til Baka"} />
         </div>
       </ReactCSSTransitionGroup>
     );

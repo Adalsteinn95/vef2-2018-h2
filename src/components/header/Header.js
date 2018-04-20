@@ -11,7 +11,7 @@ import "./Header.css";
 import { logoutUser } from "../../actions/auth";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 class Header extends Component {
   static propTypes = {
@@ -22,9 +22,9 @@ class Header extends Component {
       id: PropTypes.number,
       username: PropTypes.string,
       name: PropTypes.string,
-      image: PropTypes.string,
+      image: PropTypes.string
     })
-  }
+  };
   handleLogout = e => {
     e.preventDefault();
     const { dispatch } = this.props;
@@ -59,7 +59,6 @@ class Header extends Component {
           </h1>
           <Search />
 
-          {/* Mogulega gera seperated component */}
           {isAuthenticated &&
             user && (
               <React.Fragment>

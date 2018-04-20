@@ -4,17 +4,17 @@ import Helmet from "react-helmet";
 import BookForm from "../bookform";
 import { addBook } from "../../actions/bookAltering";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 class AddBook extends Component {
   static propTypes = {
     isSending: PropTypes.bool,
     version: PropTypes.string,
     formInfo: PropTypes.shape({
-      error: PropTypes.array,
+      error: PropTypes.array
     }),
-    dispatch: PropTypes.func, 
-  }
+    dispatch: PropTypes.func
+  };
 
   state = {
     title: "",
@@ -31,6 +31,9 @@ class AddBook extends Component {
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+  };
+  onClickBack = e => {
+    this.props.history.goBack();
   };
   handleSubmit = e => {
     e.preventDefault();
@@ -73,6 +76,7 @@ class AddBook extends Component {
         <BookForm
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          handleClickBack={this.onClickBack}
           {...this.state}
         />
         {formInfo.hasOwnProperty("title") && (
@@ -84,7 +88,6 @@ class AddBook extends Component {
 }
 
 const mapStateToProps = state => {
-  console.info(state.bookAltering.formInfo);
   return {
     isSending: state.bookAltering.isSending,
     formInfo: state.bookAltering.formInfo,

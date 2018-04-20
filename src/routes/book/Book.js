@@ -6,7 +6,7 @@ import { fetchBooks, addReadBook } from "../../actions/books";
 import Button from "../../components/button";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./Book.css";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 class Book extends Component {
   static propTypes = {
@@ -21,7 +21,7 @@ class Book extends Component {
       language: PropTypes.string,
       pagecount: PropTypes.stirng,
       published: PropTypes.string,
-      title: PropTypes.string,
+      title: PropTypes.string
     }),
     dispatch: PropTypes.func,
     history: PropTypes.shape({
@@ -32,25 +32,24 @@ class Book extends Component {
       goBack: PropTypes.func,
       goForward: PropTypes.func,
       length: PropTypes.number,
-      listen: PropTypes.func,
+      listen: PropTypes.func
     }),
     location: PropTypes.shape({
       hash: PropTypes.string,
       key: PropTypes.string,
       pathname: PropTypes.string,
-      search: PropTypes.string,
+      search: PropTypes.string
     }),
     match: PropTypes.shape({
       path: PropTypes.string,
       url: PropTypes.string,
       isExact: PropTypes.bool,
       params: PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.string
       })
     }),
-    message: PropTypes.array,
-    
-  } 
+    message: PropTypes.array
+  };
   state = { addRead: false, rating: 1, review: "" };
   async componentDidMount() {
     this.props.dispatch(
@@ -104,8 +103,6 @@ class Book extends Component {
         return <div>Bók fannst ekki</div>;
       }
     }
-
-    console.info(this.props);
 
     return (
       <ReactCSSTransitionGroup

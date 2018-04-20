@@ -49,7 +49,6 @@ class AboutUser extends Component {
     const { page } = this.state;
     const offset = `offset=${page * 10}`;
     dispatch(getRead(`users/me/read?${offset}`));
-    //dispatch(getRead(`users/me/read?${offset}`));
   }
 
   async componentDidUpdate(prevProps, prevState) {

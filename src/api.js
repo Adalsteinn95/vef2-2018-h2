@@ -13,8 +13,6 @@ async function get(endpoint) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
 
-  /* todo framkvæma get */
-
   try {
     const response = await fetch(url, options);
     const data = await response.json();
@@ -52,7 +50,6 @@ async function update(name, pass) {
   if (token) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
-  /* todo framkvæma get */
 
   let response;
 

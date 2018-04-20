@@ -8,7 +8,7 @@ import { fetchBooks } from "../../actions/books";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./updatebook.css";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 class UpdateBook extends Component {
   static propTypes = {
@@ -52,7 +52,6 @@ class UpdateBook extends Component {
     await this.props.dispatch(
       fetchBooks(`books/${this.props.match.params.id}`, null, true)
     );
-
     this.setState({
       ...this.props.book
     });
@@ -73,6 +72,11 @@ class UpdateBook extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+
+  onClickBack = e => {
+    console.log("ping");
+    this.props.history.goBack();
+  };
   handleSubmit = e => {
     e.preventDefault();
     const bookData = Object.assign({}, this.state);
@@ -88,7 +92,11 @@ class UpdateBook extends Component {
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
+<<<<<<< HEAD
     console.info(this.props);
+=======
+
+>>>>>>> 99454a7f83ea1d77c9e09ac56b483b5dc3374131
     return (
       <div>
         <Helmet title={`Breyta ${this.state.title}`} />
@@ -121,6 +129,7 @@ class UpdateBook extends Component {
         <BookForm
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          handleClickBack={this.onClickBack}
           {...this.state}
         />
         {formInfo.hasOwnProperty("title") && (

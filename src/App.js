@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Helmet from "react-helmet";
 import { Route, Switch, withRouter } from "react-router-dom";
+import Favicon from "react-favicon";
 
 import { checkToken } from "./actions/auth";
 
@@ -20,8 +21,6 @@ import Book from "./routes/book";
 import UserPage from "./routes/userpage";
 import AboutUser from "./routes/aboutUser";
 
-/* todo fleiri routes */
-
 import "./App.css";
 
 class App extends Component {
@@ -38,6 +37,7 @@ class App extends Component {
     }
     return (
       <main className="main">
+        <Favicon url="../public/favicon.ico" />
         <Helmet defaultTitle="Bókasafnið" titleTemplate="%s – Bókasafnið" />
         <Header />
 
@@ -53,7 +53,6 @@ class App extends Component {
               authenticated={isAuthenticated}
               component={Profile}
             />
-            {/* todo fleiri route */}
             <Route path="/register" exact component={Register} />
             <UserRoute
               path="/books/new"
@@ -88,7 +87,6 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  /* todo stilla redux ef það er notað */
   return {
     isAuthenticated: state.auth.isAuthenticated,
     bigError: state.auth.bigError,

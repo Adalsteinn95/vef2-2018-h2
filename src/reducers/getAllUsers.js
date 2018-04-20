@@ -3,7 +3,6 @@ import {
   GETUSERS_SUCCESS,
   GETUSERS_ERROR,
   GETONEUSER_SUCCESS
-  /* todo fleiri actions */
 } from "../actions/getAllUsers";
 
 const initialState = {

@@ -8,10 +8,7 @@ import {
   UPDATEUSER_FAILURE
 } from "../actions/auth";
 
-/* konnum hvort token se i localstorage annars null */
 const user = JSON.parse(localStorage.getItem("user" || "null"));
-
-/* upphafstada */
 
 const initialState = {
   isFetching: false,
@@ -64,7 +61,8 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
-        user: action.user
+        user: action.user,
+        message: action.message
       };
     case UPDATEUSER_FAILURE:
       return {

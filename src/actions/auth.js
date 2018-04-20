@@ -1,8 +1,3 @@
-/**
- * Ef redux er notað skal skilgreina allar actions fyrir auth hér og
- * síðan í annari skrá fyrir aðra virkni.
- * Í async "thunks" ætti þá að gera vefþjónustuköll
- */
 import api from "../api";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -87,10 +82,6 @@ function requestUpdateUser() {
   };
 }
 
-/* todo fleiri action */
-
-/* todo async "thunk" fyrir tengingu við vefþjónustu */
-
 export const loginUser = ({ username, password }, endpoint) => {
   return async dispatch => {
     dispatch(requestLogin());
@@ -110,11 +101,8 @@ export const loginUser = ({ username, password }, endpoint) => {
         return Promise.resolve();
       }
     } catch (e) {
-      console.info(e);
       return dispatch(errorLogin("Náði ekki sambandi við vefþjónustu"));
     }
-
-    console.info(login);
   };
 };
 
@@ -130,9 +118,6 @@ export const checkToken = endpoint => {
       } else {
       }
     } catch (e) {
-      // þetta er að valda böggum
-      // localStorage.removeItem("token");
-      // localStorage.removeItem("user");
       dispatch(bigError("Næ ekki sambandi við vefþjónustu"));
     }
   };
@@ -151,7 +136,6 @@ export const updateOneUser = ({ username, password } = {}) => {
     let data;
     try {
       data = await api.update(username, password);
-
       const { error, errors } = data;
 
       if (error || errors) {
