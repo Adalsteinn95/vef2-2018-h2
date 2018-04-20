@@ -60,14 +60,14 @@ class Register extends Component {
 
     let alert;
     if (!Array.isArray(message) && message) {
-      alert = <div>{message}</div>;
+      alert = <p className="alert--text">{message}</p>;
     } else {
       alert =
         message &&
         message.map((item, index) => {
           return (
             <div key={index}>
-              <p className='alert--text'>{item.message}</p>
+              <p className="alert--text">{item.message}</p>
             </div>
           );
         });
@@ -96,6 +96,7 @@ class Register extends Component {
             <div className="register--input">
               <label htmlFor="username">Username: </label>
               <input
+                required
                 id="username"
                 name="username"
                 type="text"
@@ -106,6 +107,7 @@ class Register extends Component {
             <div className="register--input">
               <label htmlFor="password">Password: </label>
               <input
+                required
                 id="password"
                 name="password"
                 type="password"
@@ -116,6 +118,7 @@ class Register extends Component {
             <div className="register--input">
               <label htmlFor="name">Name: </label>
               <input
+                required
                 id="name"
                 name="name"
                 type="text"

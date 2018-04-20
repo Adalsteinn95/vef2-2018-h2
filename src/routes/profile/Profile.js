@@ -18,11 +18,15 @@ class Profile extends Component {
     match: true
   };
 
+  componentDidUpdate() {
+    //this.checkMatch();
+  }
+
   handleInputChange = e => {
     const { name, value, files } = e.target;
 
     if (name) {
-      this.setState({ [name]: value });
+      this.setState({ [name]: value }, this.checkMatch.bind(false));
     }
 
     if (files) {
@@ -30,18 +34,24 @@ class Profile extends Component {
     }
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-
+  checkMatch = letsGo => {
     const { dispatch } = this.props;
     const { username, password, passwordAgain } = this.state;
-
     if (password !== passwordAgain) {
       this.setState({ match: false });
     } else {
+      if (letsGo) {
+        dispatch(updateOneUser({ username, password }));
+      }
       this.setState({ match: true });
-      dispatch(updateOneUser({ username, password }));
     }
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const { password, passwordAgain } = this.state;
+    this.checkMatch(true);
   };
 
   handleDelete = e => {
@@ -81,11 +91,8 @@ class Profile extends Component {
         });
     }
 
-
     if (!match) {
-      alert = (
-        <div className="alert--danger">Password don't match!</div>
-      );
+      alert = <div className="alert--danger">Password don't match!</div>;
     }
     if (isFetching) {
       return <div>Loading...</div>;
@@ -93,7 +100,6 @@ class Profile extends Component {
 
     return (
       <div>
-        {alert}
         <h1>Upplýsingar</h1>
         <ReactCSSTransitionGroup
           transitionName="registerAnimation"
@@ -110,7 +116,7 @@ class Profile extends Component {
               onSubmit={this.handleImageSubmit}
             >
               <div className="register--input">
-                <input
+                <input required
                   id="image"
                   name="image"
                   type="file"
@@ -124,7 +130,7 @@ class Profile extends Component {
             <form onSubmit={this.handleSubmit}>
               <div className="register--input">
                 <label htmlFor="username">Username: </label>
-                <input
+                <input required
                   id="username"
                   name="username"
                   type="text"
@@ -141,7 +147,7 @@ class Profile extends Component {
             <form onSubmit={this.handleSubmit}>
               <div className="register--input">
                 <label htmlFor="password">Password: </label>
-                <input
+                <input required
                   id="password"
                   name="password"
                   type="password"
@@ -151,7 +157,7 @@ class Profile extends Component {
               </div>
               <div className="register--input">
                 <label htmlFor="passwordAgain">Password Again: </label>
-                <input
+                <input required
                   id="passwordAgain"
                   name="passwordAgain"
                   type="password"
@@ -159,7 +165,11 @@ class Profile extends Component {
                   onChange={this.handleInputChange}
                 />
               </div>
-              <Button children="Uppfæra lykilorð" disabled={isFetching} />
+              <Button
+                className={match ? "" : "disable"}
+                children="Uppfæra lykilorð"
+                disabled={isFetching}
+              />
             </form>
           </div>
         </ReactCSSTransitionGroup>

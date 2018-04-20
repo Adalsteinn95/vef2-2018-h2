@@ -9,6 +9,7 @@ export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGIN_LOGOUT = "LOGIN_LOGOUT";
+export const BIG_ERROR = "BIG_ERROR";
 export const UPDATEUSER_SUCCESS = "UPDATEUSER_SUCCESS";
 export const UPDATEUSER_FAILURE = "UPDATEUSER_FAILURE";
 
@@ -32,7 +33,6 @@ function userLogin(user) {
 }
 
 function errorLogin(message) {
-  console.log("MESSAGE", message);
   return {
     type: LOGIN_FAILURE,
     isFetching: false,
@@ -41,8 +41,14 @@ function errorLogin(message) {
   };
 }
 
+function bigError(error) {
+  return {
+    type: BIG_ERROR,
+    superError: error
+  };
+}
+
 function logout() {
-  console.log("i logged you out");
   return {
     type: LOGIN_LOGOUT,
     isFetching: false,
@@ -93,9 +99,8 @@ export const loginUser = ({ username, password }, endpoint) => {
       login = await api.post({ username, password }, endpoint);
 
       if (login.error) {
-        dispatch(errorLogin(login.error.message));
+        dispatch(errorLogin(login.error));
       }
-
       if (!login.error) {
         const { user } = login;
         localStorage.setItem("user", JSON.stringify({ user }));
@@ -118,14 +123,16 @@ export const checkToken = endpoint => {
     try {
       token = await api.checkToken(endpoint);
       if (token.status === 401) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         dispatch(logout());
       } else {
       }
     } catch (e) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      console.log("BIG ERRRROOOORRR");
-      return dispatch(errorLogin("úps eitthvað óvænt kom upp!"));
+      // þetta er að valda böggum
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("user");
+      dispatch(bigError("Næ ekki sambandi við vefþjónustu"));
     }
   };
 };
@@ -155,7 +162,7 @@ export const updateOneUser = ({ username, password } = {}) => {
       dispatch(updateOneUserSucces(data));
     } catch (error) {
       const user = JSON.parse(localStorage.getItem("user"));
-      
+
       if (!user.user) {
         dispatch(updateUsererror(error, null, false));
       } else {
