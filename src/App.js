@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Helmet from "react-helmet";
 import { Route, Switch, withRouter } from "react-router-dom";
+import Favicon from "react-favicon";
 
 import { checkToken } from "./actions/auth";
 
@@ -36,6 +37,7 @@ class App extends Component {
     }
     return (
       <main className="main">
+        <Favicon url="../public/favicon.ico" />
         <Helmet defaultTitle="Bókasafnið" titleTemplate="%s – Bókasafnið" />
         <Header />
 
