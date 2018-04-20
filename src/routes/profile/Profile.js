@@ -19,10 +19,6 @@ class Profile extends Component {
     match: true
   };
 
-  componentDidUpdate() {
-    //this.checkMatch();
-  }
-
   handleInputChange = e => {
     const { name, value, files } = e.target;
 

@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import Button from "../button";
 import { getAllCategories } from "../../actions/bookAltering";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import "./bookform.css";
 class BookForm extends Component {
-
   static PropTypes = {
     dispatch: PropTypes.func,
     isFetchingCategories: PropTypes.bool.isRequired,
     categories: PropTypes.shape({
-      items: PropTypes.array,
+      items: PropTypes.array
     }).isRequired,
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
@@ -23,8 +22,7 @@ class BookForm extends Component {
     published: PropTypes.string.isRequired,
     pagecount: PropTypes.string.isRequired,
     language: PropTypes.string.isRequired
-
-  } 
+  };
 
   componentDidMount() {
     this.props.dispatch(getAllCategories("categories?limit=100"));
@@ -173,6 +171,7 @@ class BookForm extends Component {
             </div>
             <Button type="submit" children={"Vista"} />
           </form>
+          <Button onClick={this.props.handleClickBack} children={"Til Baka"} />
         </div>
       </ReactCSSTransitionGroup>
     );
