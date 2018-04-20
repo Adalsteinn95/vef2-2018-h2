@@ -5,10 +5,39 @@ import { loginUser, logoutUser } from "../../actions/auth";
 import Button from "../../components/button";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { Link } from "react-router-dom";
-
+import PropTypes from "prop-types";
 import "./Login.css";
 
 class Login extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    history: PropTypes.shape({
+      action: PropTypes.string,
+      block: PropTypes.func,
+      go: PropTypes.func,
+      goBack: PropTypes.func,
+      goForward: PropTypes.func,
+      length: PropTypes.number,
+      listen: PropTypes.func
+    }),
+    location: PropTypes.shape({
+      hash: PropTypes.string,
+      key: PropTypes.string,
+      pathname: PropTypes.string,
+      search: PropTypes.string
+    }),
+    match: PropTypes.shape({
+      path: PropTypes.string,
+      url: PropTypes.string,
+      isExact: PropTypes.bool,
+      params: PropTypes.shape({
+        id: PropTypes.string
+      })
+    }),
+    isAuthenticated: PropTypes.bool,
+    isFetching: PropTypes.bool,
+  };
+
   state = {
     username: "",
     password: ""
@@ -56,7 +85,6 @@ class Login extends Component {
 
     const { isAuthenticated, isFetching, message } = this.props;
 
-    console.info(this.props);
     if (isAuthenticated) {
       return <Button onClick={this.handleLogout}>Útskrá</Button>;
     }

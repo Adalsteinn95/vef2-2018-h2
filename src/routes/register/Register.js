@@ -5,10 +5,38 @@ import { registerUser } from "../../actions/register";
 import Button from "../../components/button";
 import { Link } from "react-router-dom";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-
+import PropTypes from "prop-types";
 import "./Register.css";
 
 class Register extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    history: PropTypes.shape({
+      action: PropTypes.string,
+      block: PropTypes.func,
+      go: PropTypes.func,
+      goBack: PropTypes.func,
+      goForward: PropTypes.func,
+      length: PropTypes.number,
+      listen: PropTypes.func
+    }),
+    location: PropTypes.shape({
+      hash: PropTypes.string,
+      key: PropTypes.string,
+      pathname: PropTypes.string,
+      search: PropTypes.string
+    }),
+    match: PropTypes.shape({
+      path: PropTypes.string,
+      url: PropTypes.string,
+      isExact: PropTypes.bool,
+      params: PropTypes.shape({
+        id: PropTypes.string
+      })
+    }),
+    message: PropTypes.array
+  };
+
   state = {
     username: "",
     password: "",
@@ -72,7 +100,7 @@ class Register extends Component {
           );
         });
     }
-
+    
     return (
       <ReactCSSTransitionGroup
         transitionName="registerAnimation"

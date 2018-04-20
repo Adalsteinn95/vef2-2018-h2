@@ -3,14 +3,47 @@ import { connect } from "react-redux";
 import Button from "../../components/button";
 import Helmet from "react-helmet";
 import { updateOneUser, postImage } from "../../actions/auth";
-import { getRead, deleteRead } from "../../actions/books";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import { Link } from "react-router-dom";
-import queryString from "query-string";
+import PropTypes from "prop-types";
 
 import ReadBooks from "../../components/readBooksList";
 
 class Profile extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    history: PropTypes.shape({
+      action: PropTypes.string,
+      block: PropTypes.func,
+      go: PropTypes.func,
+      goBack: PropTypes.func,
+      goForward: PropTypes.func,
+      length: PropTypes.number,
+      listen: PropTypes.func
+    }),
+    location: PropTypes.shape({
+      hash: PropTypes.string,
+      key: PropTypes.string,
+      pathname: PropTypes.string,
+      search: PropTypes.string
+    }),
+    match: PropTypes.shape({
+      path: PropTypes.string,
+      url: PropTypes.string,
+      isExact: PropTypes.bool,
+      params: PropTypes.shape({
+        id: PropTypes.string
+      })
+    }),
+    message: PropTypes.array,
+    isFetching: PropTypes.bool,
+    user: PropTypes.shape({
+      id: PropTypes.number,
+      image: PropTypes.string,
+      name: PropTypes.string,
+      username: PropTypes.string,
+    })
+  };
+
   state = {
     username: "",
     password: "",
@@ -57,15 +90,13 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null, reviews, user } = this.props;
+    const { isFetching, message = null, user } = this.props;
 
     const {
       username,
       password,
       passwordAgain,
-      image,
       match,
-      page
     } = this.state;
 
     let alert;

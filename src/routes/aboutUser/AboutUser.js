@@ -31,7 +31,7 @@ class AboutUser extends Component {
       url: PropTypes.string,
       isExact: PropTypes.bool,
       params: PropTypes.shape({
-        id: PropTypes.number
+        id: PropTypes.string
       })
     }),
     replace: PropTypes.func

@@ -1,30 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import Button from "../button";
 import { getAllCategories } from "../../actions/bookAltering";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import "./bookform.css";
 class BookForm extends Component {
-
-  static PropTypes = {
+  static propTypes = {
     dispatch: PropTypes.func,
-    isFetchingCategories: PropTypes.bool.isRequired,
+    isFetchingCategories: PropTypes.bool,
     categories: PropTypes.shape({
-      items: PropTypes.array,
-    }).isRequired,
+      items: PropTypes.array
+    }),
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
+    category: PropTypes.number,
     isbn10: PropTypes.string.isRequired,
     isbn13: PropTypes.string.isRequired,
     published: PropTypes.string.isRequired,
-    pagecount: PropTypes.string.isRequired,
+    pagecount: PropTypes.string,
     language: PropTypes.string.isRequired
-
-  } 
+  };
 
   componentDidMount() {
     this.props.dispatch(getAllCategories("categories?limit=100"));
