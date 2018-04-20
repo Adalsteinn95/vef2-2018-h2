@@ -11,6 +11,43 @@ import "./updatebook.css";
 import PropTypes from 'prop-types';
 
 class UpdateBook extends Component {
+  static propTypes = {
+    book: PropTypes.shape({
+      id: PropTypes.number,
+      author: PropTypes.string,
+      description: PropTypes.string,
+      isbn10: PropTypes.string,
+      isbn13: PropTypes.string,
+      language: PropTypes.string,
+      pageCount: PropTypes.string,
+      published: PropTypes.string,
+      title: PropTypes.string,
+    }),
+    dispatch: PropTypes.func,
+    history: PropTypes.shape({
+      action: PropTypes.string,
+      block: PropTypes.func,
+      go: PropTypes.func,
+      goBack: PropTypes.func,
+      goForward: PropTypes.func,
+      length: PropTypes.number,
+      listen: PropTypes.func
+    }),
+    location: PropTypes.shape({
+      hash: PropTypes.string,
+      key: PropTypes.string,
+      pathname: PropTypes.string,
+      search: PropTypes.string
+    }),
+    match: PropTypes.shape({
+      path: PropTypes.string,
+      url: PropTypes.string,
+      isExact: PropTypes.bool,
+      params: PropTypes.shape({
+        id: PropTypes.string
+      })
+    }),
+  }
   async componentDidMount() {
     await this.props.dispatch(
       fetchBooks(`books/${this.props.match.params.id}`, null, true)
@@ -51,7 +88,7 @@ class UpdateBook extends Component {
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
-    
+    console.info(this.props);
     return (
       <div>
         <Helmet title={`Breyta ${this.state.title}`} />

@@ -33,14 +33,6 @@ class Profile extends Component {
       params: PropTypes.shape({
         id: PropTypes.string
       })
-    }),
-    message: PropTypes.array,
-    isFetching: PropTypes.bool,
-    user: PropTypes.shape({
-      id: PropTypes.number,
-      image: PropTypes.string,
-      name: PropTypes.string,
-      username: PropTypes.string,
     })
   };
 
@@ -90,7 +82,7 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null, user } = this.props;
+    const { isFetching, user } = this.props;
 
     const {
       username,
@@ -98,26 +90,6 @@ class Profile extends Component {
       passwordAgain,
       match,
     } = this.state;
-
-    let alert;
-    if (!Array.isArray(message) && message) {
-      alert = <div>{message}</div>;
-    } else {
-      alert =
-        message &&
-        message.map((item, index) => {
-          return (
-            <div key={index}>
-              <p>{item.field}</p>
-              <p>{item.message}</p>
-            </div>
-          );
-        });
-    }
-
-    if (!match) {
-      alert = <div className="alert--danger">Passwords don't match!</div>;
-    }
 
     if (isFetching) {
       return <div>Loading...</div>;
@@ -210,7 +182,6 @@ class Profile extends Component {
 const mapStateToProps = state => {
   return {
     isFetching: state.auth.isFetching,
-    message: state.auth.message,
     user: state.auth.user
   };
 };

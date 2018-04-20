@@ -69,7 +69,6 @@ async function update(name, pass) {
 
     return data;
   } catch (e) {
-    console.info(e);
     throw e;
   }
 }

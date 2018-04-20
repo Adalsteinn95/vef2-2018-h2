@@ -32,7 +32,7 @@ class App extends Component {
     }
   }
   render() {
-    const { isAuthenticated, user, bigError } = this.props;
+    const { isAuthenticated, bigError } = this.props;
     if (bigError) {
       return <div>Næ ekki sambandi við vefþjónustu</div>;
     }

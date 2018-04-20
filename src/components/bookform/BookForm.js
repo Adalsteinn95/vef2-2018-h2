@@ -16,7 +16,6 @@ class BookForm extends Component {
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    category: PropTypes.number,
     isbn10: PropTypes.string.isRequired,
     isbn13: PropTypes.string.isRequired,
     published: PropTypes.string.isRequired,
