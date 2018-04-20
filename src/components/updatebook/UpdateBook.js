@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Helmet from "react-helmet";
+import Button from "../../components/button";
 
 import BookForm from "../bookform";
 import { alterBook } from "../../actions/bookAltering";
@@ -8,14 +9,13 @@ import { fetchBooks } from "../../actions/books";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./updatebook.css";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 class UpdateBook extends Component {
   async componentDidMount() {
     await this.props.dispatch(
       fetchBooks(`books/${this.props.match.params.id}`, null, true)
     );
-
     this.setState({
       ...this.props.book
     });
@@ -36,6 +36,11 @@ class UpdateBook extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+
+  onClickBack = e => {
+    console.log("ping");
+    this.props.history.goBack();
+  };
   handleSubmit = e => {
     e.preventDefault();
     const bookData = Object.assign({}, this.state);
@@ -51,7 +56,7 @@ class UpdateBook extends Component {
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
-    
+
     return (
       <div>
         <Helmet title={`Breyta ${this.state.title}`} />
@@ -84,6 +89,7 @@ class UpdateBook extends Component {
         <BookForm
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          handleClickBack={this.onClickBack}
           {...this.state}
         />
         {formInfo.hasOwnProperty("title") && (
