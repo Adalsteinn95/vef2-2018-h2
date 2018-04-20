@@ -12,7 +12,7 @@ class BookForm extends Component {
     isFetchingCategories: PropTypes.bool,
     categories: PropTypes.shape({
       items: PropTypes.array
-    }).
+    }),
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
