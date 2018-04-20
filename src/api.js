@@ -95,7 +95,6 @@ async function post(data, endpoint) {
 
     return data;
   } catch (error) {
-    console.error(error);
 
     throw error;
   }
@@ -124,7 +123,7 @@ async function patch(data, endpoint) {
     }
     return data;
   } catch (error) {
-    console.error(error);
+    
   }
 }
 
@@ -157,7 +156,7 @@ async function postImage({ image } = {}, endpoint) {
     }
     return data;
   } catch (error) {
-    console.error(error);
+    
   }
 }
 
@@ -185,7 +184,7 @@ async function deleteRead(id, endpoint) {
     }
     return response;
   } catch (error) {
-    console.error(error);
+    
   }
 }
 

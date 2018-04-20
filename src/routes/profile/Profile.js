@@ -55,6 +55,8 @@ class Profile extends Component {
   handleInputChange = e => {
     const { name, value, files } = e.target;
 
+    e.preventDefault()
+
     if (name) {
       this.setState({ [name]: value }, this.checkMatch.bind(false));
     }
@@ -95,12 +97,28 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, user } = this.props;
+    const { isFetching, user, message } = this.props;
 
     const { username, password, passwordAgain, match } = this.state;
 
     if (isFetching) {
       return <div>Loading...</div>;
+    }
+
+    let alert;
+    if (!Array.isArray(message) && message) {
+      alert = <div>{message}</div>;
+    } else {
+      alert =
+        message &&
+        message.map((item, index) => {
+          return (
+            <div key={index}>
+              <p>{item.field}</p>
+              <p>{item.message}</p>
+            </div>
+          );
+        });
     }
 
     return (
@@ -152,7 +170,7 @@ class Profile extends Component {
 
           <div className="register--container">
             {!match && <div>Passwords don't match!</div>}
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.checkMatch}>
               <div className="register--input">
                 <label htmlFor="password">Password: </label>
                 <input
@@ -176,6 +194,7 @@ class Profile extends Component {
                 />
               </div>
               <Button
+                type='button'
                 className={match ? "" : "disable"}
                 children="Uppfæra lykilorð"
                 disabled={isFetching}
@@ -191,7 +210,8 @@ class Profile extends Component {
 const mapStateToProps = state => {
   return {
     isFetching: state.auth.isFetching,
-    user: state.auth.user
+    user: state.auth.user,
+    message: state.auth.message
   };
 };
 

@@ -74,7 +74,6 @@ class UpdateBook extends Component {
   };
 
   onClickBack = e => {
-    console.log("ping");
     this.props.history.goBack();
   };
   handleSubmit = e => {

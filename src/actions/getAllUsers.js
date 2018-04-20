@@ -50,7 +50,6 @@ export const fetchUsers = endpoint => {
 
       dispatch(getUsersSuccess(data));
     } catch (e) {
-      console.error("Error fetching data", e);
       dispatch(usersError(e));
     }
   };
@@ -66,7 +65,6 @@ export const fetchOneUser = id => {
       data = await api.get(endpoint);
       dispatch(getOneUserSuccess(data));
     } catch (e) {
-      console.error("Error fetching data", e);
       dispatch(usersError(e));
     }
   };
