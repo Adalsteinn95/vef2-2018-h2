@@ -83,7 +83,7 @@ class Login extends Component {
           );
         });
     }
-
+    console.log(message);
     return (
       <ReactCSSTransitionGroup
         transitionName="registerAnimation"
@@ -108,6 +108,7 @@ class Login extends Component {
             <div className="register--input">
               <label htmlFor="username">Username: </label>
               <input
+                required
                 id="username"
                 name="username"
                 type="text"
@@ -118,6 +119,7 @@ class Login extends Component {
             <div className="register--input">
               <label htmlFor="password">Password: </label>
               <input
+                required
                 id="password"
                 name="password"
                 type="password"

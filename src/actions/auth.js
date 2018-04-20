@@ -99,7 +99,7 @@ export const loginUser = ({ username, password }, endpoint) => {
       login = await api.post({ username, password }, endpoint);
 
       if (login.error) {
-        dispatch(errorLogin(login.error.message));
+        dispatch(errorLogin(login.error));
       }
       if (!login.error) {
         const { user } = login;

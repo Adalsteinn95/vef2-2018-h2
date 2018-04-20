@@ -116,7 +116,7 @@ class Profile extends Component {
               onSubmit={this.handleImageSubmit}
             >
               <div className="register--input">
-                <input
+                <input required
                   id="image"
                   name="image"
                   type="file"
@@ -130,7 +130,7 @@ class Profile extends Component {
             <form onSubmit={this.handleSubmit}>
               <div className="register--input">
                 <label htmlFor="username">Username: </label>
-                <input
+                <input required
                   id="username"
                   name="username"
                   type="text"
@@ -147,7 +147,7 @@ class Profile extends Component {
             <form onSubmit={this.handleSubmit}>
               <div className="register--input">
                 <label htmlFor="password">Password: </label>
-                <input
+                <input required
                   id="password"
                   name="password"
                   type="password"
@@ -157,7 +157,7 @@ class Profile extends Component {
               </div>
               <div className="register--input">
                 <label htmlFor="passwordAgain">Password Again: </label>
-                <input
+                <input required
                   id="passwordAgain"
                   name="passwordAgain"
                   type="password"
