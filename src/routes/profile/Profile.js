@@ -33,8 +33,7 @@ class Profile extends Component {
       params: PropTypes.shape({
         id: PropTypes.string
       })
-<<<<<<< HEAD
-=======
+
     }),
     message: PropTypes.array,
     isFetching: PropTypes.bool,
@@ -43,7 +42,6 @@ class Profile extends Component {
       image: PropTypes.string,
       name: PropTypes.string,
       username: PropTypes.string
->>>>>>> 99454a7f83ea1d77c9e09ac56b483b5dc3374131
     })
   };
 

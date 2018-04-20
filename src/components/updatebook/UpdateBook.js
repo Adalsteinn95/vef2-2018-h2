@@ -92,11 +92,6 @@ class UpdateBook extends Component {
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
-<<<<<<< HEAD
-    console.info(this.props);
-=======
-
->>>>>>> 99454a7f83ea1d77c9e09ac56b483b5dc3374131
     return (
       <div>
         <Helmet title={`Breyta ${this.state.title}`} />
