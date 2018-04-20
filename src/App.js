@@ -26,7 +26,7 @@ import "./App.css";
 
 class App extends Component {
   componentDidUpdate() {
-    const { isAuthenticated, user } = this.props;
+    const { user } = this.props;
     if (user) {
       this.props.dispatch(checkToken("/users/me"));
     }

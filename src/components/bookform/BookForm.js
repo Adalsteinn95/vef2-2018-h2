@@ -9,18 +9,18 @@ import "./bookform.css";
 class BookForm extends Component {
   static PropTypes = {
     dispatch: PropTypes.func,
-    isFetchingCategories: PropTypes.bool.isRequired,
+    isFetchingCategories: PropTypes.bool,
     categories: PropTypes.shape({
       items: PropTypes.array
-    }).isRequired,
+    }).
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
+    category: PropTypes.number,
     isbn10: PropTypes.string.isRequired,
     isbn13: PropTypes.string.isRequired,
     published: PropTypes.string.isRequired,
-    pagecount: PropTypes.string.isRequired,
+    pagecount: PropTypes.string,
     language: PropTypes.string.isRequired
   };
 
