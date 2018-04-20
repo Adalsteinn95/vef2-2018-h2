@@ -33,7 +33,6 @@ class Profile extends Component {
       params: PropTypes.shape({
         id: PropTypes.string
       })
-
     }),
     message: PropTypes.array,
     isFetching: PropTypes.bool,
@@ -103,11 +102,11 @@ class Profile extends Component {
     if (isFetching) {
       return <div>Loading...</div>;
     }
-    console.log(message);
 
     return (
       <div>
         <h1>Upplýsingar</h1>
+        <Helmet title={` Prófíll - ${user.username}`} />
         <ReactCSSTransitionGroup
           transitionName="registerAnimation"
           transitionAppear={true}
@@ -115,7 +114,6 @@ class Profile extends Component {
           transitionEnter={false}
           transitionLeave={false}
         >
-          <Helmet title={` Prófíll - ${user.username}`} />
           <div className="register--container">
             <form
               method="post"

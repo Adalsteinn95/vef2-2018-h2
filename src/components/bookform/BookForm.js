@@ -7,7 +7,7 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import "./bookform.css";
 class BookForm extends Component {
-  static PropTypes = {
+  static propTypes = {
     dispatch: PropTypes.func,
     isFetchingCategories: PropTypes.bool,
     categories: PropTypes.shape({
