@@ -1,8 +1,3 @@
-/**
- * Ef redux er notað skal skilgreina allar actions fyrir auth hér og
- * síðan í annari skrá fyrir aðra virkni.
- * Í async "thunks" ætti þá að gera vefþjónustuköll
- */
 import api from "../api";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -86,10 +81,6 @@ function requestUpdateUser() {
     message: null
   };
 }
-
-/* todo fleiri action */
-
-/* todo async "thunk" fyrir tengingu við vefþjónustu */
 
 export const loginUser = ({ username, password }, endpoint) => {
   return async dispatch => {

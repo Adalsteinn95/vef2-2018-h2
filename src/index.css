@@ -7,16 +7,17 @@ html {
   box-sizing: border-box;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
 body {
-  /* kemur í veg fyrir lárétt hopp þegar síða síkkar og fær scrollbar */
   overflow-y: scroll;
 
   font-size: 16px;
-  font-family: 'Open sans', sans-serif;
+  font-family: "Open sans", sans-serif;
 }
 
 .main__content {
@@ -26,11 +27,10 @@ body {
   padding: 10px;
 }
 
-
 h1,
 h2,
 h3 {
-  font-family: 'Raleway',  sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 a {

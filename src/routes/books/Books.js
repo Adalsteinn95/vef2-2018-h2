@@ -7,7 +7,6 @@ import { fetchBooks } from "../../actions/books";
 import Button from "../../components/button";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import PropTypes from "prop-types";
-/* todo sækja actions frá ./actions */
 
 import "./Books.css";
 
@@ -43,7 +42,7 @@ class Books extends Component {
       })
     }),
     message: PropTypes.array,
-    searchUrl: PropTypes.string,
+    searchUrl: PropTypes.string
   };
 
   urlpage = Number(queryString.parse(this.props.location.search).page - 1);
@@ -144,7 +143,6 @@ class Books extends Component {
 }
 
 const mapStateToProps = state => {
-  /* todo stilla redux ef það er notað */
   return {
     isFetching: state.books.isFetching,
     message: state.books.message,

@@ -4,11 +4,9 @@ import Helmet from "react-helmet";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-/* action */
 
 import { fetchUsers } from "../../actions/getAllUsers";
 
-/* comp */
 import Button from "../../components/button";
 import "./userpage.css";
 

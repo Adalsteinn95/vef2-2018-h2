@@ -91,10 +91,6 @@ function getReadsError(message) {
   };
 }
 
-/* todo fleiri action */
-
-/* todo async "thunk" fyrir tengingu við vefþjónustu */
-
 export const addReadBook = (values, endpoint) => {
   return async dispatch => {
     dispatch(requestAddBook());

@@ -35,7 +35,7 @@ class Login extends Component {
       })
     }),
     isAuthenticated: PropTypes.bool,
-    isFetching: PropTypes.bool,
+    isFetching: PropTypes.bool
   };
 
   state = {
@@ -167,10 +167,7 @@ class Login extends Component {
   }
 }
 
-/* todo tengja við redux */
-
 const mapStateToProps = state => {
-  /* todo stilla redux ef það er notað */
   return {
     isFetching: state.auth.isFetching,
     isAuthenticated: state.auth.isAuthenticated,
