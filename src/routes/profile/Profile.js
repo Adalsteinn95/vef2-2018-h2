@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/button";
+import Helmet from "react-helmet";
 import { updateOneUser, postImage } from "../../actions/auth";
 import { getRead, deleteRead } from "../../actions/books";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { Link } from "react-router-dom";
 import queryString from "query-string";
 
@@ -55,7 +57,7 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null, reviews } = this.props;
+    const { isFetching, message = null, reviews, user } = this.props;
 
     const {
       username,
@@ -108,7 +110,8 @@ class Profile extends Component {
               onSubmit={this.handleImageSubmit}
             >
               <div className="register--input">
-                <input required
+                <input
+                  required
                   id="image"
                   name="image"
                   type="file"
@@ -122,7 +125,8 @@ class Profile extends Component {
             <form onSubmit={this.handleSubmit}>
               <div className="register--input">
                 <label htmlFor="username">Username: </label>
-                <input required
+                <input
+                  required
                   id="username"
                   name="username"
                   type="text"
@@ -139,7 +143,8 @@ class Profile extends Component {
             <form onSubmit={this.handleSubmit}>
               <div className="register--input">
                 <label htmlFor="password">Password: </label>
-                <input required
+                <input
+                  required
                   id="password"
                   name="password"
                   type="password"
@@ -149,7 +154,8 @@ class Profile extends Component {
               </div>
               <div className="register--input">
                 <label htmlFor="passwordAgain">Password Again: </label>
-                <input required
+                <input
+                  required
                   id="passwordAgain"
                   name="passwordAgain"
                   type="password"
