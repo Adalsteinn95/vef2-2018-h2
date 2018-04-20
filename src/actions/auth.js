@@ -110,11 +110,8 @@ export const loginUser = ({ username, password }, endpoint) => {
         return Promise.resolve();
       }
     } catch (e) {
-      console.info(e);
       return dispatch(errorLogin("Náði ekki sambandi við vefþjónustu"));
     }
-
-    console.info(login);
   };
 };
 
@@ -130,9 +127,6 @@ export const checkToken = endpoint => {
       } else {
       }
     } catch (e) {
-      // þetta er að valda böggum
-      // localStorage.removeItem("token");
-      // localStorage.removeItem("user");
       dispatch(bigError("Næ ekki sambandi við vefþjónustu"));
     }
   };
@@ -151,7 +145,6 @@ export const updateOneUser = ({ username, password } = {}) => {
     let data;
     try {
       data = await api.update(username, password);
-
       const { error, errors } = data;
 
       if (error || errors) {

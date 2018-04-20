@@ -40,7 +40,7 @@ class Profile extends Component {
       id: PropTypes.number,
       image: PropTypes.string,
       name: PropTypes.string,
-      username: PropTypes.string,
+      username: PropTypes.string
     })
   };
 
@@ -77,6 +77,15 @@ class Profile extends Component {
     }
   };
 
+  handleUpdateNameSubmit = e => {
+    e.preventDefault();
+
+    const { dispatch } = this.props;
+    const { username } = this.state;
+
+    dispatch(updateOneUser({ username }));
+  };
+
   handleImageSubmit = e => {
     e.preventDefault();
 
@@ -88,12 +97,7 @@ class Profile extends Component {
   render() {
     const { isFetching, message = null, user } = this.props;
 
-    const {
-      username,
-      password,
-      passwordAgain,
-      match,
-    } = this.state;
+    const { username, password, passwordAgain, match } = this.state;
 
     let alert;
     if (!Array.isArray(message) && message) {
@@ -118,6 +122,7 @@ class Profile extends Component {
     if (isFetching) {
       return <div>Loading...</div>;
     }
+    console.log(message);
 
     return (
       <div>
@@ -148,8 +153,9 @@ class Profile extends Component {
               </div>
             </form>
           </div>
+          {alert}
           <div className="register--container">
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleUpdateNameSubmit}>
               <div className="register--input">
                 <label htmlFor="username">Username: </label>
                 <input
