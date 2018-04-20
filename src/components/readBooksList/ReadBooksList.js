@@ -6,8 +6,20 @@ import { Link } from "react-router-dom";
 import { getRead } from "../../actions/books";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./ReadbooksList.css";
+import PropTypes from 'prop-types';
 
 class readBooksList extends Component {
+  static propTypes = {
+    deleteOption: PropTypes.bool,
+    dispatch: PropTypes.func,
+    isFetching: PropTypes.bool,
+    meReadBooks: PropTypes.bool,
+    review: PropTypes.shape({
+      limit: PropTypes.number,
+      offset: PropTypes.number,
+      items: PropTypes.array,
+    })
+  }
   urlpage = Number(queryString.parse(this.props.location).page - 1);
 
   state = {
@@ -33,6 +45,13 @@ class readBooksList extends Component {
     }, this.componentDidMount);
   };
 
+  handleDelete = (e) => {
+
+    e.preventDefault();
+    
+    console.info(e)
+  }
+
   if(isFetching) {
     return <div>Loading...</div>;
   }
@@ -46,6 +65,7 @@ class readBooksList extends Component {
       return <div>Loading...</div>;
     }
 
+    console.info(this.props);
     return (
       <ReactCSSTransitionGroup
           transitionName="bookUpdate"

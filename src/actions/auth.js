@@ -47,7 +47,8 @@ function logout() {
     type: LOGIN_LOGOUT,
     isFetching: false,
     isAuthenticated: false,
-    user: null
+    user: null,
+    message: null
   };
 }
 

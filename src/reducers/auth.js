@@ -47,7 +47,8 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
         isAuthenticated: action.isAuthenticated,
-        user: action.user
+        user: action.user,
+        message: action.message
       };
     case UPDATEUSER_SUCCESS:
       return {

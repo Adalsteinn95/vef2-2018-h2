@@ -4,8 +4,18 @@ import Helmet from "react-helmet";
 import BookForm from "../bookform";
 import { addBook } from "../../actions/bookAltering";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import PropTypes from 'prop-types';
 
 class AddBook extends Component {
+  static propTypes = {
+    isSending: PropTypes.bool,
+    version: PropTypes.string,
+    formInfo: PropTypes.shape({
+      error: PropTypes.array,
+    }),
+    dispatch: PropTypes.func, 
+  }
+
   state = {
     title: "",
     author: "",
@@ -74,6 +84,7 @@ class AddBook extends Component {
 }
 
 const mapStateToProps = state => {
+  console.info(state.bookAltering.formInfo);
   return {
     isSending: state.bookAltering.isSending,
     formInfo: state.bookAltering.formInfo,

@@ -11,8 +11,20 @@ import "./Header.css";
 import { logoutUser } from "../../actions/auth";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import PropTypes from 'prop-types';
 
 class Header extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    isAuthenticated: PropTypes.bool,
+    isFetching: PropTypes.bool,
+    user: PropTypes.shape({
+      id: PropTypes.number,
+      username: PropTypes.string,
+      name: PropTypes.string,
+      image: PropTypes.string,
+    })
+  }
   handleLogout = e => {
     e.preventDefault();
     const { dispatch } = this.props;
@@ -33,13 +45,11 @@ class Header extends Component {
       );
     }
 
-    console.info(isAuthenticated);
-
     return (
       <header className="header">
         <ReactCSSTransitionGroup
           transitionName="headerAnimation"
-          transitionAppear={true }
+          transitionAppear={true}
           transitionAppearTimeout={1500}
           transitionEnter={false}
           transitionLeave={false}
@@ -50,17 +60,18 @@ class Header extends Component {
           <Search />
 
           {/* Mogulega gera seperated component */}
-          {isAuthenticated && user && (
-            <React.Fragment>
-              <div className="profile--header">
-                <img src={user.image || "/profile.jpg"} alt="profile" />
-                <div className='profile--item'>
-                  <Link to='/profile/me'>{user.name}</Link>
-                  <Button onClick={this.handleLogout} children="Útskrá" />
+          {isAuthenticated &&
+            user && (
+              <React.Fragment>
+                <div className="profile--header">
+                  <img src={user.image || "/profile.jpg"} alt="profile" />
+                  <div className="profile--item">
+                    <Link to="/profile/me">{user.name}</Link>
+                    <Button onClick={this.handleLogout} children="Útskrá" />
+                  </div>
                 </div>
-              </div>
-            </React.Fragment>
-          )}
+              </React.Fragment>
+            )}
 
           {!isAuthenticated && <Link to="/login">Innskráning</Link>}
         </ReactCSSTransitionGroup>

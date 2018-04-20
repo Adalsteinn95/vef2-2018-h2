@@ -8,6 +8,7 @@ import { fetchBooks } from "../../actions/books";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./updatebook.css";
+import PropTypes from 'prop-types';
 
 class UpdateBook extends Component {
   async componentDidMount() {
@@ -50,7 +51,7 @@ class UpdateBook extends Component {
     if (isSending) {
       return <div>Sendi gögn...</div>;
     }
-
+    
     return (
       <div>
         <Helmet title={`Breyta ${this.state.title}`} />
