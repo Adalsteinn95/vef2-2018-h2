@@ -104,8 +104,6 @@ class Book extends Component {
       }
     }
 
-    console.info(this.props);
-
     return (
       <ReactCSSTransitionGroup
         transitionName="registerAnimation"
