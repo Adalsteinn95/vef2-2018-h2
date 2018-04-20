@@ -7,8 +7,6 @@ class Review extends Component {
   render() {
     const { reviews = null, bookId } = this.props;
 
-    console.info(this.props);
-
     const relevantReviews = reviews
       ? reviews.items.filter(i => i.book_id === bookId)
       : [];

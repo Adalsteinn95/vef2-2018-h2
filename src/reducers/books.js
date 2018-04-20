@@ -9,7 +9,6 @@ import {
   BOOK_GETREAD,
   BOOK_GETREAD_ERROR,
   BOOK_GETREAD_SUCCESS
-  /* todo fleiri actions */
 } from "../actions/books";
 
 const initialState = {

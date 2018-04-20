@@ -100,7 +100,7 @@ class Register extends Component {
           );
         });
     }
-    
+
     return (
       <ReactCSSTransitionGroup
         transitionName="registerAnimation"
@@ -168,10 +168,7 @@ class Register extends Component {
   }
 }
 
-/* todo tengja við redux */
-
 const mapStateToProps = state => {
-  /* todo stilla redux ef það er notað */
   return {
     isFetching: state.register.isFetching,
     message: state.register.message,

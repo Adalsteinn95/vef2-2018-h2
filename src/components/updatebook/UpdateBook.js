@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Helmet from "react-helmet";
-import Button from "../../components/button";
 
 import BookForm from "../bookform";
 import { alterBook } from "../../actions/bookAltering";

@@ -2,29 +2,26 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE
-} from '../actions/register';
-
-/* upphafstada */
+} from "../actions/register";
 
 const initialState = {
   isFetching: false,
-  message: [],
+  message: []
 };
 
 export default (state = initialState, action) => {
-
   switch (action.type) {
     case REGISTER_REQUEST:
       return {
         ...state,
-        isFetching: action.isFetching,
+        isFetching: action.isFetching
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
         isFetching: action.isFetching,
         user: action.user,
-        message: action.message,
+        message: action.message
       };
     case REGISTER_FAILURE:
       return {

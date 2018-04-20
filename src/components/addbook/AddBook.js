@@ -33,7 +33,6 @@ class AddBook extends Component {
     this.setState({ [name]: value });
   };
   onClickBack = e => {
-    console.log("ping");
     this.props.history.goBack();
   };
   handleSubmit = e => {
@@ -89,7 +88,6 @@ class AddBook extends Component {
 }
 
 const mapStateToProps = state => {
-  console.info(state.bookAltering.formInfo);
   return {
     isSending: state.bookAltering.isSending,
     formInfo: state.bookAltering.formInfo,

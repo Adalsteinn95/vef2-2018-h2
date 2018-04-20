@@ -10,7 +10,7 @@ function requestUsers() {
     type: GETUSERS_REQUEST,
     isFetching: true,
     message: null,
-    users: null,
+    users: null
   };
 }
 
@@ -19,7 +19,7 @@ function getUsersSuccess(users) {
     type: GETUSERS_SUCCESS,
     isFetching: false,
     users,
-    message: null,
+    message: null
   };
 }
 
@@ -28,7 +28,7 @@ function usersError(message) {
     type: GETUSERS_ERROR,
     isFetching: false,
     book: null,
-    message,
+    message
   };
 }
 
@@ -37,12 +37,9 @@ function getOneUserSuccess(user) {
     type: GETONEUSER_SUCCESS,
     isFetching: false,
     user,
-    message: null,
+    message: null
   };
 }
-/* todo fleiri action */
-
-/* todo async "thunk" fyrir tengingu við vefþjónustu */
 
 export const fetchUsers = endpoint => {
   return async dispatch => {
@@ -50,7 +47,6 @@ export const fetchUsers = endpoint => {
 
     try {
       const data = await api.get(endpoint);
-
 
       dispatch(getUsersSuccess(data));
     } catch (e) {
@@ -60,12 +56,11 @@ export const fetchUsers = endpoint => {
   };
 };
 
-
-export const fetchOneUser = (id) => {
+export const fetchOneUser = id => {
   return async dispatch => {
     dispatch(requestUsers());
 
-    const endpoint = 'users/' + id;
+    const endpoint = "users/" + id;
     let data;
     try {
       data = await api.get(endpoint);
@@ -76,4 +71,3 @@ export const fetchOneUser = (id) => {
     }
   };
 };
-
