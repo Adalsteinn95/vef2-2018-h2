@@ -40,7 +40,7 @@ class Header extends Component {
           <h1 className="header__heading">
             <Link to="/">Bókasafnið</Link>
           </h1>
-          <div>Big Loading...</div>
+          <div>Loading...</div>
         </header>
       );
     }

@@ -65,7 +65,7 @@ class AddBook extends Component {
                 transitionLeave={false}
               >
                 <div key={error.field}>
-                  <p>Villa: {error.message}</p>
+                  <p className="alert--text">Villa: {error.message}</p>
                 </div>
               </ReactCSSTransitionGroup>
             );

@@ -31,7 +31,7 @@ class Search extends Component {
     const { searchvalue } = this.state;
     return (
       <React.Fragment>
-        <form className="search--container" onSubmit={this.handleSubmit}>
+        <form method="GET" action="/books" className="search--container">
           <input
             placeholder="Bókaleit"
             value={searchvalue}

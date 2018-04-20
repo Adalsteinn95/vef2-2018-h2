@@ -75,7 +75,6 @@ class UserPage extends Component {
               const { id, username } = item;
 
               const url = `/users/${id.toString()}`;
-              console.log(url);
               return (
                 <div key={index}>
                   <Link to={url}>{username}</Link>

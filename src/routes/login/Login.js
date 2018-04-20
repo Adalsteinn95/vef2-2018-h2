@@ -18,10 +18,6 @@ class Login extends Component {
     this.maybeRedirect();
   }
 
-  getDerivedStateFromProps() {
-    console.log("getDerivedStateFromProps");
-  }
-
   handleInputChange = e => {
     const { name, value } = e.target;
     if (name) {
@@ -75,21 +71,18 @@ class Login extends Component {
 
     let alert;
     if (!Array.isArray(message) && message) {
-      alert = <div>{message}</div>;
+      alert = <p className="alert--text">{message}</p>;
     } else {
       alert =
         message &&
         message.map((item, index) => {
           return (
             <div key={index}>
-              <p>{item.field}</p>
-              <p>{item.message}</p>
+              <p className="alert--text">{item.message}</p>
             </div>
           );
         });
     }
-    console.log(message, alert);
-
     return (
       <ReactCSSTransitionGroup
         transitionName="registerAnimation"
@@ -114,6 +107,7 @@ class Login extends Component {
             <div className="register--input">
               <label htmlFor="username">Username: </label>
               <input
+                required
                 id="username"
                 name="username"
                 type="text"
@@ -124,6 +118,7 @@ class Login extends Component {
             <div className="register--input">
               <label htmlFor="password">Password: </label>
               <input
+                required
                 id="password"
                 name="password"
                 type="password"

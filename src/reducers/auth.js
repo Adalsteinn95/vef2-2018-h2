@@ -3,8 +3,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_LOGOUT,
+  BIG_ERROR,
   UPDATEUSER_SUCCESS,
-  UPDATEUSER_FAILURE,
+  UPDATEUSER_FAILURE
 } from "../actions/auth";
 
 /* konnum hvort token se i localstorage annars null */
@@ -49,6 +50,14 @@ export default (state = initialState, action) => {
         isAuthenticated: action.isAuthenticated,
         user: action.user,
         message: action.message
+      };
+    case BIG_ERROR:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        isAuthenticated: action.isAuthenticated,
+        user: action.user,
+        bigError: action.bigError
       };
     case UPDATEUSER_SUCCESS:
       return {

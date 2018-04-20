@@ -25,12 +25,17 @@ import AboutUser from "./routes/aboutUser";
 import "./App.css";
 
 class App extends Component {
-  render() {
+  componentDidUpdate() {
     const { isAuthenticated, user } = this.props;
     if (user) {
       this.props.dispatch(checkToken("/users/me"));
     }
-
+  }
+  render() {
+    const { isAuthenticated, user, bigError } = this.props;
+    if (bigError) {
+      return <div>Næ ekki sambandi við vefþjónustu</div>;
+    }
     return (
       <main className="main">
         <Helmet defaultTitle="Bókasafnið" titleTemplate="%s – Bókasafnið" />
@@ -86,6 +91,7 @@ const mapStateToProps = state => {
   /* todo stilla redux ef það er notað */
   return {
     isAuthenticated: state.auth.isAuthenticated,
+    bigError: state.auth.bigError,
     user: state.auth.user,
     username: state.auth.user ? state.auth.user.username : "",
     name: state.auth.user ? state.auth.user.name : "",

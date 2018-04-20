@@ -17,11 +17,15 @@ class Profile extends Component {
     match: true
   };
 
+  componentDidUpdate() {
+    //this.checkMatch();
+  }
+
   handleInputChange = e => {
     const { name, value, files } = e.target;
 
     if (name) {
-      this.setState({ [name]: value });
+      this.setState({ [name]: value }, this.checkMatch.bind(false));
     }
 
     if (files) {
@@ -29,17 +33,16 @@ class Profile extends Component {
     }
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-
+  checkMatch = letsGo => {
     const { dispatch } = this.props;
     const { username, password, passwordAgain } = this.state;
-
     if (password !== passwordAgain) {
       this.setState({ match: false });
     } else {
+      if (letsGo) {
+        dispatch(updateOneUser({ username, password }));
+      }
       this.setState({ match: true });
-      dispatch(updateOneUser({ username, password }));
     }
   };
 
@@ -80,7 +83,7 @@ class Profile extends Component {
     }
 
     if (!match) {
-      alert = <div>Password don't match!</div>;
+      alert = <div className="alert--danger">Passwords don't match!</div>;
     }
 
     if (isFetching) {
@@ -89,68 +92,80 @@ class Profile extends Component {
 
     return (
       <div>
-        {alert}
         <h1>Upplýsingar</h1>
+        <ReactCSSTransitionGroup
+          transitionName="registerAnimation"
+          transitionAppear={true}
+          transitionAppearTimeout={1500}
+          transitionEnter={false}
+          transitionLeave={false}
+        >
+          <Helmet title={` Prófíll - ${user.username}`} />
+          <div className="register--container">
+            <form
+              method="post"
+              encType="multipart/form-data"
+              onSubmit={this.handleImageSubmit}
+            >
+              <div className="register--input">
+                <input required
+                  id="image"
+                  name="image"
+                  type="file"
+                  onChange={this.handleInputChange}
+                />
+                <Button disabled={isFetching}>Uppfæra</Button>
+              </div>
+            </form>
+          </div>
+          <div className="register--container">
+            <form onSubmit={this.handleSubmit}>
+              <div className="register--input">
+                <label htmlFor="username">Username: </label>
+                <input required
+                  id="username"
+                  name="username"
+                  type="text"
+                  value={username}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <Button children="Uppfæra nafn" disabled={isFetching} />
+            </form>
+          </div>
 
-        <div className="register--container">
-          <form
-            method="post"
-            encType="multipart/form-data"
-            onSubmit={this.handleImageSubmit}
-          >
-            <div className="register--input">
-              <input
-                id="image"
-                name="image"
-                type="file"
-                onChange={this.handleInputChange}
+          <div className="register--container">
+            {!match && <div>Passwords don't match!</div>}
+            <form onSubmit={this.handleSubmit}>
+              <div className="register--input">
+                <label htmlFor="password">Password: </label>
+                <input required
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <div className="register--input">
+                <label htmlFor="passwordAgain">Password Again: </label>
+                <input required
+                  id="passwordAgain"
+                  name="passwordAgain"
+                  type="password"
+                  value={passwordAgain}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <Button
+                className={match ? "" : "disable"}
+                children="Uppfæra lykilorð"
+                disabled={isFetching}
               />
-              <Button disabled={isFetching}>Uppfæra</Button>
-            </div>
-          </form>
-        </div>
-        <div className="register--container">
-          <form onSubmit={this.handleSubmit}>
-            <div className="register--input">
-              <label htmlFor="username">Username: </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={username}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <Button children="Uppfæra nafn" disabled={isFetching} />
-          </form>
-        </div>
-
-        <div className='register--container'>
-          <form onSubmit={this.handleSubmit}>
-            <div className='register--input'>
-              <label htmlFor="password">Password: </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className='register--input'>
-              <label htmlFor="passwordAgain">Password Again: </label>
-              <input
-                id="passwordAgain"
-                name="passwordAgain"
-                type="password"
-                value={passwordAgain}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <Button children='Uppfæra lykilorð' disabled={isFetching}></Button>
-          </form>
-        </div>
-        <ReadBooks deleteOption={true} />
+            </form>
+          </div>
+        </ReactCSSTransitionGroup>
+        <ReadBooks meReadBooks={true} deleteOption={true} />
       </div>
     );
   }

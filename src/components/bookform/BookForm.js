@@ -77,6 +77,7 @@ class BookForm extends Component {
             <div className="register--input">
               <label htmlFor="title">Titill:</label>
               <input
+                required
                 value={title}
                 name="title"
                 type="text"
@@ -86,6 +87,7 @@ class BookForm extends Component {
             <div className="register--input">
               <label htmlFor="author">Höfundur:</label>
               <input
+                required
                 value={author}
                 name="author"
                 type="text"
@@ -120,6 +122,7 @@ class BookForm extends Component {
             <div className="register--input">
               <label htmlFor="isbn10">ISBN10:</label>
               <input
+                required
                 value={isbn10}
                 name="isbn10"
                 type="text"
@@ -130,6 +133,7 @@ class BookForm extends Component {
             <div className="register--input">
               <label htmlFor="isbn13">ISBN13:</label>
               <input
+                required
                 value={isbn13}
                 name="isbn13"
                 type="text"
@@ -139,6 +143,7 @@ class BookForm extends Component {
             <div className="register--input">
               <label htmlFor="published">Útgefin:</label>
               <input
+                required
                 value={published}
                 name="published"
                 type="text"
@@ -148,6 +153,7 @@ class BookForm extends Component {
             <div className="register--input">
               <label htmlFor="pagecount">Fjöldi síða:</label>
               <input
+                required
                 value={pagecount}
                 name="pagecount"
                 type="text"
@@ -158,6 +164,7 @@ class BookForm extends Component {
             <div className="register--input">
               <label htmlFor="language">Tungumál:</label>
               <input
+                required
                 value={language}
                 name="language"
                 type="text"

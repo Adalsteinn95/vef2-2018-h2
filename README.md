@@ -49,7 +49,7 @@ Leit er aðgengileg úr haus og við að leitað er skal setja í querystring hv
 
 ## Form og tenging við vefþjónustu
 
-Fyrir form er nóg að nota attribute á elementum fyrir _client side validation_, t.d. `<input required>`. Staðfesting í vefþjónustu skal tryggja að öll gögn séu rétt og þarf því að birta villur þaðan rétt.
+Fyrir form er nóg að nota attribute á elementum fyrir _client side validation_, t.d. `<input required required>`. Staðfesting í vefþjónustu skal tryggja að öll gögn séu rétt og þarf því að birta villur þaðan rétt.
 
 Ekki er krafa um að geta uppfært einn og einn reit á bók í einu, aðeins á notanda.
 

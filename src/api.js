@@ -17,7 +17,6 @@ async function get(endpoint) {
 
   try {
     const response = await fetch(url, options);
-
     const data = await response.json();
 
     if (data.error === "expired token") {
@@ -205,7 +204,6 @@ async function checkToken(endpoint) {
   if (token) {
     options.headers["Authorization"] = `Bearer ${token.token}`;
   }
-
   try {
     const response = await fetch(url, options);
     if (response.status === 401) {
