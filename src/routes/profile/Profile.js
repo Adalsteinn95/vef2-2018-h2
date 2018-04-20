@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "../../components/button";
-import Helmet from "react-helmet";
 import { updateOneUser, postImage } from "../../actions/auth";
-import { deleteRead } from "../../actions/books";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { getRead, deleteRead } from "../../actions/books";
+import { Link } from "react-router-dom";
+import queryString from "query-string";
 
 import ReadBooks from "../../components/readBooksList";
-import "./Profile.css";
 
 class Profile extends Component {
   state = {
@@ -44,14 +43,6 @@ class Profile extends Component {
     }
   };
 
-  handleDelete = e => {
-    e.preventDefault();
-
-    const { dispatch } = this.props;
-
-    dispatch(deleteRead(e.target.parentNode.id, "/users/me/read"));
-  };
-
   handleImageSubmit = e => {
     e.preventDefault();
 
@@ -61,9 +52,16 @@ class Profile extends Component {
   };
 
   render() {
-    const { isFetching, message = null, user } = this.props;
+    const { isFetching, message = null, reviews } = this.props;
 
-    const { username, password, passwordAgain, match } = this.state;
+    const {
+      username,
+      password,
+      passwordAgain,
+      image,
+      match,
+      page
+    } = this.state;
 
     let alert;
     if (!Array.isArray(message) && message) {
@@ -81,12 +79,10 @@ class Profile extends Component {
         });
     }
 
-
     if (!match) {
-      alert = (
-        <div className="alert--danger">Password don't match!</div>
-      );
+      alert = <div>Password don't match!</div>;
     }
+
     if (isFetching) {
       return <div>Loading...</div>;
     }
@@ -95,75 +91,66 @@ class Profile extends Component {
       <div>
         {alert}
         <h1>Upplýsingar</h1>
-        <ReactCSSTransitionGroup
-          transitionName="registerAnimation"
-          transitionAppear={true}
-          transitionAppearTimeout={1500}
-          transitionEnter={false}
-          transitionLeave={false}
-        >
-          <Helmet title={` Prófíll - ${user.username}`} />
-          <div className="register--container">
-            <form
-              method="post"
-              encType="multipart/form-data"
-              onSubmit={this.handleImageSubmit}
-            >
-              <div className="register--input">
-                <input
-                  id="image"
-                  name="image"
-                  type="file"
-                  onChange={this.handleInputChange}
-                />
-                <Button disabled={isFetching}>Uppfæra</Button>
-              </div>
-            </form>
-          </div>
-          <div className="register--container">
-            <form onSubmit={this.handleSubmit}>
-              <div className="register--input">
-                <label htmlFor="username">Username: </label>
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  value={username}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <Button children="Uppfæra nafn" disabled={isFetching} />
-            </form>
-          </div>
 
-          <div className="register--container">
-            {!match && <div>Passwords don't match!</div>}
-            <form onSubmit={this.handleSubmit}>
-              <div className="register--input">
-                <label htmlFor="password">Password: </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={password}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <div className="register--input">
-                <label htmlFor="passwordAgain">Password Again: </label>
-                <input
-                  id="passwordAgain"
-                  name="passwordAgain"
-                  type="password"
-                  value={passwordAgain}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <Button children="Uppfæra lykilorð" disabled={isFetching} />
-            </form>
-          </div>
-        </ReactCSSTransitionGroup>
-        <ReadBooks meReadBooks={true} deleteOption={true} />
+        <div className="register--container">
+          <form
+            method="post"
+            encType="multipart/form-data"
+            onSubmit={this.handleImageSubmit}
+          >
+            <div className="register--input">
+              <input
+                id="image"
+                name="image"
+                type="file"
+                onChange={this.handleInputChange}
+              />
+              <Button disabled={isFetching}>Uppfæra</Button>
+            </div>
+          </form>
+        </div>
+        <div className="register--container">
+          <form onSubmit={this.handleSubmit}>
+            <div className="register--input">
+              <label htmlFor="username">Username: </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                value={username}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <Button children="Uppfæra nafn" disabled={isFetching} />
+          </form>
+        </div>
+
+        <div className='register--container'>
+          <form onSubmit={this.handleSubmit}>
+            <div className='register--input'>
+              <label htmlFor="password">Password: </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className='register--input'>
+              <label htmlFor="passwordAgain">Password Again: </label>
+              <input
+                id="passwordAgain"
+                name="passwordAgain"
+                type="password"
+                value={passwordAgain}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <Button children='Uppfæra lykilorð' disabled={isFetching}></Button>
+          </form>
+        </div>
+        <ReadBooks deleteOption={true} />
       </div>
     );
   }
