@@ -60,7 +60,7 @@ class Register extends Component {
 
     let alert;
     if (!Array.isArray(message) && message) {
-      alert = <div>{message}</div>;
+      alert = <p className="alert--text">{message}</p>;
     } else {
       alert =
         message &&
